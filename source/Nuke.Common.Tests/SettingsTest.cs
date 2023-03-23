@@ -45,10 +45,11 @@ namespace Nuke.Common.Tests
                 .SetProcessArgumentConfigurator(_ => _.Add("/switch"))
                 .SetProcessCustomLogger((type, str, color) => logEntry = (type, str, color))
                 .EnableProcessLogInvocation();
+            var consoleColors = new List<ConsoleColor>() { ConsoleColor.Cyan };
             settings.ProcessCustomLogger.Invoke(
                 OutputType.Err,
                 "text",
-                new List<ConsoleColor>() { ConsoleColor.Cyan }
+                consoleColors
             );
 
             settings.ProcessToolPath.Should().Be("/path/to/dotnet");
@@ -63,7 +64,7 @@ namespace Nuke.Common.Tests
                 .Be("/switch");
             logEntry
                 .Should()
-                .Be((OutputType.Err, "text", new List<ConsoleColor>() { ConsoleColor.Cyan }));
+                .Be((OutputType.Err, "text", consoleColors));
         }
 
         [Fact]
