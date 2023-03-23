@@ -1,4 +1,4 @@
-// Generated from https://github.com/nuke-build/nuke/blob/master/source/Nuke.Common/Tools/Squirrel/Squirrel.json
+// Generated from https://github.com/Typhon0/nuke/blob/master/source/Nuke.Common/Tools/Squirrel/Squirrel.json
 
 using JetBrains.Annotations;
 using Newtonsoft.Json;
@@ -34,12 +34,12 @@ namespace Nuke.Common.Tools.Squirrel
         public static string SquirrelPath =>
             ToolPathResolver.TryGetEnvironmentExecutable("SQUIRREL_EXE") ??
             NuGetToolPathResolver.GetPackageExecutable("Squirrel.Windows", "Squirrel.exe");
-        public static Action<OutputType, string> SquirrelLogger { get; set; } = ProcessTasks.DefaultLogger;
+        public static Action<OutputType, string,List<ConsoleColor>> SquirrelLogger { get; set; } = ProcessTasks.DefaultLogger;
         /// <summary>
         ///   <p>Squirrel is both a set of tools and a library, to completely manage both installation and updating your Desktop Windows application, written in either C# or any other language (i.e., Squirrel can manage native C++ applications).</p>
         ///   <p>For more details, visit the <a href="https://github.com/Squirrel/Squirrel.Windows">official website</a>.</p>
         /// </summary>
-        public static IReadOnlyCollection<Output> Squirrel(ref ArgumentStringHandler arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Action<OutputType, string> customLogger = null)
+        public static IReadOnlyCollection<Output> Squirrel(ref ArgumentStringHandler arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Action<OutputType, string,List<ConsoleColor>> customLogger = null)
         {
             using var process = ProcessTasks.StartProcess(SquirrelPath, ref arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, customLogger ?? SquirrelLogger);
             process.AssertZeroExitCode();
@@ -173,7 +173,7 @@ namespace Nuke.Common.Tools.Squirrel
         ///   Path to the Squirrel executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? SquirrelTasks.SquirrelPath;
-        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? SquirrelTasks.SquirrelLogger;
+        public override Action<OutputType, string,List<ConsoleColor>> ProcessCustomLogger => base.ProcessCustomLogger ?? SquirrelTasks.SquirrelLogger;
         /// <summary>
         ///   Install the app whose package is in the specified directory.
         /// </summary>

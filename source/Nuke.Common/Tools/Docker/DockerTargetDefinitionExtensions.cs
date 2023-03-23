@@ -33,7 +33,10 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         /// Execute this target within a Docker container
         /// </summary>
-        public static ITargetDefinition DockerRun(this ITargetDefinition targetDefinition, Configure<DockerRunTargetSettings> configurator)
+        public static ITargetDefinition DockerRun(
+            this ITargetDefinition targetDefinition,
+            Configure<DockerRunTargetSettings> configurator
+        )
         {
             var definition = (TargetDefinition)targetDefinition;
             var build = definition.Build;
@@ -47,43 +50,70 @@ namespace Nuke.Common.Tools.Docker
                 settings.DotNetRuntime.NotNull();
                 settings.Platform.NotNull();
 
-                var buildAssemblyDirectory = build.BuildAssemblyDirectory.NotNull().Parent / settings.DotNetRuntime;
-                var buildAssembly = buildAssemblyDirectory / build.BuildAssemblyFile.NotNull().NameWithoutExtension;
+                var buildAssemblyDirectory =
+                    build.BuildAssemblyDirectory.NotNull().Parent / settings.DotNetRuntime;
+                var buildAssembly =
+                    buildAssemblyDirectory / build.BuildAssemblyFile.NotNull().NameWithoutExtension;
 
-                bool IsUpToDate() => build.BuildAssemblyDirectory.GlobFiles("*.dll")
-                    .Select(x => build.BuildAssemblyDirectory.GetRelativePathTo(x))
-                    .All(x => File.Exists(buildAssemblyDirectory / x) &&
-                              File.GetLastWriteTime(buildAssemblyDirectory / x) >= File.GetLastWriteTime(build.BuildAssemblyDirectory / x));
+                bool IsUpToDate() =>
+                    build.BuildAssemblyDirectory
+                        .GlobFiles("*.dll")
+                        .Select(x => build.BuildAssemblyDirectory.GetRelativePathTo(x))
+                        .All(
+                            x =>
+                                File.Exists(buildAssemblyDirectory / x)
+                                && File.GetLastWriteTime(buildAssemblyDirectory / x)
+                                    >= File.GetLastWriteTime(build.BuildAssemblyDirectory / x)
+                        );
 
                 if ((!settings.BuildCaching ?? true) || !IsUpToDate())
                 {
-                    Log.Information("Preparing build executable for {DotNetRuntime}...", settings.DotNetRuntime);
-                    DotNetPublish(p => p
-                        .SetProject(build.BuildProjectFile)
-                        .SetOutput(buildAssemblyDirectory)
-                        .SetRuntime(settings.DotNetRuntime)
-                        .EnableSelfContained()
-                        .DisableProcessLogInvocation()
-                        .DisableProcessLogOutput());
+                    Log.Information(
+                        "Preparing build executable for {DotNetRuntime}...",
+                        settings.DotNetRuntime
+                    );
+                    DotNetPublish(
+                        p =>
+                            p.SetProject(build.BuildProjectFile)
+                                .SetOutput(buildAssemblyDirectory)
+                                .SetRuntime(settings.DotNetRuntime)
+                                .EnableSelfContained()
+                                .DisableProcessLogInvocation()
+                                .DisableProcessLogOutput()
+                    );
                 }
                 else
                 {
-                    Log.Information("Reusing previously compiled build executable for {DotNetRuntime}...", settings.DotNetRuntime);
+                    Log.Information(
+                        "Reusing previously compiled build executable for {DotNetRuntime}...",
+                        settings.DotNetRuntime
+                    );
                 }
 
                 if (settings.PullImage ?? false)
                 {
                     Log.Information("Pulling image {Image}...", settings.Image);
-                    DockerTasks.Docker($"pull {settings.Image}", logInvocation: false, logOutput: false);
+                    DockerTasks.Docker(
+                        $"pull {settings.Image}",
+                        logInvocation: false,
+                        logOutput: false
+                    );
                 }
 
-                var (rootDirectory, nugetDirectory) = settings.Platform.StartsWithOrdinalIgnoreCase("win")
+                var (rootDirectory, nugetDirectory) = settings.Platform.StartsWithOrdinalIgnoreCase(
+                    "win"
+                )
                     ? (WindowsRootDirectory, WindowsNuGetDirectory)
                     : (UnixRootDirectory, UnixNuGetDirectory);
                 var localTempDirectory = build.TemporaryDirectory / "docker" / definition.Name;
-                var tempDirectory = rootDirectory / build.RootDirectory.GetRelativePathTo(localTempDirectory);
+                var tempDirectory =
+                    rootDirectory / build.RootDirectory.GetRelativePathTo(localTempDirectory);
                 var envFile = buildAssemblyDirectory / $".env.{definition.Name}";
-                var environmentVariables = GetEnvironmentVariables(settings, rootDirectory, tempDirectory);
+                var environmentVariables = GetEnvironmentVariables(
+                    settings,
+                    rootDirectory,
+                    tempDirectory
+                );
 
                 envFile.WriteAllLines(environmentVariables.Select(x => $"{x.Key}={x.Value}"));
                 localTempDirectory.CreateOrCleanDirectory();
@@ -91,34 +121,50 @@ namespace Nuke.Common.Tools.Docker
                 if (!settings.Username.IsNullOrEmpty())
                 {
                     Log.Information("Logging into {Server}...", settings.Server);
-                    DockerLogin(_ => _
-                        .SetUsername(settings.Username)
-                        .SetPassword(settings.Password)
-                        .SetServer(settings.Server)
-                        .DisableProcessLogInvocation()
-                        .DisableProcessLogOutput());
+                    DockerLogin(
+                        _ =>
+                            _.SetUsername(settings.Username)
+                                .SetPassword(settings.Password)
+                                .SetServer(settings.Server)
+                                .DisableProcessLogInvocation()
+                                .DisableProcessLogOutput()
+                    );
                 }
 
                 try
                 {
-                    using (DelegateDisposable.SetAndRestore(() => DockerLogger, (_, message) => Log.Write(LogEventReader.ReadFromString(message))))
+                    using (
+                        DelegateDisposable.SetAndRestore(
+                            () => DockerLogger,
+                            (_, message, _) => Log.Write(LogEventReader.ReadFromString(message))
+                        )
+                    )
                     {
                         Log.Information("Launching target in {Image}...", settings.Image);
-                        DockerTasks.DockerRun(_ => settings
-                            .When(!settings.Rm.HasValue, _ => _
-                                .EnableRm())
-                            .AddVolume($"{build.RootDirectory}:{rootDirectory}")
-                            .AddVolume($"{NuGetPackageResolver.GetPackagesDirectory(NuGetToolPathResolver.NuGetPackagesConfigFile)}:{nugetDirectory}")
-                            .SetPlatform(settings.Platform)
-                            .SetWorkdir(rootDirectory)
-                            .SetEnvFile(envFile)
-                            .SetEntrypoint(rootDirectory / build.RootDirectory.GetRelativePathTo(buildAssembly))
-                            .SetArgs(new[]
-                            {
-                                definition.Target.Name,
-                                $"--{ParameterService.GetParameterDashedName(Constants.SkippedTargetsParameterName)}"
-                            }.Concat(settings.Args))
-                            .DisableProcessLogInvocation());
+                        DockerTasks.DockerRun(
+                            _ =>
+                                settings
+                                    .When(!settings.Rm.HasValue, _ => _.EnableRm())
+                                    .AddVolume($"{build.RootDirectory}:{rootDirectory}")
+                                    .AddVolume(
+                                        $"{NuGetPackageResolver.GetPackagesDirectory(NuGetToolPathResolver.NuGetPackagesConfigFile)}:{nugetDirectory}"
+                                    )
+                                    .SetPlatform(settings.Platform)
+                                    .SetWorkdir(rootDirectory)
+                                    .SetEnvFile(envFile)
+                                    .SetEntrypoint(
+                                        rootDirectory
+                                            / build.RootDirectory.GetRelativePathTo(buildAssembly)
+                                    )
+                                    .SetArgs(
+                                        new[]
+                                        {
+                                            definition.Target.Name,
+                                            $"--{ParameterService.GetParameterDashedName(Constants.SkippedTargetsParameterName)}"
+                                        }.Concat(settings.Args)
+                                    )
+                                    .DisableProcessLogInvocation()
+                        );
                     }
                 }
                 finally
@@ -136,7 +182,8 @@ namespace Nuke.Common.Tools.Docker
         private static IReadOnlyDictionary<string, string> GetEnvironmentVariables(
             ToolSettings settings,
             AbsolutePath rootDirectory,
-            AbsolutePath tempDirectory)
+            AbsolutePath tempDirectory
+        )
         {
             var customEnvironmentVariables = new Dictionary<string, string>()
                 .AddPair(Constants.InterceptorEnvironmentKey, value: 1)
@@ -153,25 +200,33 @@ namespace Nuke.Common.Tools.Docker
                 // https://github.com/actions/runner/issues/619
                 .AddPair("COMPlus_EnableDiagnostics", value: 0);
 
-            var excludedEnvironmentVariables =
-                new[]
-                {
-                    "APPDATA",
-                    "DOTNET_EXE",
-                    "HOMEPATH",
-                    "LOCALAPPDATA",
-                    "USERNAME",
-                    "USERPROFILE",
-                };
+            var excludedEnvironmentVariables = new[]
+            {
+                "APPDATA",
+                "DOTNET_EXE",
+                "HOMEPATH",
+                "LOCALAPPDATA",
+                "USERNAME",
+                "USERPROFILE",
+            };
 
             return customEnvironmentVariables
-                .AddDictionary(settings.ProcessEnvironmentVariables
-                    .Where(x =>
-                        !customEnvironmentVariables.Keys.Contains(x.Key, StringComparer.OrdinalIgnoreCase) &&
-                        // TODO: Copy from TeamCity?
-                        !x.Key.Contains(' ') &&
-                        !x.Key.EqualsAnyOrdinalIgnoreCase(excludedEnvironmentVariables))
-                    .ToDictionary(x => x.Key, x => x.Value).AsReadOnly())
+                .AddDictionary(
+                    settings.ProcessEnvironmentVariables
+                        .Where(
+                            x =>
+                                !customEnvironmentVariables.Keys.Contains(
+                                    x.Key,
+                                    StringComparer.OrdinalIgnoreCase
+                                )
+                                &&
+                                // TODO: Copy from TeamCity?
+                                !x.Key.Contains(' ')
+                                && !x.Key.EqualsAnyOrdinalIgnoreCase(excludedEnvironmentVariables)
+                        )
+                        .ToDictionary(x => x.Key, x => x.Value)
+                        .AsReadOnly()
+                )
                 .ToImmutableSortedDictionary();
         }
     }

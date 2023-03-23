@@ -1,4 +1,4 @@
-// Generated from https://github.com/nuke-build/nuke/blob/master/source/Nuke.Common/Tools/BenchmarkDotNet/BenchmarkDotNet.json
+// Generated from https://github.com/Typhon0/nuke/blob/master/source/Nuke.Common/Tools/BenchmarkDotNet/BenchmarkDotNet.json
 
 using JetBrains.Annotations;
 using Newtonsoft.Json;
@@ -34,12 +34,12 @@ namespace Nuke.Common.Tools.BenchmarkDotNet
         public static string BenchmarkDotNetPath =>
             ToolPathResolver.TryGetEnvironmentExecutable("BENCHMARKDOTNET_EXE") ??
             NuGetToolPathResolver.GetPackageExecutable("benchmarkdotnet.tool", "BenchmarkDotNet.Tool.dll");
-        public static Action<OutputType, string> BenchmarkDotNetLogger { get; set; } = ProcessTasks.DefaultLogger;
+        public static Action<OutputType, string,List<ConsoleColor>> BenchmarkDotNetLogger { get; set; } = ProcessTasks.DefaultLogger;
         /// <summary>
         ///   <p>Powerful .NET library for benchmarking</p>
         ///   <p>For more details, visit the <a href="https://benchmarkdotnet.org/">official website</a>.</p>
         /// </summary>
-        public static IReadOnlyCollection<Output> BenchmarkDotNet(ref ArgumentStringHandler arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Action<OutputType, string> customLogger = null)
+        public static IReadOnlyCollection<Output> BenchmarkDotNet(ref ArgumentStringHandler arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Action<OutputType, string,List<ConsoleColor>> customLogger = null)
         {
             using var process = ProcessTasks.StartProcess(BenchmarkDotNetPath, ref arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, customLogger ?? BenchmarkDotNetLogger);
             process.AssertZeroExitCode();
@@ -248,7 +248,7 @@ namespace Nuke.Common.Tools.BenchmarkDotNet
         ///   Path to the BenchmarkDotNet executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? BenchmarkDotNetTasks.BenchmarkDotNetPath;
-        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? BenchmarkDotNetTasks.BenchmarkDotNetLogger;
+        public override Action<OutputType, string,List<ConsoleColor>> ProcessCustomLogger => base.ProcessCustomLogger ?? BenchmarkDotNetTasks.BenchmarkDotNetLogger;
         /// <summary>
         ///   The assembly with the benchmarks (required).
         /// </summary>

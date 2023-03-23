@@ -2715,7 +2715,6 @@
 
 ### Nuke.Common.Execution.IBuildExtension
 
-
 ### Nuke.Common.Execution.InjectionAttributeBase
 
 - .ctor()
@@ -3284,8 +3283,8 @@
 
 ### Nuke.Common.Tooling.ConfigureExtensions
 
-- Invoke(this CombinatorialConfigure<TSettings> configurator, Func<TSettings, IReadOnlyCollection<Output>> executor, Action<OutputType, string> logger, int degreeOfParallelism, bool completeOnFailure) : IReadOnlyCollection<(Settings TSettings, Output IReadOnlyCollection<Output>)>
-- Invoke(this CombinatorialConfigure<TSettings> configurator, Func<TSettings, (Result TResult, Output IReadOnlyCollection<Output>)> executor, Action<OutputType, string> logger, int degreeOfParallelism, bool completeOnFailure) : IReadOnlyCollection<(Settings TSettings, Result TResult, Output IReadOnlyCollection<Output>)>
+- Invoke(this CombinatorialConfigure<TSettings> configurator, Func<TSettings, IReadOnlyCollection<Output>> executor, Action<OutputType, string,List<ConsoleColor>> logger, int degreeOfParallelism, bool completeOnFailure) : IReadOnlyCollection<(Settings TSettings, Output IReadOnlyCollection<Output>)>
+- Invoke(this CombinatorialConfigure<TSettings> configurator, Func<TSettings, (Result TResult, Output IReadOnlyCollection<Output>)> executor, Action<OutputType, string,List<ConsoleColor>> logger, int degreeOfParallelism, bool completeOnFailure) : IReadOnlyCollection<(Settings TSettings, Result TResult, Output IReadOnlyCollection<Output>)>
 - InvokeSafe(this Configure<T> configurator, T obj) : T
 
 ### Nuke.Common.Tooling.Enumeration
@@ -3337,7 +3336,6 @@
 - WaitForExit() : bool
 
 ### Nuke.Common.Tooling.ISettingsEntity
-
 
 ### Nuke.Common.Tooling.LocalExecutableAttribute
 
@@ -3453,7 +3451,7 @@
 - CheckPathEnvironmentVariable() : void
 - DefaultLogger(OutputType type, string output) : void
 - StartProcess(ToolSettings toolSettings) : IProcess
-- StartProcess(string toolPath, string arguments = null, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Action<OutputType, string> customLogger = null, Func<string, string> outputFilter = null) : IProcess
+- StartProcess(string toolPath, string arguments = null, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Action<OutputType, string,List<ConsoleColor>> customLogger = null, Func<string, string> outputFilter = null) : IProcess
 
 ### Nuke.Common.Tooling.SettingsEntityExtensions
 
@@ -3462,9 +3460,9 @@
 ### Nuke.Common.Tooling.Tool
 
 - .ctor(object object, IntPtr method)
-- BeginInvoke(string arguments, string workingDirectory, IReadOnlyDictionary<string, string> environmentVariables, int? timeout, bool? logOutput, bool? logInvocation, Action<OutputType, string> customLogger, Func<string, string> outputFilter, AsyncCallback callback, object object) : IAsyncResult
+- BeginInvoke(string arguments, string workingDirectory, IReadOnlyDictionary<string, string> environmentVariables, int? timeout, bool? logOutput, bool? logInvocation, Action<OutputType, string,List<ConsoleColor>> customLogger, Func<string, string> outputFilter, AsyncCallback callback, object object) : IAsyncResult
 - EndInvoke(IAsyncResult result) : IReadOnlyCollection<Output>
-- Invoke(string arguments = null, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Action<OutputType, string> customLogger = null, Func<string, string> outputFilter = null) : IReadOnlyCollection<Output>
+- Invoke(string arguments = null, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Action<OutputType, string,List<ConsoleColor>> customLogger = null, Func<string, string> outputFilter = null) : IReadOnlyCollection<Output>
 
 ### Nuke.Common.Tooling.ToolPathResolver
 
@@ -3487,7 +3485,7 @@
 
 - .ctor()
 - get_ArgumentConfigurator() : Func<Arguments, Arguments>
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_EnvironmentVariables() : IReadOnlyDictionary<string, string>
 - get_ExecutionTimeout() : int?
 - get_LogInvocation() : bool?
@@ -3647,7 +3645,7 @@
 ### Nuke.Common.Tools.CloudFoundry.CloudFoundryApiSettings
 
 - .ctor()
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_SkipSSLValidation() : bool?
 - get_ToolPath() : string
 - get_Unset() : bool?
@@ -3673,7 +3671,7 @@
 
 - .ctor()
 - get_ClientCredentials() : bool?
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Origin() : string
 - get_Password() : string
 - get_ToolPath() : string
@@ -3700,7 +3698,7 @@
 - get_AppName() : string
 - get_BindingName() : string
 - get_ConfigurationParameters() : string
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_ServiceInstance() : string
 - get_ToolPath() : string
 - ConfigureArguments(Arguments arguments) : Arguments
@@ -3719,7 +3717,7 @@
 ### Nuke.Common.Tools.CloudFoundry.CloudFoundryCreateRouteSettings
 
 - .ctor()
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Domain() : string
 - get_Hostname() : string
 - get_Path() : string
@@ -3751,7 +3749,7 @@
 
 - .ctor()
 - get_ConfigurationParameters() : string
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_InstanceName() : string
 - get_Plan() : string
 - get_Service() : string
@@ -3780,7 +3778,7 @@
 ### Nuke.Common.Tools.CloudFoundry.CloudFoundryCreateSpaceSettings
 
 - .ctor()
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Org() : string
 - get_Quota() : string
 - get_Space() : string
@@ -3801,7 +3799,7 @@
 - .ctor()
 - .ctor(SerializationInfo info, StreamingContext context)
 - get_Credentials() : JObject
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_LogUrl() : string
 - get_RouteUrl() : string
 - get_ServiceInstanceName() : string
@@ -3828,7 +3826,7 @@
 ### Nuke.Common.Tools.CloudFoundry.CloudFoundryCurlSettings
 
 - .ctor()
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_HttpData() : string
 - get_HttpMethod() : string
 - get_IncludeResponseHeaders() : bool?
@@ -3854,7 +3852,7 @@
 
 - .ctor()
 - get_AppName() : string
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_DeleteRoutes() : bool?
 - get_ToolPath() : string
 - ConfigureArguments(Arguments arguments) : Arguments
@@ -3872,7 +3870,7 @@
 ### Nuke.Common.Tools.CloudFoundry.CloudFoundryDeleteServiceSettings
 
 - .ctor()
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_ServiceInstance() : string
 - get_ToolPath() : string
 - ConfigureArguments(Arguments arguments) : Arguments
@@ -3885,7 +3883,7 @@
 ### Nuke.Common.Tools.CloudFoundry.CloudFoundryDeleteSpaceSettings
 
 - .ctor()
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Org() : string
 - get_Space() : string
 - get_ToolPath() : string
@@ -3901,7 +3899,7 @@
 ### Nuke.Common.Tools.CloudFoundry.CloudFoundryGetServiceInfoSettings
 
 - .ctor()
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_ServiceInstance() : string
 - get_ToolPath() : string
 - ConfigureArguments(Arguments arguments) : Arguments
@@ -3915,7 +3913,7 @@
 
 - .ctor()
 - get_ApiEndpoint() : string
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Org() : string
 - get_Password() : string
 - get_SkipSslValidation() : bool?
@@ -3946,7 +3944,7 @@
 
 - .ctor()
 - get_AppName() : string
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Domain() : string
 - get_Hostname() : string
 - get_Path() : string
@@ -3979,7 +3977,7 @@
 - get_AppName() : string
 - get_Buildpack() : IReadOnlyList<string>
 - get_Command() : string
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_DockerImage() : string
 - get_DockerUsername() : string
 - get_Domain() : string
@@ -4067,7 +4065,7 @@
 
 - .ctor()
 - get_AppName() : string
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_ToolPath() : string
 - ConfigureArguments(Arguments arguments) : Arguments
 
@@ -4080,7 +4078,7 @@
 
 - .ctor()
 - get_AppName() : string
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_ToolPath() : string
 - ConfigureArguments(Arguments arguments) : Arguments
 
@@ -4092,7 +4090,7 @@
 ### Nuke.Common.Tools.CloudFoundry.CloudFoundryScaleSettings
 
 - .ctor()
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Disk() : string
 - get_Instances() : string
 - get_Memory() : string
@@ -4112,7 +4110,7 @@
 
 - .ctor()
 - get_AppName() : string
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_EnvVarName() : string
 - get_EnvVarValue() : string
 - get_ToolPath() : string
@@ -4131,7 +4129,7 @@
 
 - .ctor()
 - get_AppName() : string
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_ToolPath() : string
 - ConfigureArguments(Arguments arguments) : Arguments
 
@@ -4144,7 +4142,7 @@
 
 - .ctor()
 - get_AppName() : string
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_ToolPath() : string
 - ConfigureArguments(Arguments arguments) : Arguments
 
@@ -4156,7 +4154,7 @@
 ### Nuke.Common.Tools.CloudFoundry.CloudFoundryTargetSettings
 
 - .ctor()
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Org() : string
 - get_Space() : string
 - get_ToolPath() : string
@@ -4171,9 +4169,9 @@
 
 ### Nuke.Common.Tools.CloudFoundry.CloudFoundryTasks
 
-- get_CloudFoundryLogger() : Action<OutputType, string>
+- get_CloudFoundryLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_CloudFoundryPath() : string
-- set_CloudFoundryLogger(Action<OutputType, string> value) : void
+- set_CloudFoundryLogger(Action<OutputType, string,List<ConsoleColor>> value) : void
 - CloudFoundry(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Func<string, string> outputFilter = null) : IReadOnlyCollection<Output>
 - CloudFoundryApi(CloudFoundryApiSettings toolSettings = null) : IReadOnlyCollection<Output>
 - CloudFoundryApi(Configure<CloudFoundryApiSettings> configurator) : IReadOnlyCollection<Output>
@@ -4257,7 +4255,7 @@
 
 - .ctor()
 - get_AppName() : string
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_ServiceInstance() : string
 - get_ToolPath() : string
 - ConfigureArguments(Arguments arguments) : Arguments
@@ -4273,7 +4271,7 @@
 
 - .ctor()
 - get_AppName() : string
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Domain() : string
 - get_Hostname() : string
 - get_Path() : string
@@ -4298,7 +4296,7 @@
 
 - .ctor()
 - get_AppName() : string
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_EnvironmentalVariableName() : string
 - get_ToolPath() : string
 - ConfigureArguments(Arguments arguments) : Arguments
@@ -4338,7 +4336,7 @@
 - get_CommitEmail() : string
 - get_CommitId() : string
 - get_CommitMessage() : string
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_DryRun() : bool?
 - get_DynamicCodeCoverage() : bool?
 - get_ExportCodeCoverage() : bool?
@@ -4416,9 +4414,9 @@
 
 ### Nuke.Common.Tools.CoverallsNet.CoverallsNetTasks
 
-- get_CoverallsNetLogger() : Action<OutputType, string>
+- get_CoverallsNetLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_CoverallsNetPath() : string
-- set_CoverallsNetLogger(Action<OutputType, string> value) : void
+- set_CoverallsNetLogger(Action<OutputType, string,List<ConsoleColor>> value) : void
 - CoverallsNet(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Func<string, string> outputFilter = null) : IReadOnlyCollection<Output>
 - CoverallsNet(CoverallsNetSettings toolSettings = null) : IReadOnlyCollection<Output>
 - CoverallsNet(Configure<CoverallsNetSettings> configurator) : IReadOnlyCollection<Output>
@@ -4438,7 +4436,7 @@
 
 - .ctor()
 - get_Assembly() : string
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Exclude() : IReadOnlyList<string>
 - get_ExcludeByFile() : IReadOnlyList<string>
 - get_Format() : IReadOnlyList<CoverletOutputFormat>
@@ -4512,9 +4510,9 @@
 
 ### Nuke.Common.Tools.Coverlet.CoverletTasks
 
-- get_CoverletLogger() : Action<OutputType, string>
+- get_CoverletLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_CoverletPath() : string
-- set_CoverletLogger(Action<OutputType, string> value) : void
+- set_CoverletLogger(Action<OutputType, string,List<ConsoleColor>> value) : void
 - Coverlet(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Func<string, string> outputFilter = null) : IReadOnlyCollection<Output>
 - Coverlet(CoverletSettings toolSettings = null) : IReadOnlyCollection<Output>
 - Coverlet(Configure<CoverletSettings> configurator) : IReadOnlyCollection<Output>
@@ -4555,7 +4553,7 @@
 - get_ConfigFile() : string
 - get_Content() : IReadOnlyList<string>
 - get_CorrelationId() : string
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_DisableGitFeatures() : bool?
 - get_DryRun() : bool?
 - get_EnableDebugMode() : bool?
@@ -4776,7 +4774,7 @@
 ### Nuke.Common.Tools.DocFX.DocFXDependencySettings
 
 - .ctor()
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_DependencyFile() : string
 - get_IntermediateFolder() : string
 - get_PrintHelpMessage() : bool?
@@ -4802,7 +4800,7 @@
 
 - .ctor()
 - get_ArchiveFile() : string
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_PrintHelpMessage() : bool?
 - get_ToolPath() : string
 - get_Uri() : string
@@ -4824,7 +4822,7 @@
 
 - .ctor()
 - get_Command() : string
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_ToolPath() : string
 - ConfigureArguments(Arguments arguments) : Arguments
 
@@ -4838,7 +4836,7 @@
 - .ctor()
 - get_ApiSourceFolder() : string
 - get_ApiSourceGlobPattern() : string
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_OnlyConfigFile() : bool?
 - get_OutputFolder() : string
 - get_Overwrite() : bool?
@@ -4893,7 +4891,7 @@
 - get_ConfigFile() : string
 - get_Content() : IReadOnlyList<string>
 - get_CorrelationId() : string
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_FileMetadataFilePath() : string
 - get_GlobalMetadata() : string
 - get_GlobalMetadataFilePath() : string
@@ -4953,7 +4951,7 @@
 
 - .ctor()
 - get_CorrelationId() : string
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_DisableDefaultFilter() : bool?
 - get_DisableGitFeatures() : bool?
 - get_FilterConfigFile() : string
@@ -5046,7 +5044,7 @@
 - get_Content() : IReadOnlyList<string>
 - get_CorrelationId() : string
 - get_CssFilePath() : string
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_DisableGitFeatures() : bool?
 - get_DryRun() : bool?
 - get_EnableDebugMode() : bool?
@@ -5318,7 +5316,7 @@
 ### Nuke.Common.Tools.DocFX.DocFXServeSettings
 
 - .ctor()
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Folder() : string
 - get_Host() : string
 - get_Port() : int?
@@ -5342,9 +5340,9 @@
 
 ### Nuke.Common.Tools.DocFX.DocFXTasks
 
-- get_DocFXLogger() : Action<OutputType, string>
+- get_DocFXLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_DocFXPath() : string
-- set_DocFXLogger(Action<OutputType, string> value) : void
+- set_DocFXLogger(Action<OutputType, string,List<ConsoleColor>> value) : void
 - DocFX(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Func<string, string> outputFilter = null) : IReadOnlyCollection<Output>
 - DocFXBuild(DocFXBuildSettings toolSettings = null) : IReadOnlyCollection<Output>
 - DocFXBuild(Configure<DocFXBuildSettings> configurator) : IReadOnlyCollection<Output>
@@ -5389,7 +5387,7 @@
 - .ctor()
 - get_All() : bool?
 - get_Command() : string
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_OutputFolder() : string
 - get_PrintHelpMessage() : bool?
 - get_ToolPath() : string
@@ -5424,7 +5422,7 @@
 
 - .ctor()
 - get_Config() : string
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Debug() : bool?
 - get_LogLevel() : LogLevel
 - get_TLS() : bool?
@@ -5439,7 +5437,7 @@
 
 - .ctor()
 - get_Container() : string
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_DetachKeys() : string
 - get_NoStdin() : bool?
 - get_SigProxy() : bool?
@@ -5476,7 +5474,7 @@
 - get_CpusetCpus() : string
 - get_CpusetMems() : string
 - get_CpuShares() : long?
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_DisableContentTrust() : bool?
 - get_File() : string
 - get_ForceRm() : bool?
@@ -5641,22 +5639,20 @@
 ### Nuke.Common.Tools.Docker.DockerBuilderPruneSettings
 
 - .ctor()
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_ToolPath() : string
 - ConfigureArguments(Arguments arguments) : Arguments
 
 ### Nuke.Common.Tools.Docker.DockerBuilderPruneSettingsExtensions
 
-
 ### Nuke.Common.Tools.Docker.DockerBuilderSettings
 
 - .ctor()
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_ToolPath() : string
 - ConfigureArguments(Arguments arguments) : Arguments
 
 ### Nuke.Common.Tools.Docker.DockerBuilderSettingsExtensions
-
 
 ### Nuke.Common.Tools.Docker.DockerBuildSettings
 
@@ -5671,7 +5667,7 @@
 - get_CpusetCpus() : string
 - get_CpusetMems() : string
 - get_CpuShares() : long?
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_DisableContentTrust() : bool?
 - get_File() : string
 - get_ForceRm() : bool?
@@ -5839,7 +5835,7 @@
 - get_Checkpoint() : string
 - get_CheckpointDir() : string
 - get_Container() : string
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_LeaveRunning() : bool?
 - get_ToolPath() : string
 - ConfigureArguments(Arguments arguments) : Arguments
@@ -5863,7 +5859,7 @@
 - .ctor()
 - get_CheckpointDir() : string
 - get_Container() : string
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_ToolPath() : string
 - ConfigureArguments(Arguments arguments) : Arguments
 
@@ -5880,7 +5876,7 @@
 - get_Checkpoint() : string
 - get_CheckpointDir() : string
 - get_Container() : string
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_ToolPath() : string
 - ConfigureArguments(Arguments arguments) : Arguments
 
@@ -5896,12 +5892,11 @@
 ### Nuke.Common.Tools.Docker.DockerCheckpointSettings
 
 - .ctor()
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_ToolPath() : string
 - ConfigureArguments(Arguments arguments) : Arguments
 
 ### Nuke.Common.Tools.Docker.DockerCheckpointSettingsExtensions
-
 
 ### Nuke.Common.Tools.Docker.DockerCommitSettings
 
@@ -5909,7 +5904,7 @@
 - get_Author() : string
 - get_Change() : IReadOnlyList<string>
 - get_Container() : string
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Message() : string
 - get_Pause() : bool?
 - get_Repository() : string
@@ -5943,7 +5938,7 @@
 
 - .ctor()
 - get_Config() : string
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_File() : string
 - get_Label() : IReadOnlyList<string>
 - get_TemplateDriver() : string
@@ -5970,7 +5965,7 @@
 
 - .ctor()
 - get_Configs() : IReadOnlyList<string>
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Format() : string
 - get_Pretty() : bool?
 - get_ToolPath() : string
@@ -5996,7 +5991,7 @@
 ### Nuke.Common.Tools.Docker.DockerConfigLsSettings
 
 - .ctor()
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Filter() : string
 - get_Format() : string
 - get_Quiet() : bool?
@@ -6019,7 +6014,7 @@
 
 - .ctor()
 - get_Configs() : IReadOnlyList<string>
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_ToolPath() : string
 - ConfigureArguments(Arguments arguments) : Arguments
 
@@ -6036,18 +6031,17 @@
 ### Nuke.Common.Tools.Docker.DockerConfigSettings
 
 - .ctor()
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_ToolPath() : string
 - ConfigureArguments(Arguments arguments) : Arguments
 
 ### Nuke.Common.Tools.Docker.DockerConfigSettingsExtensions
 
-
 ### Nuke.Common.Tools.Docker.DockerContainerAttachSettings
 
 - .ctor()
 - get_Container() : string
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_DetachKeys() : string
 - get_NoStdin() : bool?
 - get_SigProxy() : bool?
@@ -6077,7 +6071,7 @@
 - get_Author() : string
 - get_Change() : IReadOnlyList<string>
 - get_Container() : string
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Message() : string
 - get_Pause() : bool?
 - get_Repository() : string
@@ -6130,7 +6124,7 @@
 - get_CpusetCpus() : string
 - get_CpusetMems() : string
 - get_CpuShares() : long?
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Device() : IReadOnlyList<string>
 - get_DeviceCgroupRule() : IReadOnlyList<string>
 - get_DeviceReadBps() : IReadOnlyList<string>
@@ -6625,7 +6619,7 @@
 
 - .ctor()
 - get_Container() : string
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_ToolPath() : string
 - ConfigureArguments(Arguments arguments) : Arguments
 
@@ -6640,7 +6634,7 @@
 - get_Args() : IReadOnlyList<string>
 - get_Command() : string
 - get_Container() : string
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Detach() : bool?
 - get_DetachKeys() : string
 - get_Env() : IReadOnlyList<string>
@@ -6703,7 +6697,7 @@
 
 - .ctor()
 - get_Container() : string
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Output() : string
 - get_ToolPath() : string
 - ConfigureArguments(Arguments arguments) : Arguments
@@ -6719,7 +6713,7 @@
 
 - .ctor()
 - get_Containers() : IReadOnlyList<string>
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Format() : string
 - get_Size() : bool?
 - get_ToolPath() : string
@@ -6746,7 +6740,7 @@
 
 - .ctor()
 - get_Containers() : IReadOnlyList<string>
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Signal() : string
 - get_ToolPath() : string
 - ConfigureArguments(Arguments arguments) : Arguments
@@ -6767,7 +6761,7 @@
 
 - .ctor()
 - get_Container() : string
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Details() : bool?
 - get_Follow() : bool?
 - get_Since() : string
@@ -6807,7 +6801,7 @@
 
 - .ctor()
 - get_All() : bool?
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Filter() : string
 - get_Format() : string
 - get_Last() : int?
@@ -6856,7 +6850,7 @@
 
 - .ctor()
 - get_Containers() : IReadOnlyList<string>
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_ToolPath() : string
 - ConfigureArguments(Arguments arguments) : Arguments
 
@@ -6874,7 +6868,7 @@
 
 - .ctor()
 - get_Container() : string
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_PrivatePort() : string
 - get_ToolPath() : string
 - ConfigureArguments(Arguments arguments) : Arguments
@@ -6889,7 +6883,7 @@
 ### Nuke.Common.Tools.Docker.DockerContainerPruneSettings
 
 - .ctor()
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Filter() : string
 - get_Force() : bool?
 - get_ToolPath() : string
@@ -6909,7 +6903,7 @@
 
 - .ctor()
 - get_Container() : string
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_NewName() : string
 - get_ToolPath() : string
 - ConfigureArguments(Arguments arguments) : Arguments
@@ -6925,7 +6919,7 @@
 
 - .ctor()
 - get_Containers() : IReadOnlyList<string>
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Time() : int?
 - get_ToolPath() : string
 - ConfigureArguments(Arguments arguments) : Arguments
@@ -6946,7 +6940,7 @@
 
 - .ctor()
 - get_Containers() : IReadOnlyList<string>
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Force() : bool?
 - get_Link() : bool?
 - get_ToolPath() : string
@@ -7001,7 +6995,7 @@
 - get_CpusetCpus() : string
 - get_CpusetMems() : string
 - get_CpuShares() : long?
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Detach() : bool?
 - get_DetachKeys() : string
 - get_Device() : IReadOnlyList<string>
@@ -7510,12 +7504,11 @@
 ### Nuke.Common.Tools.Docker.DockerContainerSettings
 
 - .ctor()
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_ToolPath() : string
 - ConfigureArguments(Arguments arguments) : Arguments
 
 ### Nuke.Common.Tools.Docker.DockerContainerSettingsExtensions
-
 
 ### Nuke.Common.Tools.Docker.DockerContainerStartSettings
 
@@ -7524,7 +7517,7 @@
 - get_Checkpoint() : string
 - get_CheckpointDir() : string
 - get_Containers() : IReadOnlyList<string>
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_DetachKeys() : string
 - get_Interactive() : bool?
 - get_ToolPath() : string
@@ -7561,7 +7554,7 @@
 - .ctor()
 - get_All() : bool?
 - get_Containers() : IReadOnlyList<string>
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Format() : string
 - get_NoStream() : bool?
 - get_NoTrunc() : bool?
@@ -7599,7 +7592,7 @@
 
 - .ctor()
 - get_Containers() : IReadOnlyList<string>
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Time() : int?
 - get_ToolPath() : string
 - ConfigureArguments(Arguments arguments) : Arguments
@@ -7620,7 +7613,7 @@
 
 - .ctor()
 - get_Container() : string
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Options() : string
 - get_ToolPath() : string
 - ConfigureArguments(Arguments arguments) : Arguments
@@ -7636,7 +7629,7 @@
 
 - .ctor()
 - get_Containers() : IReadOnlyList<string>
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_ToolPath() : string
 - ConfigureArguments(Arguments arguments) : Arguments
 
@@ -7663,7 +7656,7 @@
 - get_CpusetCpus() : string
 - get_CpusetMems() : string
 - get_CpuShares() : long?
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_KernelMemory() : long?
 - get_Memory() : long?
 - get_MemoryReservation() : long?
@@ -7717,7 +7710,7 @@
 
 - .ctor()
 - get_Containers() : IReadOnlyList<string>
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_ToolPath() : string
 - ConfigureArguments(Arguments arguments) : Arguments
 
@@ -7735,7 +7728,7 @@
 
 - .ctor()
 - get_Context() : string
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_DefaultStackOrchestrator() : string
 - get_Description() : string
 - get_Docker() : string
@@ -7763,7 +7756,7 @@
 
 - .ctor()
 - get_Context() : string
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_File() : string
 - get_Kubeconfig() : bool?
 - get_ToolPath() : string
@@ -7785,7 +7778,7 @@
 
 - .ctor()
 - get_Context() : string
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_File() : string
 - get_ToolPath() : string
 - ConfigureArguments(Arguments arguments) : Arguments
@@ -7802,7 +7795,7 @@
 - .ctor()
 - get_Context() : string
 - get_Contexts() : IReadOnlyList<string>
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Format() : string
 - get_ToolPath() : string
 - ConfigureArguments(Arguments arguments) : Arguments
@@ -7824,7 +7817,7 @@
 ### Nuke.Common.Tools.Docker.DockerContextLsSettings
 
 - .ctor()
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Format() : string
 - get_Quiet() : bool?
 - get_ToolPath() : string
@@ -7844,7 +7837,7 @@
 
 - .ctor()
 - get_Contexts() : IReadOnlyList<string>
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_ToolPath() : string
 - ConfigureArguments(Arguments arguments) : Arguments
 
@@ -7861,18 +7854,17 @@
 ### Nuke.Common.Tools.Docker.DockerContextSettings
 
 - .ctor()
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_ToolPath() : string
 - ConfigureArguments(Arguments arguments) : Arguments
 
 ### Nuke.Common.Tools.Docker.DockerContextSettingsExtensions
 
-
 ### Nuke.Common.Tools.Docker.DockerContextUpdateSettings
 
 - .ctor()
 - get_Context() : string
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_DefaultStackOrchestrator() : string
 - get_Description() : string
 - get_Docker() : string
@@ -7897,7 +7889,7 @@
 
 - .ctor()
 - get_Context() : string
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_ToolPath() : string
 - ConfigureArguments(Arguments arguments) : Arguments
 
@@ -7929,7 +7921,7 @@
 - get_CpusetCpus() : string
 - get_CpusetMems() : string
 - get_CpuShares() : long?
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Device() : IReadOnlyList<string>
 - get_DeviceCgroupRule() : IReadOnlyList<string>
 - get_DeviceReadBps() : IReadOnlyList<string>
@@ -8425,7 +8417,7 @@
 - .ctor()
 - get_BundleFile() : string
 - get_ComposeFile() : IReadOnlyList<string>
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Namespace() : string
 - get_Prune() : bool?
 - get_ResolveImage() : ResolveImage
@@ -8466,7 +8458,7 @@
 
 - .ctor()
 - get_Container() : string
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_ToolPath() : string
 - ConfigureArguments(Arguments arguments) : Arguments
 
@@ -8479,7 +8471,7 @@
 
 - .ctor()
 - get_Containerd() : string
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_DisplayOnly() : bool?
 - get_EngineImage() : string
 - get_Format() : string
@@ -8519,7 +8511,7 @@
 
 - .ctor()
 - get_Containerd() : string
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Downgrades() : bool?
 - get_EngineImage() : string
 - get_Format() : string
@@ -8565,7 +8557,7 @@
 
 - .ctor()
 - get_Command() : string
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_ToolPath() : string
 - ConfigureArguments(Arguments arguments) : Arguments
 
@@ -8578,7 +8570,7 @@
 
 - .ctor()
 - get_Containerd() : string
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_EngineImage() : string
 - get_RegistryPrefix() : string
 - get_ToolPath() : string
@@ -8599,7 +8591,7 @@
 ### Nuke.Common.Tools.Docker.DockerEventsSettings
 
 - .ctor()
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Filter() : string
 - get_Format() : string
 - get_Since() : string
@@ -8624,7 +8616,7 @@
 - get_Args() : IReadOnlyList<string>
 - get_Command() : string
 - get_Container() : string
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Detach() : bool?
 - get_DetachKeys() : string
 - get_Env() : IReadOnlyList<string>
@@ -8687,7 +8679,7 @@
 
 - .ctor()
 - get_Container() : string
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Output() : string
 - get_ToolPath() : string
 - ConfigureArguments(Arguments arguments) : Arguments
@@ -8702,7 +8694,7 @@
 ### Nuke.Common.Tools.Docker.DockerHistorySettings
 
 - .ctor()
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Format() : string
 - get_Human() : bool?
 - get_Image() : string
@@ -8746,7 +8738,7 @@
 - get_CpusetCpus() : string
 - get_CpusetMems() : string
 - get_CpuShares() : long?
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_DisableContentTrust() : bool?
 - get_File() : string
 - get_ForceRm() : bool?
@@ -8911,7 +8903,7 @@
 ### Nuke.Common.Tools.Docker.DockerImageHistorySettings
 
 - .ctor()
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Format() : string
 - get_Human() : bool?
 - get_Image() : string
@@ -8946,7 +8938,7 @@
 
 - .ctor()
 - get_Change() : IReadOnlyList<string>
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_File() : string
 - get_Message() : string
 - get_Platform() : string
@@ -8975,7 +8967,7 @@
 ### Nuke.Common.Tools.Docker.DockerImageInspectSettings
 
 - .ctor()
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Format() : string
 - get_Images() : IReadOnlyList<string>
 - get_ToolPath() : string
@@ -8996,7 +8988,7 @@
 ### Nuke.Common.Tools.Docker.DockerImageLoadSettings
 
 - .ctor()
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Input() : string
 - get_Quiet() : bool?
 - get_ToolPath() : string
@@ -9016,7 +9008,7 @@
 
 - .ctor()
 - get_All() : bool?
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Digests() : bool?
 - get_Filter() : string
 - get_Format() : string
@@ -9059,7 +9051,7 @@
 
 - .ctor()
 - get_All() : bool?
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Filter() : string
 - get_Force() : bool?
 - get_ToolPath() : string
@@ -9084,7 +9076,7 @@
 
 - .ctor()
 - get_AllTags() : bool?
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_DisableContentTrust() : bool?
 - get_Name() : string
 - get_Platform() : string
@@ -9117,7 +9109,7 @@
 ### Nuke.Common.Tools.Docker.DockerImagePushSettings
 
 - .ctor()
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_DisableContentTrust() : bool?
 - get_Name() : string
 - get_ToolPath() : string
@@ -9136,7 +9128,7 @@
 ### Nuke.Common.Tools.Docker.DockerImageRmSettings
 
 - .ctor()
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Force() : bool?
 - get_Images() : IReadOnlyList<string>
 - get_NoPrune() : bool?
@@ -9166,7 +9158,7 @@
 ### Nuke.Common.Tools.Docker.DockerImageSaveSettings
 
 - .ctor()
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Images() : IReadOnlyList<string>
 - get_Output() : string
 - get_ToolPath() : string
@@ -9187,18 +9179,17 @@
 ### Nuke.Common.Tools.Docker.DockerImageSettings
 
 - .ctor()
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_ToolPath() : string
 - ConfigureArguments(Arguments arguments) : Arguments
 
 ### Nuke.Common.Tools.Docker.DockerImageSettingsExtensions
 
-
 ### Nuke.Common.Tools.Docker.DockerImagesSettings
 
 - .ctor()
 - get_All() : bool?
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Digests() : bool?
 - get_Filter() : string
 - get_Format() : string
@@ -9240,7 +9231,7 @@
 ### Nuke.Common.Tools.Docker.DockerImageTagSettings
 
 - .ctor()
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_SourceImage() : string
 - get_TargetImage() : string
 - get_ToolPath() : string
@@ -9257,7 +9248,7 @@
 
 - .ctor()
 - get_Change() : IReadOnlyList<string>
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_File() : string
 - get_Message() : string
 - get_Platform() : string
@@ -9286,7 +9277,7 @@
 ### Nuke.Common.Tools.Docker.DockerInfoSettings
 
 - .ctor()
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Format() : string
 - get_ToolPath() : string
 - ConfigureArguments(Arguments arguments) : Arguments
@@ -9299,7 +9290,7 @@
 ### Nuke.Common.Tools.Docker.DockerInspectSettings
 
 - .ctor()
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Format() : string
 - get_Names() : IReadOnlyList<string>
 - get_Size() : bool?
@@ -9330,7 +9321,7 @@
 
 - .ctor()
 - get_Containers() : IReadOnlyList<string>
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Signal() : string
 - get_ToolPath() : string
 - ConfigureArguments(Arguments arguments) : Arguments
@@ -9350,7 +9341,7 @@
 ### Nuke.Common.Tools.Docker.DockerLoadSettings
 
 - .ctor()
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Input() : string
 - get_Quiet() : bool?
 - get_ToolPath() : string
@@ -9369,7 +9360,7 @@
 ### Nuke.Common.Tools.Docker.DockerLoginSettings
 
 - .ctor()
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Password() : string
 - get_Server() : string
 - get_ToolPath() : string
@@ -9388,7 +9379,7 @@
 ### Nuke.Common.Tools.Docker.DockerLogoutSettings
 
 - .ctor()
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Server() : string
 - get_ToolPath() : string
 - ConfigureArguments(Arguments arguments) : Arguments
@@ -9402,7 +9393,7 @@
 
 - .ctor()
 - get_Container() : string
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Details() : bool?
 - get_Follow() : bool?
 - get_Since() : string
@@ -9442,7 +9433,7 @@
 
 - .ctor()
 - get_Arch() : string
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Manifest() : string
 - get_ManifestList() : string
 - get_Os() : string
@@ -9474,7 +9465,7 @@
 ### Nuke.Common.Tools.Docker.DockerManifestCreateSettings
 
 - .ctor()
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_ManifestList() : string
 - get_Manifests() : IReadOnlyList<string>
 - get_ToolPath() : string
@@ -9495,7 +9486,7 @@
 ### Nuke.Common.Tools.Docker.DockerManifestInspectSettings
 
 - .ctor()
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Insecure() : bool?
 - get_Manifest() : string
 - get_ManifestList() : string
@@ -9523,7 +9514,7 @@
 ### Nuke.Common.Tools.Docker.DockerManifestPushSettings
 
 - .ctor()
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Insecure() : bool?
 - get_ManifestList() : string
 - get_Purge() : bool?
@@ -9549,7 +9540,7 @@
 
 - .ctor()
 - get_Command() : string
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_ToolPath() : string
 - ConfigureArguments(Arguments arguments) : Arguments
 
@@ -9563,7 +9554,7 @@
 - .ctor()
 - get_Alias() : IReadOnlyList<string>
 - get_Container() : string
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_DriverOpt() : IReadOnlyList<string>
 - get_Ip() : string
 - get_Ip6() : string
@@ -9619,7 +9610,7 @@
 - get_AuxAddress() : IReadOnlyDictionary<string, string>
 - get_ConfigFrom() : string
 - get_ConfigOnly() : bool?
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Driver() : string
 - get_Gateway() : IReadOnlyList<string>
 - get_Ingress() : bool?
@@ -9721,7 +9712,7 @@
 
 - .ctor()
 - get_Container() : string
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Force() : bool?
 - get_Network() : string
 - get_ToolPath() : string
@@ -9742,7 +9733,7 @@
 ### Nuke.Common.Tools.Docker.DockerNetworkInspectSettings
 
 - .ctor()
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Format() : string
 - get_Networks() : IReadOnlyList<string>
 - get_ToolPath() : string
@@ -9769,7 +9760,7 @@
 ### Nuke.Common.Tools.Docker.DockerNetworkLsSettings
 
 - .ctor()
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Filter() : string
 - get_Format() : string
 - get_NoTrunc() : bool?
@@ -9797,7 +9788,7 @@
 ### Nuke.Common.Tools.Docker.DockerNetworkPruneSettings
 
 - .ctor()
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Filter() : string
 - get_Force() : bool?
 - get_ToolPath() : string
@@ -9816,7 +9807,7 @@
 ### Nuke.Common.Tools.Docker.DockerNetworkRmSettings
 
 - .ctor()
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Networks() : IReadOnlyList<string>
 - get_ToolPath() : string
 - ConfigureArguments(Arguments arguments) : Arguments
@@ -9834,17 +9825,16 @@
 ### Nuke.Common.Tools.Docker.DockerNetworkSettings
 
 - .ctor()
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_ToolPath() : string
 - ConfigureArguments(Arguments arguments) : Arguments
 
 ### Nuke.Common.Tools.Docker.DockerNetworkSettingsExtensions
 
-
 ### Nuke.Common.Tools.Docker.DockerNodeDemoteSettings
 
 - .ctor()
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Nodes() : IReadOnlyList<string>
 - get_ToolPath() : string
 - ConfigureArguments(Arguments arguments) : Arguments
@@ -9862,7 +9852,7 @@
 ### Nuke.Common.Tools.Docker.DockerNodeInspectSettings
 
 - .ctor()
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Format() : string
 - get_Pretty() : bool?
 - get_Selves() : IReadOnlyList<string>
@@ -9889,7 +9879,7 @@
 ### Nuke.Common.Tools.Docker.DockerNodeLsSettings
 
 - .ctor()
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Filter() : string
 - get_Format() : string
 - get_Quiet() : bool?
@@ -9911,7 +9901,7 @@
 ### Nuke.Common.Tools.Docker.DockerNodePromoteSettings
 
 - .ctor()
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Nodes() : IReadOnlyList<string>
 - get_ToolPath() : string
 - ConfigureArguments(Arguments arguments) : Arguments
@@ -9929,7 +9919,7 @@
 ### Nuke.Common.Tools.Docker.DockerNodePsSettings
 
 - .ctor()
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Filter() : string
 - get_Format() : string
 - get_Nodes() : IReadOnlyList<string>
@@ -9971,7 +9961,7 @@
 ### Nuke.Common.Tools.Docker.DockerNodeRmSettings
 
 - .ctor()
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Force() : bool?
 - get_Nodes() : IReadOnlyList<string>
 - get_ToolPath() : string
@@ -9995,18 +9985,17 @@
 ### Nuke.Common.Tools.Docker.DockerNodeSettings
 
 - .ctor()
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_ToolPath() : string
 - ConfigureArguments(Arguments arguments) : Arguments
 
 ### Nuke.Common.Tools.Docker.DockerNodeSettingsExtensions
 
-
 ### Nuke.Common.Tools.Docker.DockerNodeUpdateSettings
 
 - .ctor()
 - get_Availability() : Availability
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_LabelAdd() : IReadOnlyList<string>
 - get_LabelRm() : IReadOnlyList<string>
 - get_Node() : string
@@ -10041,7 +10030,7 @@
 
 - .ctor()
 - get_Containers() : IReadOnlyList<string>
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_ToolPath() : string
 - ConfigureArguments(Arguments arguments) : Arguments
 
@@ -10059,7 +10048,7 @@
 
 - .ctor()
 - get_Compress() : bool?
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Plugin() : string
 - get_PluginDataDir() : string
 - get_ToolPath() : string
@@ -10080,7 +10069,7 @@
 ### Nuke.Common.Tools.Docker.DockerPluginDisableSettings
 
 - .ctor()
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Force() : bool?
 - get_Plugin() : string
 - get_ToolPath() : string
@@ -10099,7 +10088,7 @@
 ### Nuke.Common.Tools.Docker.DockerPluginEnableSettings
 
 - .ctor()
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Plugin() : string
 - get_Timeout() : int?
 - get_ToolPath() : string
@@ -10115,7 +10104,7 @@
 ### Nuke.Common.Tools.Docker.DockerPluginInspectSettings
 
 - .ctor()
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Format() : string
 - get_Plugins() : IReadOnlyList<string>
 - get_ToolPath() : string
@@ -10137,7 +10126,7 @@
 
 - .ctor()
 - get_Alias() : string
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Disable() : bool?
 - get_DisableContentTrust() : bool?
 - get_GrantAllPermissions() : bool?
@@ -10176,7 +10165,7 @@
 ### Nuke.Common.Tools.Docker.DockerPluginLsSettings
 
 - .ctor()
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Filter() : string
 - get_Format() : string
 - get_NoTrunc() : bool?
@@ -10204,7 +10193,7 @@
 ### Nuke.Common.Tools.Docker.DockerPluginPushSettings
 
 - .ctor()
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_DisableContentTrust() : bool?
 - get_Plugin() : string
 - get_ToolPath() : string
@@ -10223,7 +10212,7 @@
 ### Nuke.Common.Tools.Docker.DockerPluginRmSettings
 
 - .ctor()
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Force() : bool?
 - get_Plugins() : IReadOnlyList<string>
 - get_ToolPath() : string
@@ -10247,7 +10236,7 @@
 ### Nuke.Common.Tools.Docker.DockerPluginSetSettings
 
 - .ctor()
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_KeyValues() : IReadOnlyDictionary<string, string>
 - get_Plugin() : string
 - get_ToolPath() : string
@@ -10266,17 +10255,16 @@
 ### Nuke.Common.Tools.Docker.DockerPluginSettings
 
 - .ctor()
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_ToolPath() : string
 - ConfigureArguments(Arguments arguments) : Arguments
 
 ### Nuke.Common.Tools.Docker.DockerPluginSettingsExtensions
 
-
 ### Nuke.Common.Tools.Docker.DockerPluginUpgradeSettings
 
 - .ctor()
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_DisableContentTrust() : bool?
 - get_GrantAllPermissions() : bool?
 - get_Plugin() : string
@@ -10311,7 +10299,7 @@
 
 - .ctor()
 - get_Container() : string
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_PrivatePort() : string
 - get_ToolPath() : string
 - ConfigureArguments(Arguments arguments) : Arguments
@@ -10327,7 +10315,7 @@
 
 - .ctor()
 - get_All() : bool?
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Filter() : string
 - get_Format() : string
 - get_Last() : int?
@@ -10376,7 +10364,7 @@
 
 - .ctor()
 - get_AllTags() : bool?
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_DisableContentTrust() : bool?
 - get_Name() : string
 - get_Platform() : string
@@ -10409,7 +10397,7 @@
 ### Nuke.Common.Tools.Docker.DockerPushSettings
 
 - .ctor()
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_DisableContentTrust() : bool?
 - get_Name() : string
 - get_ToolPath() : string
@@ -10429,7 +10417,7 @@
 
 - .ctor()
 - get_Container() : string
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_NewName() : string
 - get_ToolPath() : string
 - ConfigureArguments(Arguments arguments) : Arguments
@@ -10445,7 +10433,7 @@
 
 - .ctor()
 - get_Containers() : IReadOnlyList<string>
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Time() : int?
 - get_ToolPath() : string
 - ConfigureArguments(Arguments arguments) : Arguments
@@ -10465,7 +10453,7 @@
 ### Nuke.Common.Tools.Docker.DockerRmiSettings
 
 - .ctor()
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Force() : bool?
 - get_Images() : IReadOnlyList<string>
 - get_NoPrune() : bool?
@@ -10496,7 +10484,7 @@
 
 - .ctor()
 - get_Containers() : IReadOnlyList<string>
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Force() : bool?
 - get_Link() : bool?
 - get_ToolPath() : string
@@ -10551,7 +10539,7 @@
 - get_CpusetCpus() : string
 - get_CpusetMems() : string
 - get_CpuShares() : long?
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Detach() : bool?
 - get_DetachKeys() : string
 - get_Device() : IReadOnlyList<string>
@@ -11060,7 +11048,7 @@
 ### Nuke.Common.Tools.Docker.DockerSaveSettings
 
 - .ctor()
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Images() : IReadOnlyList<string>
 - get_Output() : string
 - get_ToolPath() : string
@@ -11082,7 +11070,7 @@
 
 - .ctor()
 - get_Automated() : bool?
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Filter() : string
 - get_Format() : string
 - get_Limit() : int?
@@ -11118,7 +11106,7 @@
 ### Nuke.Common.Tools.Docker.DockerSecretCreateSettings
 
 - .ctor()
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Driver() : string
 - get_File() : string
 - get_Label() : IReadOnlyList<string>
@@ -11148,7 +11136,7 @@
 ### Nuke.Common.Tools.Docker.DockerSecretInspectSettings
 
 - .ctor()
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Format() : string
 - get_Pretty() : bool?
 - get_Secrets() : IReadOnlyList<string>
@@ -11175,7 +11163,7 @@
 ### Nuke.Common.Tools.Docker.DockerSecretLsSettings
 
 - .ctor()
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Filter() : string
 - get_Format() : string
 - get_Quiet() : bool?
@@ -11197,7 +11185,7 @@
 ### Nuke.Common.Tools.Docker.DockerSecretRmSettings
 
 - .ctor()
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Secrets() : IReadOnlyList<string>
 - get_ToolPath() : string
 - ConfigureArguments(Arguments arguments) : Arguments
@@ -11215,12 +11203,11 @@
 ### Nuke.Common.Tools.Docker.DockerSecretSettings
 
 - .ctor()
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_ToolPath() : string
 - ConfigureArguments(Arguments arguments) : Arguments
 
 ### Nuke.Common.Tools.Docker.DockerSecretSettingsExtensions
-
 
 ### Nuke.Common.Tools.Docker.DockerServiceCreateSettings
 
@@ -11231,7 +11218,7 @@
 - get_Constraint() : IReadOnlyList<string>
 - get_ContainerLabel() : IReadOnlyList<string>
 - get_CredentialSpec() : string
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Detach() : bool?
 - get_Dns() : IReadOnlyList<string>
 - get_DnsOption() : IReadOnlyList<string>
@@ -11536,7 +11523,7 @@
 ### Nuke.Common.Tools.Docker.DockerServiceInspectSettings
 
 - .ctor()
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Format() : string
 - get_Pretty() : bool?
 - get_Services() : IReadOnlyList<string>
@@ -11563,7 +11550,7 @@
 ### Nuke.Common.Tools.Docker.DockerServiceLogsSettings
 
 - .ctor()
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Details() : bool?
 - get_Follow() : bool?
 - get_NoResolve() : bool?
@@ -11624,7 +11611,7 @@
 ### Nuke.Common.Tools.Docker.DockerServiceLsSettings
 
 - .ctor()
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Filter() : string
 - get_Format() : string
 - get_Quiet() : bool?
@@ -11646,7 +11633,7 @@
 ### Nuke.Common.Tools.Docker.DockerServicePsSettings
 
 - .ctor()
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Filter() : string
 - get_Format() : string
 - get_NoResolve() : bool?
@@ -11688,7 +11675,7 @@
 ### Nuke.Common.Tools.Docker.DockerServiceRmSettings
 
 - .ctor()
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Services() : IReadOnlyList<string>
 - get_ToolPath() : string
 - ConfigureArguments(Arguments arguments) : Arguments
@@ -11706,7 +11693,7 @@
 ### Nuke.Common.Tools.Docker.DockerServiceRollbackSettings
 
 - .ctor()
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Detach() : bool?
 - get_Quiet() : bool?
 - get_Service() : string
@@ -11731,7 +11718,7 @@
 ### Nuke.Common.Tools.Docker.DockerServiceScaleSettings
 
 - .ctor()
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_ServiceReplicas() : IReadOnlyDictionary<string, string>
 - get_ToolPath() : string
 - ConfigureArguments(Arguments arguments) : Arguments
@@ -11747,12 +11734,11 @@
 ### Nuke.Common.Tools.Docker.DockerServiceSettings
 
 - .ctor()
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_ToolPath() : string
 - ConfigureArguments(Arguments arguments) : Arguments
 
 ### Nuke.Common.Tools.Docker.DockerServiceSettingsExtensions
-
 
 ### Nuke.Common.Tools.Docker.DockerServiceUpdateSettings
 
@@ -11765,7 +11751,7 @@
 - get_ContainerLabelAdd() : IReadOnlyList<string>
 - get_ContainerLabelRm() : IReadOnlyList<string>
 - get_CredentialSpec() : string
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Detach() : bool?
 - get_DnsAdd() : IReadOnlyList<string>
 - get_DnsOptionAdd() : IReadOnlyList<string>
@@ -12201,7 +12187,7 @@
 - .ctor()
 - get_BundleFile() : string
 - get_ComposeFile() : IReadOnlyList<string>
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Namespace() : string
 - get_Prune() : bool?
 - get_ResolveImage() : ResolveImage
@@ -12242,7 +12228,7 @@
 
 - .ctor()
 - get_AllNamespaces() : bool?
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Format() : string
 - get_Namespace() : IReadOnlyList<string>
 - get_ToolPath() : string
@@ -12268,7 +12254,7 @@
 ### Nuke.Common.Tools.Docker.DockerStackPsSettings
 
 - .ctor()
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Filter() : string
 - get_Format() : string
 - get_Namespace() : string
@@ -12308,7 +12294,7 @@
 ### Nuke.Common.Tools.Docker.DockerStackRmSettings
 
 - .ctor()
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Namespace() : string
 - get_Stacks() : IReadOnlyList<string>
 - get_ToolPath() : string
@@ -12329,7 +12315,7 @@
 ### Nuke.Common.Tools.Docker.DockerStackServicesSettings
 
 - .ctor()
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Filter() : string
 - get_Format() : string
 - get_Namespace() : string
@@ -12357,7 +12343,7 @@
 ### Nuke.Common.Tools.Docker.DockerStackSettings
 
 - .ctor()
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Kubeconfig() : string
 - get_Orchestrator() : string
 - get_ToolPath() : string
@@ -12377,7 +12363,7 @@
 - get_Checkpoint() : string
 - get_CheckpointDir() : string
 - get_Containers() : IReadOnlyList<string>
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_DetachKeys() : string
 - get_Interactive() : bool?
 - get_ToolPath() : string
@@ -12414,7 +12400,7 @@
 - .ctor()
 - get_All() : bool?
 - get_Containers() : IReadOnlyList<string>
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Format() : string
 - get_NoStream() : bool?
 - get_NoTrunc() : bool?
@@ -12452,7 +12438,7 @@
 
 - .ctor()
 - get_Containers() : IReadOnlyList<string>
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Time() : int?
 - get_ToolPath() : string
 - ConfigureArguments(Arguments arguments) : Arguments
@@ -12475,7 +12461,7 @@
 - get_CaCert() : string
 - get_CaKey() : string
 - get_CertExpiry() : string
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Detach() : bool?
 - get_ExternalCa() : string
 - get_Quiet() : bool?
@@ -12516,7 +12502,7 @@
 - get_Autolock() : bool?
 - get_Availability() : Availability
 - get_CertExpiry() : string
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_DataPathAddr() : string
 - get_DataPathPort() : string
 - get_DefaultAddrPool() : string
@@ -12575,7 +12561,7 @@
 - .ctor()
 - get_AdvertiseAddr() : string
 - get_Availability() : Availability
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_DataPathAddr() : string
 - get_ListenAddr() : string
 - get_Token() : string
@@ -12598,7 +12584,7 @@
 ### Nuke.Common.Tools.Docker.DockerSwarmJoinTokenSettings
 
 - .ctor()
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Quiet() : bool?
 - get_Rotate() : bool?
 - get_ToolPath() : string
@@ -12623,7 +12609,7 @@
 ### Nuke.Common.Tools.Docker.DockerSwarmLeaveSettings
 
 - .ctor()
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Force() : bool?
 - get_ToolPath() : string
 - ConfigureArguments(Arguments arguments) : Arguments
@@ -12639,17 +12625,16 @@
 ### Nuke.Common.Tools.Docker.DockerSwarmSettings
 
 - .ctor()
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_ToolPath() : string
 - ConfigureArguments(Arguments arguments) : Arguments
 
 ### Nuke.Common.Tools.Docker.DockerSwarmSettingsExtensions
 
-
 ### Nuke.Common.Tools.Docker.DockerSwarmUnlockKeySettings
 
 - .ctor()
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Quiet() : bool?
 - get_Rotate() : bool?
 - get_ToolPath() : string
@@ -12671,19 +12656,18 @@
 ### Nuke.Common.Tools.Docker.DockerSwarmUnlockSettings
 
 - .ctor()
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_ToolPath() : string
 - ConfigureArguments(Arguments arguments) : Arguments
 
 ### Nuke.Common.Tools.Docker.DockerSwarmUnlockSettingsExtensions
-
 
 ### Nuke.Common.Tools.Docker.DockerSwarmUpdateSettings
 
 - .ctor()
 - get_Autolock() : bool?
 - get_CertExpiry() : string
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_DispatcherHeartbeat() : string
 - get_ExternalCa() : string
 - get_MaxSnapshots() : int?
@@ -12715,7 +12699,7 @@
 ### Nuke.Common.Tools.Docker.DockerSystemDfSettings
 
 - .ctor()
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Format() : string
 - get_ToolPath() : string
 - get_Verbose() : bool?
@@ -12734,7 +12718,7 @@
 ### Nuke.Common.Tools.Docker.DockerSystemEventsSettings
 
 - .ctor()
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Filter() : string
 - get_Format() : string
 - get_Since() : string
@@ -12756,7 +12740,7 @@
 ### Nuke.Common.Tools.Docker.DockerSystemInfoSettings
 
 - .ctor()
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Format() : string
 - get_ToolPath() : string
 - ConfigureArguments(Arguments arguments) : Arguments
@@ -12770,7 +12754,7 @@
 
 - .ctor()
 - get_All() : bool?
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Filter() : string
 - get_Force() : bool?
 - get_ToolPath() : string
@@ -12800,17 +12784,16 @@
 ### Nuke.Common.Tools.Docker.DockerSystemSettings
 
 - .ctor()
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_ToolPath() : string
 - ConfigureArguments(Arguments arguments) : Arguments
 
 ### Nuke.Common.Tools.Docker.DockerSystemSettingsExtensions
 
-
 ### Nuke.Common.Tools.Docker.DockerTagSettings
 
 - .ctor()
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_SourceImage() : string
 - get_TargetImage() : string
 - get_ToolPath() : string
@@ -12825,9 +12808,9 @@
 
 ### Nuke.Common.Tools.Docker.DockerTasks
 
-- get_DockerLogger() : Action<OutputType, string>
+- get_DockerLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_DockerPath() : string
-- set_DockerLogger(Action<OutputType, string> value) : void
+- set_DockerLogger(Action<OutputType, string,List<ConsoleColor>> value) : void
 - Docker(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Func<string, string> outputFilter = null) : IReadOnlyCollection<Output>
 - DockerAttach(DockerAttachSettings toolSettings = null) : IReadOnlyCollection<Output>
 - DockerAttach(Configure<DockerAttachSettings> configurator) : IReadOnlyCollection<Output>
@@ -13392,7 +13375,7 @@
 
 - .ctor()
 - get_Container() : string
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Options() : string
 - get_ToolPath() : string
 - ConfigureArguments(Arguments arguments) : Arguments
@@ -13407,7 +13390,7 @@
 ### Nuke.Common.Tools.Docker.DockerTrustInspectSettings
 
 - .ctor()
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Images() : IReadOnlyList<string>
 - get_ToolPath() : string
 - ConfigureArguments(Arguments arguments) : Arguments
@@ -13425,7 +13408,7 @@
 ### Nuke.Common.Tools.Docker.DockerTrustKeyGenerateSettings
 
 - .ctor()
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Name() : string
 - get_ToolPath() : string
 - ConfigureArguments(Arguments arguments) : Arguments
@@ -13438,7 +13421,7 @@
 ### Nuke.Common.Tools.Docker.DockerTrustKeyLoadSettings
 
 - .ctor()
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Keyfile() : string
 - get_Name() : string
 - get_ToolPath() : string
@@ -13454,17 +13437,16 @@
 ### Nuke.Common.Tools.Docker.DockerTrustKeySettings
 
 - .ctor()
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_ToolPath() : string
 - ConfigureArguments(Arguments arguments) : Arguments
 
 ### Nuke.Common.Tools.Docker.DockerTrustKeySettingsExtensions
 
-
 ### Nuke.Common.Tools.Docker.DockerTrustRevokeSettings
 
 - .ctor()
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Image() : string
 - get_ToolPath() : string
 - get_Yes() : bool?
@@ -13483,17 +13465,16 @@
 ### Nuke.Common.Tools.Docker.DockerTrustSettings
 
 - .ctor()
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_ToolPath() : string
 - ConfigureArguments(Arguments arguments) : Arguments
 
 ### Nuke.Common.Tools.Docker.DockerTrustSettingsExtensions
 
-
 ### Nuke.Common.Tools.Docker.DockerTrustSignerAddSettings
 
 - .ctor()
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Name() : string
 - get_Options() : string
 - get_Repositories() : IReadOnlyList<string>
@@ -13517,7 +13498,7 @@
 ### Nuke.Common.Tools.Docker.DockerTrustSignerRemoveSettings
 
 - .ctor()
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Force() : bool?
 - get_Name() : string
 - get_Repositories() : IReadOnlyList<string>
@@ -13544,28 +13525,26 @@
 ### Nuke.Common.Tools.Docker.DockerTrustSignerSettings
 
 - .ctor()
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_ToolPath() : string
 - ConfigureArguments(Arguments arguments) : Arguments
 
 ### Nuke.Common.Tools.Docker.DockerTrustSignerSettingsExtensions
 
-
 ### Nuke.Common.Tools.Docker.DockerTrustSignSettings
 
 - .ctor()
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_ToolPath() : string
 - ConfigureArguments(Arguments arguments) : Arguments
 
 ### Nuke.Common.Tools.Docker.DockerTrustSignSettingsExtensions
 
-
 ### Nuke.Common.Tools.Docker.DockerUnpauseSettings
 
 - .ctor()
 - get_Containers() : IReadOnlyList<string>
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_ToolPath() : string
 - ConfigureArguments(Arguments arguments) : Arguments
 
@@ -13592,7 +13571,7 @@
 - get_CpusetCpus() : string
 - get_CpusetMems() : string
 - get_CpuShares() : long?
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_KernelMemory() : long?
 - get_Memory() : long?
 - get_MemoryReservation() : long?
@@ -13645,7 +13624,7 @@
 ### Nuke.Common.Tools.Docker.DockerVersionSettings
 
 - .ctor()
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Format() : string
 - get_Kubeconfig() : string
 - get_ToolPath() : string
@@ -13661,7 +13640,7 @@
 ### Nuke.Common.Tools.Docker.DockerVolumeCreateSettings
 
 - .ctor()
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Driver() : string
 - get_Label() : IReadOnlyList<string>
 - get_Name() : string
@@ -13694,7 +13673,7 @@
 ### Nuke.Common.Tools.Docker.DockerVolumeInspectSettings
 
 - .ctor()
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Format() : string
 - get_ToolPath() : string
 - get_Volumes() : IReadOnlyList<string>
@@ -13715,7 +13694,7 @@
 ### Nuke.Common.Tools.Docker.DockerVolumeLsSettings
 
 - .ctor()
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Filter() : string
 - get_Format() : string
 - get_Quiet() : bool?
@@ -13737,7 +13716,7 @@
 ### Nuke.Common.Tools.Docker.DockerVolumePruneSettings
 
 - .ctor()
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Filter() : string
 - get_Force() : bool?
 - get_ToolPath() : string
@@ -13756,7 +13735,7 @@
 ### Nuke.Common.Tools.Docker.DockerVolumeRmSettings
 
 - .ctor()
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Force() : bool?
 - get_ToolPath() : string
 - get_Volumes() : IReadOnlyList<string>
@@ -13781,7 +13760,7 @@
 
 - .ctor()
 - get_Command() : string
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_ToolPath() : string
 - ConfigureArguments(Arguments arguments) : Arguments
 
@@ -13794,7 +13773,7 @@
 
 - .ctor()
 - get_Containers() : IReadOnlyList<string>
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_ToolPath() : string
 - ConfigureArguments(Arguments arguments) : Arguments
 
@@ -13843,7 +13822,7 @@
 
 ### Nuke.Common.Tools.Docker.RollbackFailureAction
 
-- continue_ : RollbackFailureAction
+- continue\_ : RollbackFailureAction
 - pause : RollbackFailureAction
 - .ctor()
 - op_Explicit(string value) : RollbackFailureAction
@@ -13857,7 +13836,7 @@
 
 ### Nuke.Common.Tools.Docker.UpdateFailureAction
 
-- continue_ : UpdateFailureAction
+- continue\_ : UpdateFailureAction
 - pause : UpdateFailureAction
 - rollback : UpdateFailureAction
 - .ctor()
@@ -13877,7 +13856,7 @@
 - get_AnalyseTargetArguments() : bool?
 - get_AttributeFilters() : IReadOnlyList<string>
 - get_Configuration() : string
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_DisableDefaultFilters() : bool?
 - get_Filters() : IReadOnlyList<string>
 - get_HideAutoProperties() : bool?
@@ -13989,7 +13968,7 @@
 - get_AnalyseTargetArguments() : bool?
 - get_AttributeFilters() : IReadOnlyList<string>
 - get_Configuration() : string
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_DisableDefaultFilters() : bool?
 - get_Filters() : IReadOnlyList<string>
 - get_InheritConsole() : bool?
@@ -14089,7 +14068,7 @@
 
 - .ctor()
 - get_Configuration() : string
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_LogFile() : string
 - get_Source() : IReadOnlyList<string>
 - get_ToolPath() : string
@@ -14113,7 +14092,7 @@
 
 - .ctor()
 - get_Configuration() : string
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_LogFile() : string
 - get_OutputFile() : string
 - get_Source() : IReadOnlyList<string>
@@ -14143,7 +14122,7 @@
 
 - .ctor()
 - get_Configuration() : string
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_HideAutoProperties() : bool?
 - get_LogFile() : string
 - get_OutputFile() : string
@@ -14186,9 +14165,9 @@
 
 ### Nuke.Common.Tools.DotCover.DotCoverTasks
 
-- get_DotCoverLogger() : Action<OutputType, string>
+- get_DotCoverLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_DotCoverPath() : string
-- set_DotCoverLogger(Action<OutputType, string> value) : void
+- set_DotCoverLogger(Action<OutputType, string,List<ConsoleColor>> value) : void
 - DotCover(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Func<string, string> outputFilter = null) : IReadOnlyCollection<Output>
 - DotCoverAnalyse(DotCoverAnalyseSettings toolSettings = null) : IReadOnlyCollection<Output>
 - DotCoverAnalyse(Configure<DotCoverAnalyseSettings> configurator) : IReadOnlyCollection<Output>
@@ -14213,7 +14192,7 @@
 
 - .ctor()
 - get_Configuration() : string
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_LogFile() : string
 - get_OutputFile() : string
 - get_Source() : string
@@ -14238,16 +14217,16 @@
 
 ### Nuke.Common.Tools.DotMemoryUnit.DotMemoryUnitTasks
 
-- get_DotMemoryUnitLogger() : Action<OutputType, string>
+- get_DotMemoryUnitLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_DotMemoryUnitPath() : string
-- set_DotMemoryUnitLogger(Action<OutputType, string> value) : void
+- set_DotMemoryUnitLogger(Action<OutputType, string,List<ConsoleColor>> value) : void
 - DotMemoryUnit(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Func<string, string> outputFilter = null) : IReadOnlyCollection<Output>
 
 ### Nuke.Common.Tools.DotNet.DotNetBuildSettings
 
 - .ctor()
 - get_Configuration() : string
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_DisableParallel() : bool?
 - get_Force() : bool?
 - get_ForceEvaluate() : bool?
@@ -14449,7 +14428,7 @@
 
 - .ctor()
 - get_Configuration() : string
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Framework() : string
 - get_Output() : string
 - get_Project() : string
@@ -14560,7 +14539,7 @@
 
 - .ctor()
 - get_ApiKey() : string
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_DisableBuffering() : bool?
 - get_ForceEnglishOutput() : bool?
 - get_NoSymbols() : bool?
@@ -14606,7 +14585,7 @@
 
 - .ctor()
 - get_Configuration() : string
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_DisableParallel() : bool?
 - get_Force() : bool?
 - get_ForceEvaluate() : bool?
@@ -14809,7 +14788,7 @@
 
 - .ctor()
 - get_Configuration() : string
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_DisableParallel() : bool?
 - get_Force() : bool?
 - get_ForceEvaluate() : bool?
@@ -15006,7 +14985,7 @@
 
 - .ctor()
 - get_ConfigFile() : string
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_DisableParallel() : bool?
 - get_Force() : bool?
 - get_ForceEvaluate() : bool?
@@ -15174,7 +15153,7 @@
 - .ctor()
 - get_ApplicationArguments() : string
 - get_Configuration() : string
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_DisableParallel() : bool?
 - get_Force() : bool?
 - get_ForceEvaluate() : bool?
@@ -15369,9 +15348,9 @@
 
 ### Nuke.Common.Tools.DotNet.DotNetTasks
 
-- get_DotNetLogger() : Action<OutputType, string>
+- get_DotNetLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_DotNetPath() : string
-- set_DotNetLogger(Action<OutputType, string> value) : void
+- set_DotNetLogger(Action<OutputType, string,List<ConsoleColor>> value) : void
 - DotNet(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Func<string, string> outputFilter = null) : IReadOnlyCollection<Output>
 - DotNetBuild(DotNetBuildSettings toolSettings = null) : IReadOnlyCollection<Output>
 - DotNetBuild(Configure<DotNetBuildSettings> configurator) : IReadOnlyCollection<Output>
@@ -15411,7 +15390,7 @@
 
 - .ctor()
 - get_Configuration() : string
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_DataCollector() : string
 - get_DiagnosticsFile() : string
 - get_DisableParallel() : bool?
@@ -15546,7 +15525,7 @@
 
 - .ctor()
 - get_ConfigFile() : string
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Framework() : string
 - get_Global() : bool?
 - get_PackageName() : string
@@ -15587,7 +15566,7 @@
 ### Nuke.Common.Tools.DotNet.DotNetToolUninstallSettings
 
 - .ctor()
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Global() : bool?
 - get_PackageName() : string
 - get_ToolInstallationPath() : string
@@ -15613,7 +15592,7 @@
 
 - .ctor()
 - get_ConfigFile() : string
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Framework() : string
 - get_Global() : bool?
 - get_PackageName() : string
@@ -15667,7 +15646,7 @@
 - .ctor()
 - get_ConfigFile() : string
 - get_CreateConfigFile() : string
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_DiscardCost() : bool?
 - get_DiscardFields() : bool?
 - get_DiscardLiterals() : bool?
@@ -15758,9 +15737,9 @@
 
 ### Nuke.Common.Tools.DupFinder.DupFinderTasks
 
-- get_DupFinderLogger() : Action<OutputType, string>
+- get_DupFinderLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_DupFinderPath() : string
-- set_DupFinderLogger(Action<OutputType, string> value) : void
+- set_DupFinderLogger(Action<OutputType, string,List<ConsoleColor>> value) : void
 - DupFinder(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Func<string, string> outputFilter = null) : IReadOnlyCollection<Output>
 - DupFinder(DupFinderSettings toolSettings = null) : IReadOnlyCollection<Output>
 - DupFinder(Configure<DupFinderSettings> configurator) : IReadOnlyCollection<Output>
@@ -15771,7 +15750,7 @@
 - .ctor()
 - get_Configuration() : string
 - get_Context() : string
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_DryRun() : bool?
 - get_Force() : bool?
 - get_Framework() : string
@@ -15835,7 +15814,7 @@
 - .ctor()
 - get_Configuration() : string
 - get_Context() : string
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_DryRun() : bool?
 - get_Framework() : string
 - get_Json() : bool?
@@ -15896,7 +15875,7 @@
 - .ctor()
 - get_Configuration() : string
 - get_Context() : string
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Framework() : string
 - get_Json() : bool?
 - get_NoColor() : bool?
@@ -15948,7 +15927,7 @@
 - .ctor()
 - get_Configuration() : string
 - get_Context() : string
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Framework() : string
 - get_Json() : bool?
 - get_NoColor() : bool?
@@ -16002,7 +15981,7 @@
 - get_Connection() : string
 - get_Context() : string
 - get_ContextDirectory() : string
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_DataAnnotations() : bool?
 - get_Force() : bool?
 - get_Framework() : string
@@ -16098,7 +16077,7 @@
 - .ctor()
 - get_Configuration() : string
 - get_Context() : string
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Framework() : string
 - get_Json() : bool?
 - get_Name() : string
@@ -16156,7 +16135,7 @@
 - .ctor()
 - get_Configuration() : string
 - get_Context() : string
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Framework() : string
 - get_Json() : bool?
 - get_NoColor() : bool?
@@ -16208,7 +16187,7 @@
 - .ctor()
 - get_Configuration() : string
 - get_Context() : string
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Framework() : string
 - get_Json() : bool?
 - get_NoColor() : bool?
@@ -16263,7 +16242,7 @@
 - .ctor()
 - get_Configuration() : string
 - get_Context() : string
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Framework() : string
 - get_From() : string
 - get_Idempotent() : bool?
@@ -16327,9 +16306,9 @@
 
 ### Nuke.Common.Tools.EntityFramework.EntityFrameworkTasks
 
-- get_EntityFrameworkLogger() : Action<OutputType, string>
+- get_EntityFrameworkLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_EntityFrameworkPath() : string
-- set_EntityFrameworkLogger(Action<OutputType, string> value) : void
+- set_EntityFrameworkLogger(Action<OutputType, string,List<ConsoleColor>> value) : void
 - EntityFramework(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Func<string, string> outputFilter = null) : IReadOnlyCollection<Output>
 - EntityFrameworkDatabaseDrop(EntityFrameworkDatabaseDropSettings toolSettings = null) : IReadOnlyCollection<Output>
 - EntityFrameworkDatabaseDrop(Configure<EntityFrameworkDatabaseDropSettings> configurator) : IReadOnlyCollection<Output>
@@ -16361,9 +16340,9 @@
 
 ### Nuke.Common.Tools.Git.GitTasks
 
-- get_GitLogger() : Action<OutputType, string>
+- get_GitLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_GitPath() : string
-- set_GitLogger(Action<OutputType, string> value) : void
+- set_GitLogger(Action<OutputType, string,List<ConsoleColor>> value) : void
 - Git(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Func<string, string> outputFilter = null) : IReadOnlyCollection<Output>
 - GitCurrentBranch() : string
 - GitHasCleanWorkingCopy() : bool
@@ -16389,7 +16368,7 @@
 - get_BranchName() : string
 - get_CommitSha() : string
 - get_Configuration() : string
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Debug() : bool?
 - get_ErrorsAsWarnings() : bool?
 - get_File() : string
@@ -16449,7 +16428,7 @@
 - .ctor()
 - get_BaseDirectory() : string
 - get_CommitSha() : string
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Method() : GitLinkSourceCodeRetrieval
 - get_PdbFile() : string
 - get_RepositoryUrl() : string
@@ -16484,9 +16463,9 @@
 
 ### Nuke.Common.Tools.GitLink.GitLinkTasks
 
-- get_GitLinkLogger() : Action<OutputType, string>
+- get_GitLinkLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_GitLinkPath() : string
-- set_GitLinkLogger(Action<OutputType, string> value) : void
+- set_GitLinkLogger(Action<OutputType, string,List<ConsoleColor>> value) : void
 - GitLink(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Func<string, string> outputFilter = null) : IReadOnlyCollection<Output>
 - GitLink2(GitLink2Settings toolSettings = null) : IReadOnlyCollection<Output>
 - GitLink2(Configure<GitLink2Settings> configurator) : IReadOnlyCollection<Output>
@@ -16499,7 +16478,7 @@
 
 - .ctor()
 - get_AssetPaths() : IReadOnlyList<string>
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_LogFilePath() : string
 - get_Password() : string
 - get_RepositoryName() : string
@@ -16537,7 +16516,7 @@
 ### Nuke.Common.Tools.GitReleaseManager.GitReleaseManagerCloseSettings
 
 - .ctor()
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_LogFilePath() : string
 - get_Milestone() : string
 - get_Password() : string
@@ -16569,7 +16548,7 @@
 
 - .ctor()
 - get_AssetPaths() : IReadOnlyList<string>
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_InputFilePath() : string
 - get_LogFilePath() : string
 - get_Milestone() : string
@@ -16622,7 +16601,7 @@
 ### Nuke.Common.Tools.GitReleaseManager.GitReleaseManagerExportSettings
 
 - .ctor()
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_FileOutputPath() : string
 - get_LogFilePath() : string
 - get_Password() : string
@@ -16656,7 +16635,7 @@
 ### Nuke.Common.Tools.GitReleaseManager.GitReleaseManagerPublishSettings
 
 - .ctor()
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_LogFilePath() : string
 - get_Password() : string
 - get_RepositoryName() : string
@@ -16686,9 +16665,9 @@
 
 ### Nuke.Common.Tools.GitReleaseManager.GitReleaseManagerTasks
 
-- get_GitReleaseManagerLogger() : Action<OutputType, string>
+- get_GitReleaseManagerLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_GitReleaseManagerPath() : string
-- set_GitReleaseManagerLogger(Action<OutputType, string> value) : void
+- set_GitReleaseManagerLogger(Action<OutputType, string,List<ConsoleColor>> value) : void
 - GitReleaseManager(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Func<string, string> outputFilter = null) : IReadOnlyCollection<Output>
 - GitReleaseManagerAddAssets(GitReleaseManagerAddAssetsSettings toolSettings = null) : IReadOnlyCollection<Output>
 - GitReleaseManagerAddAssets(Configure<GitReleaseManagerAddAssetsSettings> configurator) : IReadOnlyCollection<Output>
@@ -16760,7 +16739,7 @@
 - get_Branch() : string
 - get_Commit() : string
 - get_ConfigurationOverride() : IReadOnlyDictionary<string, object>
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Diagnostics() : bool?
 - get_DynamicRepositoryLocation() : string
 - get_EnsureAssemblyInfo() : bool?
@@ -16868,9 +16847,9 @@
 
 ### Nuke.Common.Tools.GitVersion.GitVersionTasks
 
-- get_GitVersionLogger() : Action<OutputType, string>
+- get_GitVersionLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_GitVersionPath() : string
-- set_GitVersionLogger(Action<OutputType, string> value) : void
+- set_GitVersionLogger(Action<OutputType, string,List<ConsoleColor>> value) : void
 - GitVersion(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Func<string, string> outputFilter = null) : IReadOnlyCollection<Output>
 - GitVersion(GitVersionSettings toolSettings = null) : (Result GitVersion, Output IReadOnlyCollection<Output>)
 - GitVersion(Configure<GitVersionSettings> configurator) : (Result GitVersion, Output IReadOnlyCollection<Output>)
@@ -16889,7 +16868,7 @@
 ### Nuke.Common.Tools.Helm.HelmCommonSettings
 
 - .ctor()
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Debug() : bool?
 - get_Help() : bool?
 - get_Home() : string
@@ -16928,7 +16907,7 @@
 ### Nuke.Common.Tools.Helm.HelmCompletionSettings
 
 - .ctor()
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Help() : bool?
 - get_Shell() : string
 - get_ToolPath() : string
@@ -16947,7 +16926,7 @@
 ### Nuke.Common.Tools.Helm.HelmCreateSettings
 
 - .ctor()
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Help() : bool?
 - get_Name() : string
 - get_Starter() : string
@@ -16969,7 +16948,7 @@
 ### Nuke.Common.Tools.Helm.HelmDeleteSettings
 
 - .ctor()
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Description() : string
 - get_DryRun() : bool?
 - get_Help() : bool?
@@ -17042,7 +17021,7 @@
 
 - .ctor()
 - get_Chart() : string
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Help() : bool?
 - get_Keyring() : string
 - get_ToolPath() : string
@@ -17070,7 +17049,7 @@
 
 - .ctor()
 - get_Chart() : string
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Help() : bool?
 - get_ToolPath() : string
 - ConfigureArguments(Arguments arguments) : Arguments
@@ -17089,7 +17068,7 @@
 
 - .ctor()
 - get_Chart() : string
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Help() : bool?
 - get_Keyring() : string
 - get_SkipRefresh() : bool?
@@ -17125,7 +17104,7 @@
 - get_CaFile() : string
 - get_CertFile() : string
 - get_Charts() : IReadOnlyList<string>
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Destination() : string
 - get_Devel() : bool?
 - get_Help() : bool?
@@ -17200,7 +17179,7 @@
 ### Nuke.Common.Tools.Helm.HelmGetHooksSettings
 
 - .ctor()
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Help() : bool?
 - get_ReleaseName() : string
 - get_Revision() : int?
@@ -17246,7 +17225,7 @@
 ### Nuke.Common.Tools.Helm.HelmGetManifestSettings
 
 - .ctor()
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Help() : bool?
 - get_ReleaseName() : string
 - get_Revision() : int?
@@ -17292,7 +17271,7 @@
 ### Nuke.Common.Tools.Helm.HelmGetNotesSettings
 
 - .ctor()
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Help() : bool?
 - get_ReleaseName() : string
 - get_Revision() : int?
@@ -17338,7 +17317,7 @@
 ### Nuke.Common.Tools.Helm.HelmGetSettings
 
 - .ctor()
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Help() : bool?
 - get_ReleaseName() : string
 - get_Revision() : int?
@@ -17385,7 +17364,7 @@
 
 - .ctor()
 - get_All() : bool?
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Help() : bool?
 - get_Output() : string
 - get_ReleaseName() : string
@@ -17440,7 +17419,7 @@
 
 - .ctor()
 - get_ColWidth() : uint?
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Help() : bool?
 - get_Max() : int?
 - get_Output() : string
@@ -17491,7 +17470,7 @@
 ### Nuke.Common.Tools.Helm.HelmHomeSettings
 
 - .ctor()
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Help() : bool?
 - get_ToolPath() : string
 - ConfigureArguments(Arguments arguments) : Arguments
@@ -17510,7 +17489,7 @@
 - get_AutomountServiceAccountToken() : bool?
 - get_CanaryImage() : bool?
 - get_ClientOnly() : bool?
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_DryRun() : bool?
 - get_ForceUpgrade() : bool?
 - get_Help() : bool?
@@ -17634,7 +17613,7 @@
 - get_CaFile() : string
 - get_CertFile() : string
 - get_Chart() : string
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Devel() : bool?
 - get_Help() : bool?
 - get_KeyFile() : string
@@ -17689,7 +17668,7 @@
 - get_CaFile() : string
 - get_CertFile() : string
 - get_Chart() : string
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Devel() : bool?
 - get_Help() : bool?
 - get_KeyFile() : string
@@ -17738,7 +17717,7 @@
 - get_CaFile() : string
 - get_CertFile() : string
 - get_Chart() : string
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Devel() : bool?
 - get_Help() : bool?
 - get_KeyFile() : string
@@ -17793,7 +17772,7 @@
 - get_CaFile() : string
 - get_CertFile() : string
 - get_Chart() : string
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Devel() : bool?
 - get_Help() : bool?
 - get_KeyFile() : string
@@ -17849,7 +17828,7 @@
 - get_CaFile() : string
 - get_CertFile() : string
 - get_Chart() : string
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_DepUp() : bool?
 - get_Description() : string
 - get_Devel() : bool?
@@ -18013,7 +17992,7 @@
 ### Nuke.Common.Tools.Helm.HelmLintSettings
 
 - .ctor()
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Help() : bool?
 - get_Namespace() : string
 - get_Path() : string
@@ -18070,7 +18049,7 @@
 - get_All() : bool?
 - get_ChartName() : bool?
 - get_ColWidth() : uint?
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Date() : bool?
 - get_Deleted() : bool?
 - get_Deleting() : bool?
@@ -18194,7 +18173,7 @@
 - .ctor()
 - get_AppVersion() : string
 - get_ChartPaths() : IReadOnlyList<string>
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_DependencyUpdate() : bool?
 - get_Destination() : string
 - get_Help() : bool?
@@ -18249,7 +18228,7 @@
 ### Nuke.Common.Tools.Helm.HelmPluginInstallSettings
 
 - .ctor()
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Help() : bool?
 - get_Options() : string
 - get_Paths() : IReadOnlyList<string>
@@ -18279,7 +18258,7 @@
 ### Nuke.Common.Tools.Helm.HelmPluginListSettings
 
 - .ctor()
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Help() : bool?
 - get_ToolPath() : string
 - ConfigureArguments(Arguments arguments) : Arguments
@@ -18295,7 +18274,7 @@
 ### Nuke.Common.Tools.Helm.HelmPluginRemoveSettings
 
 - .ctor()
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Help() : bool?
 - get_Plugins() : IReadOnlyList<string>
 - get_ToolPath() : string
@@ -18319,7 +18298,7 @@
 ### Nuke.Common.Tools.Helm.HelmPluginUpdateSettings
 
 - .ctor()
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Help() : bool?
 - get_Plugins() : IReadOnlyList<string>
 - get_ToolPath() : string
@@ -18345,7 +18324,7 @@
 - .ctor()
 - get_CaFile() : string
 - get_CertFile() : string
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Help() : bool?
 - get_KeyFile() : string
 - get_Name() : string
@@ -18386,7 +18365,7 @@
 ### Nuke.Common.Tools.Helm.HelmRepoIndexSettings
 
 - .ctor()
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Directory() : string
 - get_Help() : bool?
 - get_Merge() : string
@@ -18411,7 +18390,7 @@
 ### Nuke.Common.Tools.Helm.HelmRepoListSettings
 
 - .ctor()
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Help() : bool?
 - get_ToolPath() : string
 - ConfigureArguments(Arguments arguments) : Arguments
@@ -18427,7 +18406,7 @@
 ### Nuke.Common.Tools.Helm.HelmRepoRemoveSettings
 
 - .ctor()
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Help() : bool?
 - get_Name() : string
 - get_ToolPath() : string
@@ -18446,7 +18425,7 @@
 ### Nuke.Common.Tools.Helm.HelmRepoUpdateSettings
 
 - .ctor()
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Help() : bool?
 - get_Strict() : bool?
 - get_ToolPath() : string
@@ -18468,7 +18447,7 @@
 ### Nuke.Common.Tools.Helm.HelmResetSettings
 
 - .ctor()
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Force() : bool?
 - get_Help() : bool?
 - get_RemoveHelmHome() : bool?
@@ -18520,7 +18499,7 @@
 ### Nuke.Common.Tools.Helm.HelmRollbackSettings
 
 - .ctor()
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Description() : string
 - get_DryRun() : bool?
 - get_Force() : bool?
@@ -18603,7 +18582,7 @@
 
 - .ctor()
 - get_ColWidth() : uint?
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Help() : bool?
 - get_Keyword() : string
 - get_Regexp() : bool?
@@ -18640,7 +18619,7 @@
 
 - .ctor()
 - get_Address() : string
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Help() : bool?
 - get_RepoPath() : string
 - get_ToolPath() : string
@@ -18664,7 +18643,7 @@
 ### Nuke.Common.Tools.Helm.HelmStatusSettings
 
 - .ctor()
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Help() : bool?
 - get_Output() : HelmOutputFormat
 - get_ReleaseName() : string
@@ -18712,9 +18691,9 @@
 
 ### Nuke.Common.Tools.Helm.HelmTasks
 
-- get_HelmLogger() : Action<OutputType, string>
+- get_HelmLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_HelmPath() : string
-- set_HelmLogger(Action<OutputType, string> value) : void
+- set_HelmLogger(Action<OutputType, string,List<ConsoleColor>> value) : void
 - Helm(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Func<string, string> outputFilter = null) : IReadOnlyCollection<Output>
 - HelmCompletion(HelmCompletionSettings toolSettings = null) : IReadOnlyCollection<Output>
 - HelmCompletion(Configure<HelmCompletionSettings> configurator) : IReadOnlyCollection<Output>
@@ -18847,7 +18826,7 @@
 
 - .ctor()
 - get_Chart() : string
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Execute() : IReadOnlyDictionary<string, object>
 - get_Help() : bool?
 - get_IsUpgrade() : bool?
@@ -18925,7 +18904,7 @@
 
 - .ctor()
 - get_Cleanup() : bool?
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Help() : bool?
 - get_Parallel() : bool?
 - get_Release() : string
@@ -18983,7 +18962,7 @@
 
 - .ctor()
 - get_CommonSettings() : HelmCommonSettings
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - ConfigureArguments(Arguments arguments) : Arguments
 
 ### Nuke.Common.Tools.Helm.HelmToolSettingsExtensions
@@ -18999,7 +18978,7 @@
 - get_CaFile() : string
 - get_CertFile() : string
 - get_Chart() : string
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Description() : string
 - get_Devel() : bool?
 - get_DryRun() : bool?
@@ -19172,7 +19151,7 @@
 ### Nuke.Common.Tools.Helm.HelmVerifySettings
 
 - .ctor()
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Help() : bool?
 - get_Keyring() : string
 - get_Path() : string
@@ -19195,7 +19174,7 @@
 
 - .ctor()
 - get_Client() : bool?
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Help() : bool?
 - get_Server() : bool?
 - get_Short() : bool?
@@ -19255,7 +19234,7 @@
 ### Nuke.Common.Tools.InnoSetup.InnoSetupSettings
 
 - .ctor()
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_KeyDefinitions() : IReadOnlyList<string>
 - get_KeyValueDefinitions() : IReadOnlyDictionary<string, string>
 - get_Output() : bool?
@@ -19314,9 +19293,9 @@
 
 ### Nuke.Common.Tools.InnoSetup.InnoSetupTasks
 
-- get_InnoSetupLogger() : Action<OutputType, string>
+- get_InnoSetupLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_InnoSetupPath() : string
-- set_InnoSetupLogger(Action<OutputType, string> value) : void
+- set_InnoSetupLogger(Action<OutputType, string,List<ConsoleColor>> value) : void
 - InnoSetup(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Func<string, string> outputFilter = null) : IReadOnlyCollection<Output>
 - InnoSetup(InnoSetupSettings toolSettings = null) : IReadOnlyCollection<Output>
 - InnoSetup(Configure<InnoSetupSettings> configurator) : IReadOnlyCollection<Output>
@@ -19324,9 +19303,9 @@
 
 ### Nuke.Common.Tools.InspectCode.InspectCodeMSBuildToolset
 
-- _12_0 : InspectCodeMSBuildToolset
-- _14_0 : InspectCodeMSBuildToolset
-- _15_0 : InspectCodeMSBuildToolset
+- \_12_0 : InspectCodeMSBuildToolset
+- \_14_0 : InspectCodeMSBuildToolset
+- \_15_0 : InspectCodeMSBuildToolset
 - .ctor()
 - op_Explicit(string value) : InspectCodeMSBuildToolset
 
@@ -19334,7 +19313,7 @@
 
 - .ctor()
 - get_CachesHome() : string
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_DisableSettingsLayers() : IReadOnlyList<InspectCodeSettingsLayers>
 - get_DumpIssuesTypes() : bool?
 - get_Extensions() : IReadOnlyList<string>
@@ -19409,9 +19388,9 @@
 
 ### Nuke.Common.Tools.InspectCode.InspectCodeTasks
 
-- get_InspectCodeLogger() : Action<OutputType, string>
+- get_InspectCodeLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_InspectCodePath() : string
-- set_InspectCodeLogger(Action<OutputType, string> value) : void
+- set_InspectCodeLogger(Action<OutputType, string,List<ConsoleColor>> value) : void
 - InspectCode(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Func<string, string> outputFilter = null) : IReadOnlyCollection<Output>
 - InspectCode(InspectCodeSettings toolSettings = null) : IReadOnlyCollection<Output>
 - InspectCode(Configure<InspectCodeSettings> configurator) : IReadOnlyCollection<Output>
@@ -19420,12 +19399,11 @@
 ### Nuke.Common.Tools.Kubernetes.KubernetesAlphaSettings
 
 - .ctor()
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_ToolPath() : string
 - ConfigureArguments(Arguments arguments) : Arguments
 
 ### Nuke.Common.Tools.Kubernetes.KubernetesAlphaSettingsExtensions
-
 
 ### Nuke.Common.Tools.Kubernetes.KubernetesAnnotateOutput
 
@@ -19447,7 +19425,7 @@
 - get_All() : bool?
 - get_AllowMissingTemplateKeys() : bool?
 - get_Annotations() : IReadOnlyDictionary<string, string>
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_DryRun() : bool?
 - get_FieldSelector() : string
 - get_Filename() : IReadOnlyList<string>
@@ -19548,7 +19526,7 @@
 - .ctor()
 - get_ApiGroup() : string
 - get_Cached() : bool?
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Namespaced() : bool?
 - get_NoHeaders() : bool?
 - get_Output() : KubernetesApiResourcesOutput
@@ -19588,12 +19566,11 @@
 ### Nuke.Common.Tools.Kubernetes.KubernetesApiVersionsSettings
 
 - .ctor()
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_ToolPath() : string
 - ConfigureArguments(Arguments arguments) : Arguments
 
 ### Nuke.Common.Tools.Kubernetes.KubernetesApiVersionsSettingsExtensions
-
 
 ### Nuke.Common.Tools.Kubernetes.KubernetesApplyOutput
 
@@ -19615,7 +19592,7 @@
 - get_All() : bool?
 - get_AllowMissingTemplateKeys() : bool?
 - get_Cascade() : bool?
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_DryRun() : bool?
 - get_Filename() : IReadOnlyList<string>
 - get_Force() : bool?
@@ -19732,7 +19709,7 @@
 
 - .ctor()
 - get_Container() : string
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Pod() : IReadOnlyList<string>
 - get_PodRunningTimeout() : TimeSpan?
 - get_Stdin() : bool?
@@ -19767,7 +19744,7 @@
 ### Nuke.Common.Tools.Kubernetes.KubernetesAuthSettings
 
 - .ctor()
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Subcommand() : string
 - get_ToolPath() : string
 - ConfigureArguments(Arguments arguments) : Arguments
@@ -19796,7 +19773,7 @@
 - .ctor()
 - get_AllowMissingTemplateKeys() : bool?
 - get_CpuPercent() : int?
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_DryRun() : bool?
 - get_Filename() : IReadOnlyList<string>
 - get_Generator() : string
@@ -19863,7 +19840,7 @@
 ### Nuke.Common.Tools.Kubernetes.KubernetesCertificateSettings
 
 - .ctor()
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Subcommand() : IReadOnlyList<string>
 - get_ToolPath() : string
 - ConfigureArguments(Arguments arguments) : Arguments
@@ -19881,12 +19858,11 @@
 ### Nuke.Common.Tools.Kubernetes.KubernetesClusterInfoSettings
 
 - .ctor()
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_ToolPath() : string
 - ConfigureArguments(Arguments arguments) : Arguments
 
 ### Nuke.Common.Tools.Kubernetes.KubernetesClusterInfoSettingsExtensions
-
 
 ### Nuke.Common.Tools.Kubernetes.KubernetesCommonSettings
 
@@ -19900,7 +19876,7 @@
 - get_ClientKey() : string
 - get_Cluster() : string
 - get_Context() : string
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_InsecureSkipTlsVerify() : bool?
 - get_Kubeconfig() : string
 - get_LogBacktraceAt() : string
@@ -19989,22 +19965,20 @@
 ### Nuke.Common.Tools.Kubernetes.KubernetesCompletionSettings
 
 - .ctor()
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_ToolPath() : string
 - ConfigureArguments(Arguments arguments) : Arguments
 
 ### Nuke.Common.Tools.Kubernetes.KubernetesCompletionSettingsExtensions
 
-
 ### Nuke.Common.Tools.Kubernetes.KubernetesConfigSettings
 
 - .ctor()
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_ToolPath() : string
 - ConfigureArguments(Arguments arguments) : Arguments
 
 ### Nuke.Common.Tools.Kubernetes.KubernetesConfigSettingsExtensions
-
 
 ### Nuke.Common.Tools.Kubernetes.KubernetesConvertOutput
 
@@ -20024,7 +19998,7 @@
 
 - .ctor()
 - get_AllowMissingTemplateKeys() : bool?
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Filename() : IReadOnlyList<string>
 - get_Local() : bool?
 - get_Output() : KubernetesConvertOutput
@@ -20074,7 +20048,7 @@
 ### Nuke.Common.Tools.Kubernetes.KubernetesCordonSettings
 
 - .ctor()
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_DryRun() : bool?
 - get_Node() : string
 - get_Selector() : string
@@ -20097,7 +20071,7 @@
 
 - .ctor()
 - get_Container() : string
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_DestFileSpec() : string
 - get_SrcFileSpec() : string
 - get_ToolPath() : string
@@ -20130,7 +20104,7 @@
 
 - .ctor()
 - get_AllowMissingTemplateKeys() : bool?
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_DryRun() : bool?
 - get_Edit() : bool?
 - get_Filename() : IReadOnlyList<string>
@@ -20209,7 +20183,7 @@
 - .ctor()
 - get_All() : bool?
 - get_Cascade() : bool?
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_FieldSelector() : string
 - get_Filename() : IReadOnlyList<string>
 - get_Force() : bool?
@@ -20289,7 +20263,7 @@
 
 - .ctor()
 - get_AllNamespaces() : bool?
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Filename() : IReadOnlyList<string>
 - get_IncludeUninitialized() : bool?
 - get_Recursive() : bool?
@@ -20341,7 +20315,7 @@
 ### Nuke.Common.Tools.Kubernetes.KubernetesDrainSettings
 
 - .ctor()
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_DeleteLocalData() : bool?
 - get_DryRun() : bool?
 - get_Force() : bool?
@@ -20402,7 +20376,7 @@
 
 - .ctor()
 - get_AllowMissingTemplateKeys() : bool?
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Filename() : IReadOnlyList<string>
 - get_IncludeUninitialized() : bool?
 - get_Output() : KubernetesEditOutput
@@ -20501,7 +20475,7 @@
 
 - .ctor()
 - get_Container() : string
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Pod() : string
 - get_PodName() : string
 - get_Stdin() : bool?
@@ -20532,7 +20506,7 @@
 
 - .ctor()
 - get_ApiVersion() : string
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Recursive() : bool?
 - get_Resource() : IReadOnlyList<string>
 - get_ToolPath() : string
@@ -20575,7 +20549,7 @@
 - get_AllowMissingTemplateKeys() : bool?
 - get_ClusterIp() : string
 - get_ContainerPort() : string
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_DryRun() : bool?
 - get_ExternalIp() : string
 - get_Filename() : IReadOnlyList<string>
@@ -20681,7 +20655,7 @@
 - get_AllNamespaces() : bool?
 - get_AllowMissingTemplateKeys() : bool?
 - get_ChunkSize() : long?
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Export() : bool?
 - get_FieldSelector() : string
 - get_Filename() : IReadOnlyList<string>
@@ -20833,7 +20807,7 @@
 - .ctor()
 - get_All() : bool?
 - get_AllowMissingTemplateKeys() : bool?
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_DryRun() : bool?
 - get_FieldSelector() : string
 - get_Filename() : IReadOnlyList<string>
@@ -20934,7 +20908,7 @@
 - .ctor()
 - get_AllContainers() : bool?
 - get_Container() : string
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Follow() : bool?
 - get_Interactive() : bool?
 - get_LimitBytes() : long?
@@ -21001,12 +20975,11 @@
 ### Nuke.Common.Tools.Kubernetes.KubernetesOptionsSettings
 
 - .ctor()
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_ToolPath() : string
 - ConfigureArguments(Arguments arguments) : Arguments
 
 ### Nuke.Common.Tools.Kubernetes.KubernetesOptionsSettingsExtensions
-
 
 ### Nuke.Common.Tools.Kubernetes.KubernetesPatchOutput
 
@@ -21026,7 +20999,7 @@
 
 - .ctor()
 - get_AllowMissingTemplateKeys() : bool?
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_DryRun() : bool?
 - get_Filename() : IReadOnlyList<string>
 - get_Local() : bool?
@@ -21101,7 +21074,7 @@
 ### Nuke.Common.Tools.Kubernetes.KubernetesPluginSettings
 
 - .ctor()
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Name() : string
 - get_ToolPath() : string
 - ConfigureArguments(Arguments arguments) : Arguments
@@ -21114,7 +21087,7 @@
 ### Nuke.Common.Tools.Kubernetes.KubernetesPortForwardSettings
 
 - .ctor()
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_PodRunningTimeout() : TimeSpan?
 - get_Ports() : IReadOnlyDictionary<int, int>
 - get_ToolPath() : string
@@ -21145,7 +21118,7 @@
 - get_AcceptPaths() : string
 - get_Address() : string
 - get_ApiPrefix() : string
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_DisableFilter() : bool?
 - get_Port() : int?
 - get_RejectMethods() : string
@@ -21203,7 +21176,7 @@
 - .ctor()
 - get_AllowMissingTemplateKeys() : bool?
 - get_Cascade() : bool?
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Filename() : IReadOnlyList<string>
 - get_Force() : bool?
 - get_GracePeriod() : int?
@@ -21289,7 +21262,7 @@
 - .ctor()
 - get_AllowMissingTemplateKeys() : bool?
 - get_Container() : string
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_DeploymentLabelKey() : string
 - get_DryRun() : bool?
 - get_Filename() : IReadOnlyList<string>
@@ -21356,7 +21329,7 @@
 ### Nuke.Common.Tools.Kubernetes.KubernetesRolloutSettings
 
 - .ctor()
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Subcommand() : IReadOnlyList<string>
 - get_ToolPath() : string
 - ConfigureArguments(Arguments arguments) : Arguments
@@ -21392,7 +21365,7 @@
 - get_Attach() : bool?
 - get_Cascade() : bool?
 - get_Command() : bool?
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_DryRun() : bool?
 - get_Env() : IReadOnlyList<string>
 - get_Expose() : bool?
@@ -21588,7 +21561,7 @@
 - get_Attach() : bool?
 - get_Cascade() : bool?
 - get_Command() : bool?
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_DryRun() : bool?
 - get_Env() : IReadOnlyList<string>
 - get_Expose() : bool?
@@ -21786,7 +21759,7 @@
 - get_All() : bool?
 - get_AllowMissingTemplateKeys() : bool?
 - get_CurrentReplicas() : int?
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Filename() : IReadOnlyList<string>
 - get_Output() : KubernetesScaleOutput
 - get_Record() : bool?
@@ -21846,7 +21819,7 @@
 ### Nuke.Common.Tools.Kubernetes.KubernetesSetSettings
 
 - .ctor()
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Subcommand() : IReadOnlyList<string>
 - get_ToolPath() : string
 - ConfigureArguments(Arguments arguments) : Arguments
@@ -21864,12 +21837,11 @@
 ### Nuke.Common.Tools.Kubernetes.KubernetesSettings
 
 - .ctor()
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_ToolPath() : string
 - ConfigureArguments(Arguments arguments) : Arguments
 
 ### Nuke.Common.Tools.Kubernetes.KubernetesSettingsExtensions
-
 
 ### Nuke.Common.Tools.Kubernetes.KubernetesTaintOutput
 
@@ -21890,7 +21862,7 @@
 - .ctor()
 - get_All() : bool?
 - get_AllowMissingTemplateKeys() : bool?
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Output() : KubernetesTaintOutput
 - get_Overwrite() : bool?
 - get_Selector() : string
@@ -21944,9 +21916,9 @@
 
 ### Nuke.Common.Tools.Kubernetes.KubernetesTasks
 
-- get_KubernetesLogger() : Action<OutputType, string>
+- get_KubernetesLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_KubernetesPath() : string
-- set_KubernetesLogger(Action<OutputType, string> value) : void
+- set_KubernetesLogger(Action<OutputType, string,List<ConsoleColor>> value) : void
 - Kubernetes(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Func<string, string> outputFilter = null) : IReadOnlyCollection<Output>
 - Kubernetes(KubernetesSettings toolSettings = null) : IReadOnlyCollection<Output>
 - Kubernetes(Configure<KubernetesSettings> configurator) : IReadOnlyCollection<Output>
@@ -22096,17 +22068,16 @@
 ### Nuke.Common.Tools.Kubernetes.KubernetesTopSettings
 
 - .ctor()
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_ToolPath() : string
 - ConfigureArguments(Arguments arguments) : Arguments
 
 ### Nuke.Common.Tools.Kubernetes.KubernetesTopSettingsExtensions
 
-
 ### Nuke.Common.Tools.Kubernetes.KubernetesUncordonSettings
 
 - .ctor()
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_DryRun() : bool?
 - get_Node() : string
 - get_Selector() : string
@@ -22129,7 +22100,7 @@
 
 - .ctor()
 - get_Client() : bool?
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Output() : string
 - get_Short() : bool?
 - get_ToolPath() : string
@@ -22169,7 +22140,7 @@
 - .ctor()
 - get_AllNamespaces() : bool?
 - get_AllowMissingTemplateKeys() : bool?
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Filename() : IReadOnlyList<string>
 - get_For() : string
 - get_Output() : KubernetesWaitOutput
@@ -22230,7 +22201,7 @@
 ### Nuke.Common.Tools.MSBuild.MSBuildSettings
 
 - .ctor()
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_DetailedSummary() : bool?
 - get_Loggers() : IReadOnlyList<string>
 - get_MaxCpuCount() : int?
@@ -22458,9 +22429,9 @@
 
 ### Nuke.Common.Tools.MSBuild.MSBuildTasks
 
-- get_MSBuildLogger() : Action<OutputType, string>
+- get_MSBuildLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_MSBuildPath() : string
-- set_MSBuildLogger(Action<OutputType, string> value) : void
+- set_MSBuildLogger(Action<OutputType, string,List<ConsoleColor>> value) : void
 - MSBuild(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Func<string, string> outputFilter = null) : IReadOnlyCollection<Output>
 - MSBuild(MSBuildSettings toolSettings = null) : IReadOnlyCollection<Output>
 - MSBuild(Configure<MSBuildSettings> configurator) : IReadOnlyCollection<Output>
@@ -22472,12 +22443,12 @@
 
 ### Nuke.Common.Tools.MSBuild.MSBuildToolsVersion
 
-- _12_0 : MSBuildToolsVersion
-- _14_0 : MSBuildToolsVersion
-- _15_0 : MSBuildToolsVersion
-- _2_0 : MSBuildToolsVersion
-- _3_5 : MSBuildToolsVersion
-- _4_0 : MSBuildToolsVersion
+- \_12_0 : MSBuildToolsVersion
+- \_14_0 : MSBuildToolsVersion
+- \_15_0 : MSBuildToolsVersion
+- \_2_0 : MSBuildToolsVersion
+- \_3_5 : MSBuildToolsVersion
+- \_4_0 : MSBuildToolsVersion
 - .ctor()
 - op_Explicit(string value) : MSBuildToolsVersion
 
@@ -22507,7 +22478,7 @@
 - .ctor()
 - get_AppVeyor() : bool?
 - get_Assemblies() : IReadOnlyList<string>
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_DottedProgress() : bool?
 - get_Excludes() : IReadOnlyList<string>
 - get_Filters() : IReadOnlyList<string>
@@ -22600,9 +22571,9 @@
 
 ### Nuke.Common.Tools.MSpec.MSpecTasks
 
-- get_MSpecLogger() : Action<OutputType, string>
+- get_MSpecLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_MSpecPath() : string
-- set_MSpecLogger(Action<OutputType, string> value) : void
+- set_MSpecLogger(Action<OutputType, string,List<ConsoleColor>> value) : void
 - MSpec(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Func<string, string> outputFilter = null) : IReadOnlyCollection<Output>
 - MSpec(MSpecSettings toolSettings = null) : IReadOnlyCollection<Output>
 - MSpec(Configure<MSpecSettings> configurator) : IReadOnlyCollection<Output>
@@ -22611,16 +22582,15 @@
 ### Nuke.Common.Tools.Npm.NpmCiSettings
 
 - .ctor()
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_ToolPath() : string
 
 ### Nuke.Common.Tools.Npm.NpmCiSettingsExtensions
 
-
 ### Nuke.Common.Tools.Npm.NpmInstallSettings
 
 - .ctor()
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Force() : bool?
 - get_Global() : bool?
 - get_GlobalStyle() : bool?
@@ -22713,7 +22683,7 @@
 - .ctor()
 - get_Arguments() : IReadOnlyList<string>
 - get_Command() : string
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_ToolPath() : string
 - ConfigureArguments(Arguments arguments) : Arguments
 
@@ -22731,9 +22701,9 @@
 
 ### Nuke.Common.Tools.Npm.NpmTasks
 
-- get_NpmLogger() : Action<OutputType, string>
+- get_NpmLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_NpmPath() : string
-- set_NpmLogger(Action<OutputType, string> value) : void
+- set_NpmLogger(Action<OutputType, string,List<ConsoleColor>> value) : void
 - Npm(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Func<string, string> outputFilter = null) : IReadOnlyCollection<Output>
 - NpmCi(NpmCiSettings toolSettings = null) : IReadOnlyCollection<Output>
 - NpmCi(Configure<NpmCiSettings> configurator) : IReadOnlyCollection<Output>
@@ -22807,7 +22777,7 @@
 - get_AssemblyConfig() : string
 - get_ContractResolver() : string
 - get_CreateWebHostBuilderMethod() : string
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_DefaultDictionaryValueReferenceTypeNullHandling() : ReferenceTypeNullHandling
 - get_DefaultEnumHandling() : EnumHandling
 - get_DefaultPropertyNameHandling() : PropertyNameHandling
@@ -22999,7 +22969,7 @@
 - get_Configuration() : string
 - get_ContractResolver() : string
 - get_CreateWebHostBuilderMethod() : string
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_DefaultDictionaryValueReferenceTypeNullHandling() : ReferenceTypeNullHandling
 - get_DefaultEnumHandling() : EnumHandling
 - get_DefaultPropertyNameHandling() : PropertyNameHandling
@@ -23224,17 +23194,16 @@
 ### Nuke.Common.Tools.NSwag.NSwagCreateDocumentSettings
 
 - .ctor()
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_ToolPath() : string
 - ConfigureArguments(Arguments arguments) : Arguments
 
 ### Nuke.Common.Tools.NSwag.NSwagCreateDocumentSettingsExtensions
 
-
 ### Nuke.Common.Tools.NSwag.NSwagExecuteDocumentSettings
 
 - .ctor()
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Input() : string
 - get_ToolPath() : string
 - get_Variables() : IReadOnlyDictionary<string, object>
@@ -23256,7 +23225,7 @@
 - get_AnyType() : string
 - get_ArrayInstanceType() : string
 - get_ArrayType() : string
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_DateTimeType() : string
 - get_DictionaryInstanceType() : string
 - get_DictionaryType() : string
@@ -23316,7 +23285,7 @@
 ### Nuke.Common.Tools.NSwag.NSwagJsonSchemaToTypeScriptSettings
 
 - .ctor()
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Input() : string
 - get_Name() : string
 - get_Output() : string
@@ -23348,7 +23317,7 @@
 - .ctor()
 - get_Assembly() : IReadOnlyList<string>
 - get_AssemblyConfig() : string
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_File() : string
 - get_ReferencePaths() : IReadOnlyList<string>
 - get_ToolPath() : string
@@ -23392,7 +23361,7 @@
 - .ctor()
 - get_Assembly() : IReadOnlyList<string>
 - get_AssemblyConfig() : string
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_File() : string
 - get_ReferencePaths() : IReadOnlyList<string>
 - get_ToolPath() : string
@@ -23442,7 +23411,7 @@
 - get_ArrayType() : string
 - get_ClassName() : string
 - get_ClassStyle() : CSharpClassStyle
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_DateTimeType() : string
 - get_DateType() : string
 - get_DictionaryBaseType() : string
@@ -23694,7 +23663,7 @@
 - get_ArrayType() : string
 - get_ClassName() : string
 - get_ClassStyle() : CSharpClassStyle
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_DateTimeType() : string
 - get_DateType() : string
 - get_DictionaryBaseType() : string
@@ -23938,7 +23907,7 @@
 ### Nuke.Common.Tools.NSwag.NSwagOpenApiToTypeScriptClientSettings
 
 - .ctor()
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_EnumNameGeneratorType() : string
 - get_Input() : string
 - get_Output() : string
@@ -23977,7 +23946,7 @@
 ### Nuke.Common.Tools.NSwag.NSwagSettings
 
 - .ctor()
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_NSwagRuntime() : string
 - set_NSwagRuntime(string value) : void
 - ConfigureArguments(Arguments arguments) : Arguments
@@ -24006,7 +23975,7 @@
 - get_ConfigurationClass() : string
 - get_ContractsNamespace() : string
 - get_ContractsOutput() : string
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_DateTimeType() : string
 - get_DateType() : string
 - get_DictionaryBaseType() : string
@@ -24388,7 +24357,7 @@
 - get_ControllerBaseClass() : string
 - get_ControllerStyle() : CSharpControllerStyle
 - get_ControllerTarget() : CSharpControllerTarget
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_DateTimeType() : string
 - get_DateType() : string
 - get_DictionaryBaseType() : string
@@ -24667,7 +24636,7 @@
 - get_ClientBaseClass() : string
 - get_ConfigurationClass() : string
 - get_ConvertConstructorInterfaceData() : bool?
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_DateTimeType() : TypeScriptDateTimeType
 - get_EnumNameGeneratorType() : string
 - get_ExceptionClass() : string
@@ -24933,9 +24902,9 @@
 
 ### Nuke.Common.Tools.NSwag.NSwagTasks
 
-- get_NSwagLogger() : Action<OutputType, string>
+- get_NSwagLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_NSwagPath() : string
-- set_NSwagLogger(Action<OutputType, string> value) : void
+- set_NSwagLogger(Action<OutputType, string,List<ConsoleColor>> value) : void
 - GetToolPath() : string
 - NSwag(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Func<string, string> outputFilter = null) : IReadOnlyCollection<Output>
 - NSwagAspNetCoreToOpenApi(NSwagAspNetCoreToOpenApiSettings toolSettings = null) : IReadOnlyCollection<Output>
@@ -25009,7 +24978,7 @@
 - .ctor()
 - get_Assembly() : IReadOnlyList<string>
 - get_AssemblyConfig() : string
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Output() : string
 - get_OutputType() : SchemaType
 - get_ReferencePaths() : IReadOnlyList<string>
@@ -25052,7 +25021,7 @@
 - get_Assembly() : IReadOnlyList<string>
 - get_AssemblyConfig() : string
 - get_ClassNames() : IReadOnlyList<string>
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_DefaultDictionaryValueReferenceTypeNullHandling() : ReferenceTypeNullHandling
 - get_DefaultEnumHandling() : EnumHandling
 - get_DefaultPropertyNameHandling() : PropertyNameHandling
@@ -25139,12 +25108,11 @@
 ### Nuke.Common.Tools.NSwag.NSwagVersionSettings
 
 - .ctor()
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_ToolPath() : string
 - ConfigureArguments(Arguments arguments) : Arguments
 
 ### Nuke.Common.Tools.NSwag.NSwagVersionSettingsExtensions
-
 
 ### Nuke.Common.Tools.NSwag.NSwagWebApiToOpenApiSettings
 
@@ -25156,7 +25124,7 @@
 - get_AssemblyConfig() : string
 - get_ContractResolver() : string
 - get_CreateWebHostBuilderMethod() : string
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_DefaultDictionaryValueReferenceTypeNullHandling() : ReferenceTypeNullHandling
 - get_DefaultEnumHandling() : EnumHandling
 - get_DefaultPropertyNameHandling() : PropertyNameHandling
@@ -25350,7 +25318,7 @@
 - get_Controller() : string
 - get_Controllers() : IReadOnlyList<string>
 - get_CreateWebHostBuilderMethod() : string
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_DefaultDictionaryValueReferenceTypeNullHandling() : ReferenceTypeNullHandling
 - get_DefaultEnumHandling() : EnumHandling
 - get_DefaultPropertyNameHandling() : PropertyNameHandling
@@ -25645,9 +25613,9 @@
 
 ### Nuke.Common.Tools.NuGet.NuGetMSBuildVersion
 
-- _12 : NuGetMSBuildVersion
-- _14 : NuGetMSBuildVersion
-- _4 : NuGetMSBuildVersion
+- \_12 : NuGetMSBuildVersion
+- \_14 : NuGetMSBuildVersion
+- \_4 : NuGetMSBuildVersion
 - .ctor()
 - op_Explicit(string value) : NuGetMSBuildVersion
 
@@ -25656,7 +25624,7 @@
 - .ctor()
 - get_BasePath() : string
 - get_Build() : bool?
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Exclude() : string
 - get_ExcludeEmptyDirectories() : bool?
 - get_ForceEnglishOutput() : bool?
@@ -25758,7 +25726,7 @@
 - .ctor()
 - get_ApiKey() : string
 - get_ConfigFile() : string
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_DisableBuffering() : bool?
 - get_ForceEnglishOutput() : bool?
 - get_NonInteractive() : bool?
@@ -25815,7 +25783,7 @@
 
 - .ctor()
 - get_ConfigFile() : string
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_DirectDownload() : bool?
 - get_DisableParallelProcessing() : bool?
 - get_FallbackSource() : IReadOnlyList<string>
@@ -25918,7 +25886,7 @@
 
 - .ctor()
 - get_ConfigFile() : string
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_ForceEnglishOutput() : bool?
 - get_Name() : string
 - get_NonInteractive() : bool?
@@ -25964,7 +25932,7 @@
 
 - .ctor()
 - get_ConfigFile() : string
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_ForceEnglishOutput() : bool?
 - get_Name() : string
 - get_NonInteractive() : bool?
@@ -25995,7 +25963,7 @@
 
 - .ctor()
 - get_ConfigFile() : string
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_ForceEnglishOutput() : bool?
 - get_Name() : string
 - get_NonInteractive() : bool?
@@ -26033,7 +26001,7 @@
 
 - .ctor()
 - get_ConfigFile() : string
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_ForceEnglishOutput() : bool?
 - get_Format() : NuGetSourcesListFormat
 - get_NonInteractive() : bool?
@@ -26064,7 +26032,7 @@
 
 - .ctor()
 - get_ConfigFile() : string
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_ForceEnglishOutput() : bool?
 - get_Name() : string
 - get_NonInteractive() : bool?
@@ -26095,7 +26063,7 @@
 
 - .ctor()
 - get_ConfigFile() : string
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_ForceEnglishOutput() : bool?
 - get_Name() : string
 - get_NonInteractive() : bool?
@@ -26146,9 +26114,9 @@
 
 ### Nuke.Common.Tools.NuGet.NuGetTasks
 
-- get_NuGetLogger() : Action<OutputType, string>
+- get_NuGetLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_NuGetPath() : string
-- set_NuGetLogger(Action<OutputType, string> value) : void
+- set_NuGetLogger(Action<OutputType, string,List<ConsoleColor>> value) : void
 - NuGet(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Func<string, string> outputFilter = null) : IReadOnlyCollection<Output>
 - NuGetPack(NuGetPackSettings toolSettings = null) : IReadOnlyCollection<Output>
 - NuGetPack(Configure<NuGetPackSettings> configurator) : IReadOnlyCollection<Output>
@@ -26198,7 +26166,7 @@
 - .ctor()
 - get_Agents() : int?
 - get_Configuration() : string
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Debug() : bool?
 - get_DebugAgent() : bool?
 - get_DisposeRunners() : bool?
@@ -26414,9 +26382,9 @@
 
 ### Nuke.Common.Tools.NUnit.NUnitTasks
 
-- get_NUnitLogger() : Action<OutputType, string>
+- get_NUnitLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_NUnitPath() : string
-- set_NUnitLogger(Action<OutputType, string> value) : void
+- set_NUnitLogger(Action<OutputType, string,List<ConsoleColor>> value) : void
 - NUnit(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Func<string, string> outputFilter = null) : IReadOnlyCollection<Output>
 - NUnit3(NUnit3Settings toolSettings = null) : IReadOnlyCollection<Output>
 - NUnit3(Configure<NUnit3Settings> configurator) : IReadOnlyCollection<Output>
@@ -26439,7 +26407,7 @@
 - get_CancelOnTimeout() : bool?
 - get_Channel() : string
 - get_ConfigFile() : string
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Debug() : bool?
 - get_DefaultPackageVersion() : string
 - get_DeployAt() : string
@@ -26633,7 +26601,7 @@
 - get_CancelOnTimeout() : bool?
 - get_Channel() : string
 - get_ConfigFile() : string
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Debug() : bool?
 - get_DeployAt() : string
 - get_DeploymentCheckSleepCycle() : string
@@ -26799,7 +26767,7 @@
 - .ctor()
 - get_Authors() : IReadOnlyList<string>
 - get_BasePath() : string
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Description() : string
 - get_Format() : OctopusPackFormat
 - get_Id() : string
@@ -26859,7 +26827,7 @@
 - .ctor()
 - get_ApiKey() : string
 - get_ConfigFile() : string
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Debug() : bool?
 - get_EnableServiceMessages() : bool?
 - get_IgnoreSslErrors() : bool?
@@ -26931,9 +26899,9 @@
 
 ### Nuke.Common.Tools.Octopus.OctopusTasks
 
-- get_OctopusLogger() : Action<OutputType, string>
+- get_OctopusLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_OctopusPath() : string
-- set_OctopusLogger(Action<OutputType, string> value) : void
+- set_OctopusLogger(Action<OutputType, string,List<ConsoleColor>> value) : void
 - Octopus(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Func<string, string> outputFilter = null) : IReadOnlyCollection<Output>
 - OctopusCreateRelease(OctopusCreateReleaseSettings toolSettings = null) : IReadOnlyCollection<Output>
 - OctopusCreateRelease(Configure<OctopusCreateReleaseSettings> configurator) : IReadOnlyCollection<Output>
@@ -26952,7 +26920,7 @@
 
 - .ctor()
 - get_CoverByTests() : IReadOnlyList<string>
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_ExcludeByAttributes() : IReadOnlyList<string>
 - get_ExcludeByFile() : IReadOnlyList<string>
 - get_ExcludeDirectories() : IReadOnlyList<string>
@@ -27105,9 +27073,9 @@
 
 ### Nuke.Common.Tools.OpenCover.OpenCoverTasks
 
-- get_OpenCoverLogger() : Action<OutputType, string>
+- get_OpenCoverLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_OpenCoverPath() : string
-- set_OpenCoverLogger(Action<OutputType, string> value) : void
+- set_OpenCoverLogger(Action<OutputType, string,List<ConsoleColor>> value) : void
 - OpenCover(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Func<string, string> outputFilter = null) : IReadOnlyCollection<Output>
 - OpenCover(OpenCoverSettings toolSettings = null) : IReadOnlyCollection<Output>
 - OpenCover(Configure<OpenCoverSettings> configurator) : IReadOnlyCollection<Output>
@@ -27139,7 +27107,7 @@
 - .ctor()
 - get_BuildConfiguration() : string
 - get_BuildPlatform() : string
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Exclude() : IReadOnlyList<string>
 - get_FromBootstrapper() : bool?
 - get_IncludeReferencedProjects() : bool?
@@ -27234,7 +27202,7 @@
 
 - .ctor()
 - get_ApiKey() : string
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Endpoint() : string
 - get_File() : string
 - get_FromBootstrapper() : bool?
@@ -27276,7 +27244,7 @@
 ### Nuke.Common.Tools.Paket.PaketRestoreSettings
 
 - .ctor()
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_DependencyGroup() : string
 - get_FailOnChecks() : bool?
 - get_Force() : bool?
@@ -27353,9 +27321,9 @@
 
 ### Nuke.Common.Tools.Paket.PaketTasks
 
-- get_PaketLogger() : Action<OutputType, string>
+- get_PaketLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_PaketPath() : string
-- set_PaketLogger(Action<OutputType, string> value) : void
+- set_PaketLogger(Action<OutputType, string,List<ConsoleColor>> value) : void
 - Paket(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Func<string, string> outputFilter = null) : IReadOnlyCollection<Output>
 - PaketPack(PaketPackSettings toolSettings = null) : IReadOnlyCollection<Output>
 - PaketPack(Configure<PaketPackSettings> configurator) : IReadOnlyCollection<Output>
@@ -27375,7 +27343,7 @@
 - .ctor()
 - get_CleanRedirects() : bool?
 - get_CreateNewBindingFiles() : bool?
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_DependencyGroup() : string
 - get_Filter() : bool?
 - get_Force() : bool?
@@ -27475,7 +27443,7 @@
 - .ctor()
 - get_AssemblyFilters() : IReadOnlyList<string>
 - get_ClassFilters() : IReadOnlyList<string>
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_FileFilters() : IReadOnlyList<string>
 - get_Framework() : string
 - get_HistoryDirectory() : string
@@ -27545,9 +27513,9 @@
 
 ### Nuke.Common.Tools.ReportGenerator.ReportGeneratorTasks
 
-- get_ReportGeneratorLogger() : Action<OutputType, string>
+- get_ReportGeneratorLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_ReportGeneratorPath() : string
-- set_ReportGeneratorLogger(Action<OutputType, string> value) : void
+- set_ReportGeneratorLogger(Action<OutputType, string,List<ConsoleColor>> value) : void
 - ReportGenerator(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Func<string, string> outputFilter = null) : IReadOnlyCollection<Output>
 - ReportGenerator(ReportGeneratorSettings toolSettings = null) : IReadOnlyCollection<Output>
 - ReportGenerator(Configure<ReportGeneratorSettings> configurator) : IReadOnlyCollection<Output>
@@ -27605,7 +27573,7 @@
 - get_CertificateTemplateName() : string
 - get_ContentFileToPkcs7() : string
 - get_Csp() : string
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Debug() : bool?
 - get_Description() : string
 - get_EnhancedKeyUsage() : string
@@ -27793,9 +27761,9 @@
 
 ### Nuke.Common.Tools.SignTool.SignToolTasks
 
-- get_SignToolLogger() : Action<OutputType, string>
+- get_SignToolLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_SignToolPath() : string
-- set_SignToolLogger(Action<OutputType, string> value) : void
+- set_SignToolLogger(Action<OutputType, string,List<ConsoleColor>> value) : void
 - SignTool(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Func<string, string> outputFilter = null) : IReadOnlyCollection<Output>
 - SignTool(SignToolSettings toolSettings = null) : IReadOnlyCollection<Output>
 - SignTool(Configure<SignToolSettings> configurator) : IReadOnlyCollection<Output>
@@ -27931,7 +27899,7 @@
 - .ctor()
 - get_ContinuousIntegrationUrl() : string
 - get_CoverageExclusions() : IReadOnlyList<string>
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Description() : string
 - get_DotCoverPaths() : IReadOnlyList<string>
 - get_DuplicationExclusions() : IReadOnlyList<string>
@@ -28080,7 +28048,7 @@
 ### Nuke.Common.Tools.SonarScanner.SonarScannerEndSettings
 
 - .ctor()
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Login() : string
 - get_Password() : string
 - get_ToolPath() : string
@@ -28095,9 +28063,9 @@
 
 ### Nuke.Common.Tools.SonarScanner.SonarScannerTasks
 
-- get_SonarScannerLogger() : Action<OutputType, string>
+- get_SonarScannerLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_SonarScannerPath() : string
-- set_SonarScannerLogger(Action<OutputType, string> value) : void
+- set_SonarScannerLogger(Action<OutputType, string,List<ConsoleColor>> value) : void
 - SonarScanner(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Func<string, string> outputFilter = null) : IReadOnlyCollection<Output>
 - SonarScannerBegin(SonarScannerBeginSettings toolSettings = null) : IReadOnlyCollection<Output>
 - SonarScannerBegin(Configure<SonarScannerBeginSettings> configurator) : IReadOnlyCollection<Output>
@@ -28109,19 +28077,18 @@
 ### Nuke.Common.Tools.SpecFlow.SpecFlowAboutSettings
 
 - .ctor()
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_ToolPath() : string
 - ConfigureArguments(Arguments arguments) : Arguments
 
 ### Nuke.Common.Tools.SpecFlow.SpecFlowAboutSettingsExtensions
-
 
 ### Nuke.Common.Tools.SpecFlow.SpecFlowBuildServerRunSettings
 
 - .ctor()
 - get_BaseFolder() : string
 - get_BuildServerName() : string
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Filter() : string
 - get_LogFile() : string
 - get_OutputFolder() : string
@@ -28150,7 +28117,7 @@
 ### Nuke.Common.Tools.SpecFlow.SpecFlowMSTestExecutionReportSettings
 
 - .ctor()
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_OutputFile() : string
 - get_ProjectFile() : string
 - get_TestResult() : string
@@ -28172,7 +28139,7 @@
 ### Nuke.Common.Tools.SpecFlow.SpecFlowNUnitExecutionReportSettings
 
 - .ctor()
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_FeatureLanguage() : string
 - get_OutputFile() : string
 - get_ProjectFile() : string
@@ -28203,7 +28170,7 @@
 ### Nuke.Common.Tools.SpecFlow.SpecFlowRegisterSettings
 
 - .ctor()
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_IssuedTo() : string
 - get_LicenseKey() : string
 - get_ToolPath() : string
@@ -28220,7 +28187,7 @@
 
 - .ctor()
 - get_BaseFolder() : string
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Debug() : bool?
 - get_Filter() : string
 - get_LogFile() : string
@@ -28254,7 +28221,7 @@
 
 - .ctor()
 - get_BinFolder() : string
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_OutputFile() : string
 - get_ProjectFile() : string
 - get_ToolPath() : string
@@ -28274,9 +28241,9 @@
 
 ### Nuke.Common.Tools.SpecFlow.SpecFlowTasks
 
-- get_SpecFlowLogger() : Action<OutputType, string>
+- get_SpecFlowLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_SpecFlowPath() : string
-- set_SpecFlowLogger(Action<OutputType, string> value) : void
+- set_SpecFlowLogger(Action<OutputType, string,List<ConsoleColor>> value) : void
 - SpecFlow(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Func<string, string> outputFilter = null) : IReadOnlyCollection<Output>
 - SpecFlowAbout(SpecFlowAboutSettings toolSettings = null) : IReadOnlyCollection<Output>
 - SpecFlowAbout(Configure<SpecFlowAboutSettings> configurator) : IReadOnlyCollection<Output>
@@ -28316,12 +28283,11 @@
 ### Nuke.Common.Tools.SpecFlow.SpecFlowUnregisterSettings
 
 - .ctor()
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_ToolPath() : string
 - ConfigureArguments(Arguments arguments) : Arguments
 
 ### Nuke.Common.Tools.SpecFlow.SpecFlowUnregisterSettingsExtensions
-
 
 ### Nuke.Common.Tools.Squirrel.SquirrelSettings
 
@@ -28330,7 +28296,7 @@
 - get_BootstrapperExecutable() : string
 - get_CheckForUpdate() : bool?
 - get_CreateShortcut() : string
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Download() : bool?
 - get_FrameworkVersion() : string
 - get_GenerateNoDelta() : bool?
@@ -28427,9 +28393,9 @@
 
 ### Nuke.Common.Tools.Squirrel.SquirrelTasks
 
-- get_SquirrelLogger() : Action<OutputType, string>
+- get_SquirrelLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_SquirrelPath() : string
-- set_SquirrelLogger(Action<OutputType, string> value) : void
+- set_SquirrelLogger(Action<OutputType, string,List<ConsoleColor>> value) : void
 - Squirrel(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Func<string, string> outputFilter = null) : IReadOnlyCollection<Output>
 - Squirrel(SquirrelSettings toolSettings = null) : IReadOnlyCollection<Output>
 - Squirrel(Configure<SquirrelSettings> configurator) : IReadOnlyCollection<Output>
@@ -28439,7 +28405,7 @@
 
 - .ctor()
 - get_AssemblyDirectory() : string
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_DataPaths() : IReadOnlyList<string>
 - get_Devices() : string
 - get_DsymFile() : string
@@ -28509,9 +28475,9 @@
 
 ### Nuke.Common.Tools.TestCloud.TestCloudTasks
 
-- get_TestCloudLogger() : Action<OutputType, string>
+- get_TestCloudLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_TestCloudPath() : string
-- set_TestCloudLogger(Action<OutputType, string> value) : void
+- set_TestCloudLogger(Action<OutputType, string,List<ConsoleColor>> value) : void
 - TestCloud(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Func<string, string> outputFilter = null) : IReadOnlyCollection<Output>
 - TestCloud(TestCloudSettings toolSettings = null) : IReadOnlyCollection<Output>
 - TestCloud(Configure<TestCloudSettings> configurator) : IReadOnlyCollection<Output>
@@ -28532,7 +28498,7 @@
 ### Nuke.Common.Tools.Unity.UnityBaseSettings
 
 - .ctor()
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_LogFile() : string
 - get_MinimalOutput() : bool?
 - get_StableExitCodes() : IReadOnlyList<int>
@@ -28600,7 +28566,7 @@
 
 - .ctor()
 - get_BatchMode() : bool?
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_NoGraphics() : bool?
 - get_Password() : string
 - get_Quit() : bool?
@@ -28641,22 +28607,22 @@
 
 ### Nuke.Common.Tools.Unity.UnityGLCore
 
-- _32 : UnityGLCore
-- _33 : UnityGLCore
-- _40 : UnityGLCore
-- _41 : UnityGLCore
-- _42 : UnityGLCore
-- _43 : UnityGLCore
-- _44 : UnityGLCore
-- _45 : UnityGLCore
+- \_32 : UnityGLCore
+- \_33 : UnityGLCore
+- \_40 : UnityGLCore
+- \_41 : UnityGLCore
+- \_42 : UnityGLCore
+- \_43 : UnityGLCore
+- \_44 : UnityGLCore
+- \_45 : UnityGLCore
 - .ctor()
 - op_Explicit(string value) : UnityGLCore
 
 ### Nuke.Common.Tools.Unity.UnityGLES
 
-- _30 : UnityGLES
-- _31 : UnityGLES
-- _32 : UnityGLES
+- \_30 : UnityGLES
+- \_31 : UnityGLES
+- \_32 : UnityGLES
 - .ctor()
 - op_Explicit(string value) : UnityGLES
 
@@ -28664,7 +28630,7 @@
 
 - .ctor()
 - get_BatchMode() : bool?
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_LicenseFile() : string
 - get_NoGraphics() : bool?
 - get_Password() : string
@@ -28721,7 +28687,7 @@
 
 - .ctor()
 - get_BatchMode() : bool?
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_NoGraphics() : bool?
 - get_Password() : string
 - get_Quit() : bool?
@@ -28778,7 +28744,7 @@
 - get_CacheServerIPAddress() : string
 - get_CreateProject() : string
 - get_CustomArguments() : IReadOnlyList<string>
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_DefaultPlatformTextureFormat() : string
 - get_DisableAssemblyUpdater() : IReadOnlyList<string>
 - get_EditorTestsCategories() : IReadOnlyList<string>
@@ -28974,9 +28940,9 @@
 
 ### Nuke.Common.Tools.Unity.UnityTasks
 
-- get_UnityLogger() : Action<OutputType, string>
+- get_UnityLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_UnityPath() : string
-- set_UnityLogger(Action<OutputType, string> value) : void
+- set_UnityLogger(Action<OutputType, string,List<ConsoleColor>> value) : void
 - GetToolPath() : string
 - Unity(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Func<string, string> outputFilter = null) : IReadOnlyCollection<Output>
 - Unity(UnitySettings toolSettings = null) : IReadOnlyCollection<Output>
@@ -29011,7 +28977,7 @@
 ### Nuke.Common.Tools.VSTest.VSTestSettings
 
 - .ctor()
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_DiagnosticsFile() : string
 - get_EnableCodeCoverage() : bool?
 - get_Framework() : VsTestFramework
@@ -29111,9 +29077,9 @@
 
 ### Nuke.Common.Tools.VSTest.VSTestTasks
 
-- get_VSTestLogger() : Action<OutputType, string>
+- get_VSTestLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_VSTestPath() : string
-- set_VSTestLogger(Action<OutputType, string> value) : void
+- set_VSTestLogger(Action<OutputType, string,List<ConsoleColor>> value) : void
 - VSTest(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Func<string, string> outputFilter = null) : IReadOnlyCollection<Output>
 - VSTest(VSTestSettings toolSettings = null) : IReadOnlyCollection<Output>
 - VSTest(Configure<VSTestSettings> configurator) : IReadOnlyCollection<Output>
@@ -29175,7 +29141,7 @@
 
 - .ctor()
 - get_All() : bool?
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Format() : VSWhereFormat
 - get_Latest() : bool?
 - get_Legacy() : bool?
@@ -29253,9 +29219,9 @@
 - MsBuildComponent : string
 - NetCoreComponent : string
 - VcComponent : string
-- get_VSWhereLogger() : Action<OutputType, string>
+- get_VSWhereLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_VSWherePath() : string
-- set_VSWhereLogger(Action<OutputType, string> value) : void
+- set_VSWhereLogger(Action<OutputType, string,List<ConsoleColor>> value) : void
 - VSWhere(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Func<string, string> outputFilter = null) : IReadOnlyCollection<Output>
 - VSWhere(VSWhereSettings toolSettings = null) : (Result List<VSWhereResult>, Output IReadOnlyCollection<Output>)
 - VSWhere(Configure<VSWhereSettings> configurator) : (Result List<VSWhereResult>, Output IReadOnlyCollection<Output>)
@@ -29264,7 +29230,7 @@
 ### Nuke.Common.Tools.WebConfigTransformRunner.WebConfigTransformRunnerSettings
 
 - .ctor()
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_OutputFilename() : string
 - get_ToolPath() : string
 - get_TransformFilename() : string
@@ -29282,9 +29248,9 @@
 
 ### Nuke.Common.Tools.WebConfigTransformRunner.WebConfigTransformRunnerTasks
 
-- get_WebConfigTransformRunnerLogger() : Action<OutputType, string>
+- get_WebConfigTransformRunnerLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_WebConfigTransformRunnerPath() : string
-- set_WebConfigTransformRunnerLogger(Action<OutputType, string> value) : void
+- set_WebConfigTransformRunnerLogger(Action<OutputType, string,List<ConsoleColor>> value) : void
 - WebConfigTransformRunner(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Func<string, string> outputFilter = null) : IReadOnlyCollection<Output>
 - WebConfigTransformRunner(WebConfigTransformRunnerSettings toolSettings = null) : IReadOnlyCollection<Output>
 - WebConfigTransformRunner(Configure<WebConfigTransformRunnerSettings> configurator) : IReadOnlyCollection<Output>
@@ -29331,7 +29297,7 @@
 - .ctor()
 - get_AppDomainMode() : Xunit2AppDomainMode
 - get_Classes() : IReadOnlyList<string>
-- get_CustomLogger() : Action<OutputType, string>
+- get_CustomLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_Debug() : bool?
 - get_Diagnostics() : bool?
 - get_ExcludedTraits() : ILookup<string, string>
@@ -29469,9 +29435,9 @@
 
 ### Nuke.Common.Tools.Xunit.XunitTasks
 
-- get_XunitLogger() : Action<OutputType, string>
+- get_XunitLogger() : Action<OutputType, string,List<ConsoleColor>>
 - get_XunitPath() : string
-- set_XunitLogger(Action<OutputType, string> value) : void
+- set_XunitLogger(Action<OutputType, string,List<ConsoleColor>> value) : void
 - Xunit(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Func<string, string> outputFilter = null) : IReadOnlyCollection<Output>
 - Xunit2(Xunit2Settings toolSettings = null) : IReadOnlyCollection<Output>
 - Xunit2(Configure<Xunit2Settings> configurator) : IReadOnlyCollection<Output>
@@ -29621,4 +29587,3 @@
 ### System.Diagnostics.CodeAnalysis.ExcludeAssemblyFromCodeCoverageAttribute
 
 - .ctor()
-

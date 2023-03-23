@@ -1,4 +1,4 @@
-// Generated from https://github.com/nuke-build/nuke/blob/master/source/Nuke.Common/Tools/VSWhere/VSWhere.json
+// Generated from https://github.com/Typhon0/nuke/blob/master/source/Nuke.Common/Tools/VSWhere/VSWhere.json
 
 using JetBrains.Annotations;
 using Newtonsoft.Json;
@@ -34,12 +34,12 @@ namespace Nuke.Common.Tools.VSWhere
         public static string VSWherePath =>
             ToolPathResolver.TryGetEnvironmentExecutable("VSWHERE_EXE") ??
             NuGetToolPathResolver.GetPackageExecutable("vswhere", "vswhere.exe");
-        public static Action<OutputType, string> VSWhereLogger { get; set; } = ProcessTasks.DefaultLogger;
+        public static Action<OutputType, string,List<ConsoleColor>> VSWhereLogger { get; set; } = ProcessTasks.DefaultLogger;
         /// <summary>
         ///   <p>VSWhere is designed to be a redistributable, single-file executable that can be used in build or deployment scripts to find where Visual Studio - or other products in the Visual Studio family - is located.</p>
         ///   <p>For more details, visit the <a href="https://github.com/Microsoft/vswhere">official website</a>.</p>
         /// </summary>
-        public static IReadOnlyCollection<Output> VSWhere(ref ArgumentStringHandler arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Action<OutputType, string> customLogger = null)
+        public static IReadOnlyCollection<Output> VSWhere(ref ArgumentStringHandler arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Action<OutputType, string,List<ConsoleColor>> customLogger = null)
         {
             using var process = ProcessTasks.StartProcess(VSWherePath, ref arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, customLogger ?? VSWhereLogger);
             process.AssertZeroExitCode();
@@ -137,7 +137,7 @@ namespace Nuke.Common.Tools.VSWhere
         ///   Path to the VSWhere executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? VSWhereTasks.VSWherePath;
-        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? VSWhereTasks.VSWhereLogger;
+        public override Action<OutputType, string,List<ConsoleColor>> ProcessCustomLogger => base.ProcessCustomLogger ?? VSWhereTasks.VSWhereLogger;
         /// <summary>
         ///    Return only the newest version and last installed.
         /// </summary>

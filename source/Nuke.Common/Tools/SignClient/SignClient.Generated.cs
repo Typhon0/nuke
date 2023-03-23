@@ -1,4 +1,4 @@
-// Generated from https://github.com/nuke-build/nuke/blob/master/source/Nuke.Common/Tools/SignClient/SignClient.json
+// Generated from https://github.com/Typhon0/nuke/blob/master/source/Nuke.Common/Tools/SignClient/SignClient.json
 
 using JetBrains.Annotations;
 using Newtonsoft.Json;
@@ -34,12 +34,12 @@ namespace Nuke.Common.Tools.SignClient
         public static string SignClientPath =>
             ToolPathResolver.TryGetEnvironmentExecutable("SIGNCLIENT_EXE") ??
             NuGetToolPathResolver.GetPackageExecutable("SignClient", "SignClient.exe");
-        public static Action<OutputType, string> SignClientLogger { get; set; } = ProcessTasks.DefaultLogger;
+        public static Action<OutputType, string,List<ConsoleColor>> SignClientLogger { get; set; } = ProcessTasks.DefaultLogger;
         /// <summary>
         ///   <p>Code Signing client for Authenticode, NuGet, VSIX, and more</p>
         ///   <p>For more details, visit the <a href="https://discoverdot.net/projects/sign-service">official website</a>.</p>
         /// </summary>
-        public static IReadOnlyCollection<Output> SignClient(ref ArgumentStringHandler arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Action<OutputType, string> customLogger = null)
+        public static IReadOnlyCollection<Output> SignClient(ref ArgumentStringHandler arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Action<OutputType, string,List<ConsoleColor>> customLogger = null)
         {
             using var process = ProcessTasks.StartProcess(SignClientPath, ref arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, customLogger ?? SignClientLogger);
             process.AssertZeroExitCode();
@@ -134,7 +134,7 @@ namespace Nuke.Common.Tools.SignClient
         ///   Path to the SignClient executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? SignClientTasks.SignClientPath;
-        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? SignClientTasks.SignClientLogger;
+        public override Action<OutputType, string,List<ConsoleColor>> ProcessCustomLogger => base.ProcessCustomLogger ?? SignClientTasks.SignClientLogger;
         /// <summary>
         ///   Path to config json file
         /// </summary>

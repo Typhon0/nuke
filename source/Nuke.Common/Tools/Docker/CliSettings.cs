@@ -2,9 +2,9 @@
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
-using System;
-using System.Linq;
 using Nuke.Common.Tooling;
+using System;
+using System.Collections.Generic;
 
 namespace Nuke.Common.Tools.Docker
 {
@@ -15,6 +15,6 @@ namespace Nuke.Common.Tools.Docker
             return ConfigureProcessArguments(new Arguments());
         }
 
-        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? throw new NotSupportedException();
+        public override Action<OutputType, string, List<ConsoleColor>> ProcessCustomLogger => base.ProcessCustomLogger ?? throw new NotSupportedException();
     }
 }

@@ -1,4 +1,4 @@
-// Generated from https://github.com/nuke-build/nuke/blob/master/source/Nuke.Common/Tools/Boots/Boots.json
+// Generated from https://github.com/Typhon0/nuke/blob/master/source/Nuke.Common/Tools/Boots/Boots.json
 
 using JetBrains.Annotations;
 using Newtonsoft.Json;
@@ -34,12 +34,12 @@ namespace Nuke.Common.Tools.Boots
         public static string BootsPath =>
             ToolPathResolver.TryGetEnvironmentExecutable("BOOTS_EXE") ??
             NuGetToolPathResolver.GetPackageExecutable("Boots", "Boots.exe");
-        public static Action<OutputType, string> BootsLogger { get; set; } = ProcessTasks.DefaultLogger;
+        public static Action<OutputType, string,List<ConsoleColor>> BootsLogger { get; set; } = ProcessTasks.DefaultLogger;
         /// <summary>
         ///   <p>boots is a .NET global tool for <c>bootstrapping</c> <c>vsix</c> and <c>pkg</c> files.</p>
         ///   <p>For more details, visit the <a href="https://github.com/jonathanpeppers/boots">official website</a>.</p>
         /// </summary>
-        public static IReadOnlyCollection<Output> Boots(ref ArgumentStringHandler arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Action<OutputType, string> customLogger = null)
+        public static IReadOnlyCollection<Output> Boots(ref ArgumentStringHandler arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Action<OutputType, string,List<ConsoleColor>> customLogger = null)
         {
             using var process = ProcessTasks.StartProcess(BootsPath, ref arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, customLogger ?? BootsLogger);
             process.AssertZeroExitCode();
@@ -125,7 +125,7 @@ namespace Nuke.Common.Tools.Boots
         ///   Path to the Boots executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? BootsTasks.BootsPath;
-        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? BootsTasks.BootsLogger;
+        public override Action<OutputType, string,List<ConsoleColor>> ProcessCustomLogger => base.ProcessCustomLogger ?? BootsTasks.BootsLogger;
         /// <summary>
         ///   Install the latest <em>stable</em> version of a product from VS manifests. Options include: <c>Xamarin.Android</c>, <c>Xamarin.iOS</c>, <c>Xamarin.Mac</c>, and <c>Mono</c>
         /// </summary>

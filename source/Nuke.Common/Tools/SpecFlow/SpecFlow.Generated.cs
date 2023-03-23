@@ -1,4 +1,4 @@
-// Generated from https://github.com/nuke-build/nuke/blob/master/source/Nuke.Common/Tools/SpecFlow/SpecFlow.json
+// Generated from https://github.com/Typhon0/nuke/blob/master/source/Nuke.Common/Tools/SpecFlow/SpecFlow.json
 
 using JetBrains.Annotations;
 using Newtonsoft.Json;
@@ -34,12 +34,12 @@ namespace Nuke.Common.Tools.SpecFlow
         public static string SpecFlowPath =>
             ToolPathResolver.TryGetEnvironmentExecutable("SPECFLOW_EXE") ??
             NuGetToolPathResolver.GetPackageExecutable("SpecFlow", "specflow.exe");
-        public static Action<OutputType, string> SpecFlowLogger { get; set; } = ProcessTasks.DefaultLogger;
+        public static Action<OutputType, string,List<ConsoleColor>> SpecFlowLogger { get; set; } = ProcessTasks.DefaultLogger;
         /// <summary>
         ///   <p>Use SpecFlow to define, manage and automatically execute human-readable acceptance tests in .NET projects. Writing easily understandable tests is a cornerstone of the BDD paradigm and also helps build up a living documentation of your system.</p>
         ///   <p>For more details, visit the <a href="https://specflow.org/">official website</a>.</p>
         /// </summary>
-        public static IReadOnlyCollection<Output> SpecFlow(ref ArgumentStringHandler arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Action<OutputType, string> customLogger = null)
+        public static IReadOnlyCollection<Output> SpecFlow(ref ArgumentStringHandler arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Action<OutputType, string,List<ConsoleColor>> customLogger = null)
         {
             using var process = ProcessTasks.StartProcess(SpecFlowPath, ref arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, customLogger ?? SpecFlowLogger);
             process.AssertZeroExitCode();
@@ -476,7 +476,7 @@ namespace Nuke.Common.Tools.SpecFlow
         ///   Path to the SpecFlow executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? SpecFlowTasks.SpecFlowPath;
-        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? SpecFlowTasks.SpecFlowLogger;
+        public override Action<OutputType, string,List<ConsoleColor>> ProcessCustomLogger => base.ProcessCustomLogger ?? SpecFlowTasks.SpecFlowLogger;
         /// <summary>
         ///   A path of the project file containing the *.feature files. Required.
         /// </summary>
@@ -533,7 +533,7 @@ namespace Nuke.Common.Tools.SpecFlow
         ///   Path to the SpecFlow executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? SpecFlowTasks.SpecFlowPath;
-        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? SpecFlowTasks.SpecFlowLogger;
+        public override Action<OutputType, string,List<ConsoleColor>> ProcessCustomLogger => base.ProcessCustomLogger ?? SpecFlowTasks.SpecFlowLogger;
         /// <summary>
         ///   A path of the project file containing the *.feature files. Required.
         /// </summary>
@@ -575,7 +575,7 @@ namespace Nuke.Common.Tools.SpecFlow
         ///   Path to the SpecFlow executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? SpecFlowTasks.SpecFlowPath;
-        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? SpecFlowTasks.SpecFlowLogger;
+        public override Action<OutputType, string,List<ConsoleColor>> ProcessCustomLogger => base.ProcessCustomLogger ?? SpecFlowTasks.SpecFlowLogger;
         /// <summary>
         ///   A path of the project file containing the *.feature files. Required.
         /// </summary>
@@ -617,7 +617,7 @@ namespace Nuke.Common.Tools.SpecFlow
         ///   Path to the SpecFlow executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? SpecFlowTasks.SpecFlowPath;
-        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? SpecFlowTasks.SpecFlowLogger;
+        public override Action<OutputType, string,List<ConsoleColor>> ProcessCustomLogger => base.ProcessCustomLogger ?? SpecFlowTasks.SpecFlowLogger;
         /// <summary>
         ///   Supported values: <c>None, VS2010, VS2012, VS2013, TeamCity, TFS</c>.
         /// </summary>
@@ -674,7 +674,7 @@ namespace Nuke.Common.Tools.SpecFlow
         ///   Path to the SpecFlow executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? SpecFlowTasks.SpecFlowPath;
-        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? SpecFlowTasks.SpecFlowLogger;
+        public override Action<OutputType, string,List<ConsoleColor>> ProcessCustomLogger => base.ProcessCustomLogger ?? SpecFlowTasks.SpecFlowLogger;
         /// <summary>
         ///   The assembly or test profile (<c>.srprofile</c> file) to be tested.
         /// </summary>
@@ -731,7 +731,7 @@ namespace Nuke.Common.Tools.SpecFlow
         ///   Path to the SpecFlow executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? SpecFlowTasks.SpecFlowPath;
-        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? SpecFlowTasks.SpecFlowLogger;
+        public override Action<OutputType, string,List<ConsoleColor>> ProcessCustomLogger => base.ProcessCustomLogger ?? SpecFlowTasks.SpecFlowLogger;
         /// <summary>
         ///   The license key you received when you purchased SpecFlow+.
         /// </summary>
@@ -763,7 +763,7 @@ namespace Nuke.Common.Tools.SpecFlow
         ///   Path to the SpecFlow executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? SpecFlowTasks.SpecFlowPath;
-        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? SpecFlowTasks.SpecFlowLogger;
+        public override Action<OutputType, string,List<ConsoleColor>> ProcessCustomLogger => base.ProcessCustomLogger ?? SpecFlowTasks.SpecFlowLogger;
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
@@ -785,7 +785,7 @@ namespace Nuke.Common.Tools.SpecFlow
         ///   Path to the SpecFlow executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? SpecFlowTasks.SpecFlowPath;
-        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? SpecFlowTasks.SpecFlowLogger;
+        public override Action<OutputType, string,List<ConsoleColor>> ProcessCustomLogger => base.ProcessCustomLogger ?? SpecFlowTasks.SpecFlowLogger;
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments

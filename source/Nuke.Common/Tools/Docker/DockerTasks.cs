@@ -3,6 +3,7 @@
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using Nuke.Common.Tooling;
 using Serilog;
@@ -11,7 +12,7 @@ namespace Nuke.Common.Tools.Docker
 {
     partial class DockerTasks
     {
-        internal static void CustomLogger(OutputType type, string output)
+        internal static void CustomLogger(OutputType type, string output,List<ConsoleColor> consoleColors)
         {
             switch (type)
             {

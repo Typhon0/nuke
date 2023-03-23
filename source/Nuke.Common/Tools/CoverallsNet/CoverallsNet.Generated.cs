@@ -1,4 +1,4 @@
-// Generated from https://github.com/nuke-build/nuke/blob/master/source/Nuke.Common/Tools/CoverallsNet/CoverallsNet.json
+// Generated from https://github.com/Typhon0/nuke/blob/master/source/Nuke.Common/Tools/CoverallsNet/CoverallsNet.json
 
 using JetBrains.Annotations;
 using Newtonsoft.Json;
@@ -34,12 +34,12 @@ namespace Nuke.Common.Tools.CoverallsNet
         public static string CoverallsNetPath =>
             ToolPathResolver.TryGetEnvironmentExecutable("COVERALLSNET_EXE") ??
             NuGetToolPathResolver.GetPackageExecutable("coveralls.net", "csmacnz.Coveralls.dll");
-        public static Action<OutputType, string> CoverallsNetLogger { get; set; } = ProcessTasks.DefaultLogger;
+        public static Action<OutputType, string,List<ConsoleColor>> CoverallsNetLogger { get; set; } = ProcessTasks.DefaultLogger;
         /// <summary>
         ///   <p>Coveralls uploader for .Net Code coverage of your C# source code. Should work with any code files that get reported with the supported coverage tools, but the primary focus is CSharp.</p>
         ///   <p>For more details, visit the <a href="https://coverallsnet.readthedocs.io">official website</a>.</p>
         /// </summary>
-        public static IReadOnlyCollection<Output> CoverallsNet(ref ArgumentStringHandler arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Action<OutputType, string> customLogger = null)
+        public static IReadOnlyCollection<Output> CoverallsNet(ref ArgumentStringHandler arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Action<OutputType, string,List<ConsoleColor>> customLogger = null)
         {
             using var process = ProcessTasks.StartProcess(CoverallsNetPath, ref arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, customLogger ?? CoverallsNetLogger);
             process.AssertZeroExitCode();
@@ -158,7 +158,7 @@ namespace Nuke.Common.Tools.CoverallsNet
         ///   Path to the CoverallsNet executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? CoverallsNetTasks.CoverallsNetPath;
-        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? CoverallsNetTasks.CoverallsNetLogger;
+        public override Action<OutputType, string,List<ConsoleColor>> ProcessCustomLogger => base.ProcessCustomLogger ?? CoverallsNetTasks.CoverallsNetLogger;
         /// <summary>
         ///   The coverage source file location.
         /// </summary>

@@ -3,6 +3,7 @@
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using JetBrains.Annotations;
 using Nuke.Common.IO;
@@ -19,9 +20,15 @@ namespace Nuke.Common.Tools.NSwag
         /// <summary>The runtime of the nswag tool to use.</summary>
         public string NSwagRuntime { get; set; } = NSwagTasks.Runtime.Net60.ToString();
 
-        private bool IsNetCore => NSwagRuntime != null && NSwagRuntime.StartsWith("Net", StringComparison.OrdinalIgnoreCase);
+        private bool IsNetCore =>
+            NSwagRuntime != null
+            && NSwagRuntime.StartsWith("Net", StringComparison.OrdinalIgnoreCase);
 
-        public override Action<OutputType, string> ProcessCustomLogger { get; internal set; }
+        public override Action<OutputType, string, List<ConsoleColor>> ProcessCustomLogger
+        {
+            get;
+            internal set;
+        }
 
         [NotNull]
         protected override Arguments ConfigureProcessArguments([NotNull] Arguments arguments)
@@ -54,8 +61,16 @@ namespace Nuke.Common.Tools.NSwag
 
         private AbsolutePath GetPackageFrameworkDir()
         {
-            var package = NuGetPackageResolver.GetLocalInstalledPackage("nswag.msbuild", NuGetToolPathResolver.NuGetPackagesConfigFile);
-            return package.Directory / (package.Version.Version >= new Version(major: 11, minor: 18, build: 1) ? "tools" : "build");
+            var package = NuGetPackageResolver.GetLocalInstalledPackage(
+                "nswag.msbuild",
+                NuGetToolPathResolver.NuGetPackagesConfigFile
+            );
+            return package.Directory
+                / (
+                    package.Version.Version >= new Version(major: 11, minor: 18, build: 1)
+                        ? "tools"
+                        : "build"
+                );
         }
     }
 }

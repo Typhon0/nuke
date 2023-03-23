@@ -1,4 +1,4 @@
-// Generated from https://github.com/nuke-build/nuke/blob/master/source/Nuke.Common/Tools/TestCloud/TestCloud.json
+// Generated from https://github.com/Typhon0/nuke/blob/master/source/Nuke.Common/Tools/TestCloud/TestCloud.json
 
 using JetBrains.Annotations;
 using Newtonsoft.Json;
@@ -34,12 +34,12 @@ namespace Nuke.Common.Tools.TestCloud
         public static string TestCloudPath =>
             ToolPathResolver.TryGetEnvironmentExecutable("TESTCLOUD_EXE") ??
             NuGetToolPathResolver.GetPackageExecutable("Xamarin.UITest", "test-cloud.exe");
-        public static Action<OutputType, string> TestCloudLogger { get; set; } = ProcessTasks.DefaultLogger;
+        public static Action<OutputType, string,List<ConsoleColor>> TestCloudLogger { get; set; } = ProcessTasks.DefaultLogger;
         /// <summary>
         ///   <p>Test Cloud is a cloud based service consisting of thousands of physical mobile devices. Users upload their apps and tests to Test Cloud, which will install the apps on the devices and run the tests. When the tests are complete, Test Cloud, the results made available to users through an easy to use and informative web-based front end.</p>
         ///   <p>For more details, visit the <a href="https://developer.xamarin.com/guides/testcloud/">official website</a>.</p>
         /// </summary>
-        public static IReadOnlyCollection<Output> TestCloud(ref ArgumentStringHandler arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Action<OutputType, string> customLogger = null)
+        public static IReadOnlyCollection<Output> TestCloud(ref ArgumentStringHandler arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Action<OutputType, string,List<ConsoleColor>> customLogger = null)
         {
             using var process = ProcessTasks.StartProcess(TestCloudPath, ref arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, customLogger ?? TestCloudLogger);
             process.AssertZeroExitCode();
@@ -137,7 +137,7 @@ namespace Nuke.Common.Tools.TestCloud
         ///   Path to the TestCloud executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? TestCloudTasks.TestCloudPath;
-        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? TestCloudTasks.TestCloudLogger;
+        public override Action<OutputType, string,List<ConsoleColor>> ProcessCustomLogger => base.ProcessCustomLogger ?? TestCloudTasks.TestCloudLogger;
         /// <summary>
         ///   The path to the folder holding the test assemblies.
         /// </summary>

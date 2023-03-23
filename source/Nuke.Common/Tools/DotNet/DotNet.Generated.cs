@@ -1,4 +1,4 @@
-// Generated from https://github.com/nuke-build/nuke/blob/master/source/Nuke.Common/Tools/DotNet/DotNet.json
+// Generated from https://github.com/Typhon0/nuke/blob/master/source/Nuke.Common/Tools/DotNet/DotNet.json
 
 using JetBrains.Annotations;
 using Newtonsoft.Json;
@@ -33,11 +33,11 @@ namespace Nuke.Common.Tools.DotNet
         public static string DotNetPath =>
             ToolPathResolver.TryGetEnvironmentExecutable("DOTNET_EXE") ??
             ToolPathResolver.GetPathExecutable("dotnet");
-        public static Action<OutputType, string> DotNetLogger { get; set; } = CustomLogger;
+        public static Action<OutputType, string,List<ConsoleColor>> DotNetLogger { get; set; } = CustomLogger;
         /// <summary>
         ///   <p>For more details, visit the <a href="https://docs.microsoft.com/en-us/dotnet/core/tools/">official website</a>.</p>
         /// </summary>
-        public static IReadOnlyCollection<Output> DotNet(ref ArgumentStringHandler arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Action<OutputType, string> customLogger = null)
+        public static IReadOnlyCollection<Output> DotNet(ref ArgumentStringHandler arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Action<OutputType, string,List<ConsoleColor>> customLogger = null)
         {
             using var process = ProcessTasks.StartProcess(DotNetPath, ref arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, customLogger ?? DotNetLogger);
             process.AssertZeroExitCode();
@@ -1362,7 +1362,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   Path to the DotNet executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? DotNetTasks.DotNetPath;
-        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DotNetTasks.DotNetLogger;
+        public override Action<OutputType, string,List<ConsoleColor>> ProcessCustomLogger => base.ProcessCustomLogger ?? DotNetTasks.DotNetLogger;
         /// <summary>
         ///   Specifies a path to the test project. If omitted, it defaults to current directory.
         /// </summary>
@@ -1570,7 +1570,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   Path to the DotNet executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? DotNetTasks.DotNetPath;
-        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DotNetTasks.DotNetLogger;
+        public override Action<OutputType, string,List<ConsoleColor>> ProcessCustomLogger => base.ProcessCustomLogger ?? DotNetTasks.DotNetLogger;
         /// <summary>
         ///   Configuration to use for building the project. The default value is Debug.
         /// </summary>
@@ -1699,7 +1699,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   Path to the DotNet executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? DotNetTasks.DotNetPath;
-        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DotNetTasks.DotNetLogger;
+        public override Action<OutputType, string,List<ConsoleColor>> ProcessCustomLogger => base.ProcessCustomLogger ?? DotNetTasks.DotNetLogger;
         /// <summary>
         ///   Optional path to the project file to restore.
         /// </summary>
@@ -1803,7 +1803,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   Path to the DotNet executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? DotNetTasks.DotNetPath;
-        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DotNetTasks.DotNetLogger;
+        public override Action<OutputType, string,List<ConsoleColor>> ProcessCustomLogger => base.ProcessCustomLogger ?? DotNetTasks.DotNetLogger;
         /// <summary>
         ///   The project to pack. It's either a path to a csproj file or to a directory. If omitted, it defaults to the current directory.
         /// </summary>
@@ -1947,7 +1947,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   Path to the DotNet executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? DotNetTasks.DotNetPath;
-        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DotNetTasks.DotNetLogger;
+        public override Action<OutputType, string,List<ConsoleColor>> ProcessCustomLogger => base.ProcessCustomLogger ?? DotNetTasks.DotNetLogger;
         /// <summary>
         ///   The project file to build. If a project file is not specified, MSBuild searches the current working directory for a file that has a file extension that ends in proj and uses that file.
         /// </summary>
@@ -2102,7 +2102,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   Path to the DotNet executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? DotNetTasks.DotNetPath;
-        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DotNetTasks.DotNetLogger;
+        public override Action<OutputType, string,List<ConsoleColor>> ProcessCustomLogger => base.ProcessCustomLogger ?? DotNetTasks.DotNetLogger;
         /// <summary>
         ///   The solution or project file on which MSBuild is executed.
         /// </summary>
@@ -2197,7 +2197,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   Path to the DotNet executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? DotNetTasks.DotNetPath;
-        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DotNetTasks.DotNetLogger;
+        public override Action<OutputType, string,List<ConsoleColor>> ProcessCustomLogger => base.ProcessCustomLogger ?? DotNetTasks.DotNetLogger;
         /// <summary>
         ///   The MSBuild project to clean. If a project file is not specified, MSBuild searches the current working directory for a file that has a file extension that ends in <em>proj</em> and uses that file.
         /// </summary>
@@ -2260,7 +2260,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   Path to the DotNet executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? DotNetTasks.DotNetPath;
-        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DotNetTasks.DotNetLogger;
+        public override Action<OutputType, string,List<ConsoleColor>> ProcessCustomLogger => base.ProcessCustomLogger ?? DotNetTasks.DotNetLogger;
         /// <summary>
         ///   The MSBuild project or solution to run code formatting on. If a project or solution file is not specified, MSBuild searches the current working directory for a file that has a file extension that ends in <em>proj</em> or <em>sln</em>, and uses that file.
         /// </summary>
@@ -2340,7 +2340,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   Path to the DotNet executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? DotNetTasks.DotNetPath;
-        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DotNetTasks.DotNetLogger;
+        public override Action<OutputType, string,List<ConsoleColor>> ProcessCustomLogger => base.ProcessCustomLogger ?? DotNetTasks.DotNetLogger;
         /// <summary>
         ///   The project to publish, which defaults to the current directory if not specified.
         /// </summary>
@@ -2484,7 +2484,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   Path to the DotNet executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? DotNetTasks.DotNetPath;
-        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DotNetTasks.DotNetLogger;
+        public override Action<OutputType, string,List<ConsoleColor>> ProcessCustomLogger => base.ProcessCustomLogger ?? DotNetTasks.DotNetLogger;
         /// <summary>
         ///   Path of the package to push.
         /// </summary>
@@ -2561,7 +2561,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   Path to the DotNet executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? DotNetTasks.DotNetPath;
-        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DotNetTasks.DotNetLogger;
+        public override Action<OutputType, string,List<ConsoleColor>> ProcessCustomLogger => base.ProcessCustomLogger ?? DotNetTasks.DotNetLogger;
         /// <summary>
         ///   URL of the source.
         /// </summary>
@@ -2614,7 +2614,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   Path to the DotNet executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? DotNetTasks.DotNetPath;
-        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DotNetTasks.DotNetLogger;
+        public override Action<OutputType, string,List<ConsoleColor>> ProcessCustomLogger => base.ProcessCustomLogger ?? DotNetTasks.DotNetLogger;
         /// <summary>
         ///   The Name/ID of the NuGet package that contains the .NET Core Global Tool to install.
         /// </summary>
@@ -2677,7 +2677,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   Path to the DotNet executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? DotNetTasks.DotNetPath;
-        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DotNetTasks.DotNetLogger;
+        public override Action<OutputType, string,List<ConsoleColor>> ProcessCustomLogger => base.ProcessCustomLogger ?? DotNetTasks.DotNetLogger;
         /// <summary>
         ///   Specifies the NuGet configuration (<em>nuget.config</em>) file to use.
         /// </summary>
@@ -2735,7 +2735,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   Path to the DotNet executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? DotNetTasks.DotNetPath;
-        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DotNetTasks.DotNetLogger;
+        public override Action<OutputType, string,List<ConsoleColor>> ProcessCustomLogger => base.ProcessCustomLogger ?? DotNetTasks.DotNetLogger;
         /// <summary>
         ///   The Name/ID of the NuGet package that contains the .NET Core Global Tool to uninstall. You can find the package name using the <a href="https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-tool-list">dotnet tool list</a> command.
         /// </summary>
@@ -2777,7 +2777,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   Path to the DotNet executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? DotNetTasks.DotNetPath;
-        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DotNetTasks.DotNetLogger;
+        public override Action<OutputType, string,List<ConsoleColor>> ProcessCustomLogger => base.ProcessCustomLogger ?? DotNetTasks.DotNetLogger;
         /// <summary>
         ///   The Name/ID of the NuGet package that contains the .NET Core Global Tool to install.
         /// </summary>

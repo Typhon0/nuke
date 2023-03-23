@@ -1,4 +1,4 @@
-// Generated from https://github.com/nuke-build/nuke/blob/master/source/Nuke.Common/Tools/PowerShell/PowerShell.json
+// Generated from https://github.com/Typhon0/nuke/blob/master/source/Nuke.Common/Tools/PowerShell/PowerShell.json
 
 using JetBrains.Annotations;
 using Newtonsoft.Json;
@@ -31,12 +31,12 @@ namespace Nuke.Common.Tools.PowerShell
         public static string PowerShellPath =>
             ToolPathResolver.TryGetEnvironmentExecutable("POWERSHELL_EXE") ??
             GetToolPath();
-        public static Action<OutputType, string> PowerShellLogger { get; set; } = ProcessTasks.DefaultLogger;
+        public static Action<OutputType, string,List<ConsoleColor>> PowerShellLogger { get; set; } = ProcessTasks.DefaultLogger;
         /// <summary>
         ///   <p>PowerShell is a cross-platform task automation solution made up of a command-line shell, a scripting language, and a configuration management framework. PowerShell runs on Windows, Linux, and macOS.</p>
         ///   <p>For more details, visit the <a href="https://docs.microsoft.com/en-us/powershell/">official website</a>.</p>
         /// </summary>
-        public static IReadOnlyCollection<Output> PowerShell(ref ArgumentStringHandler arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Action<OutputType, string> customLogger = null)
+        public static IReadOnlyCollection<Output> PowerShell(ref ArgumentStringHandler arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Action<OutputType, string,List<ConsoleColor>> customLogger = null)
         {
             using var process = ProcessTasks.StartProcess(PowerShellPath, ref arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, customLogger ?? PowerShellLogger);
             process.AssertZeroExitCode();
@@ -152,7 +152,7 @@ namespace Nuke.Common.Tools.PowerShell
         ///   Path to the PowerShell executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? GetProcessToolPath();
-        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? PowerShellTasks.PowerShellLogger;
+        public override Action<OutputType, string,List<ConsoleColor>> ProcessCustomLogger => base.ProcessCustomLogger ?? PowerShellTasks.PowerShellLogger;
         /// <summary>
         ///   Loads the specified PowerShell console file. Enter the path and name of the console file. To create a console file, use the Export-Console cmdlet in PowerShell.
         /// </summary>

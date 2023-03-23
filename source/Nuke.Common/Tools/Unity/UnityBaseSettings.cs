@@ -3,6 +3,7 @@
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using Nuke.Common.Tooling;
 using Nuke.Common.Utilities;
@@ -11,7 +12,8 @@ namespace Nuke.Common.Tools.Unity
 {
     public partial class UnityBaseSettings
     {
-        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? UnityTasks.UnityLogger;
+        public override Action<OutputType, string, List<ConsoleColor>> ProcessCustomLogger =>
+            base.ProcessCustomLogger ?? UnityTasks.UnityLogger;
 
         public string GetProcessToolPath()
         {

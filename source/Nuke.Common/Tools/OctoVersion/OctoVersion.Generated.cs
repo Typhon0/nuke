@@ -1,4 +1,4 @@
-// Generated from https://github.com/nuke-build/nuke/blob/master/source/Nuke.Common/Tools/OctoVersion/OctoVersion.json
+// Generated from https://github.com/Typhon0/nuke/blob/master/source/Nuke.Common/Tools/OctoVersion/OctoVersion.json
 
 using JetBrains.Annotations;
 using Newtonsoft.Json;
@@ -33,11 +33,11 @@ namespace Nuke.Common.Tools.OctoVersion
         public static string OctoVersionPath =>
             ToolPathResolver.TryGetEnvironmentExecutable("OCTOVERSION_EXE") ??
             NuGetToolPathResolver.GetPackageExecutable("OctoVersion.Tool", "OctoVersion.Tool.dll");
-        public static Action<OutputType, string> OctoVersionLogger { get; set; } = ProcessTasks.DefaultLogger;
+        public static Action<OutputType, string,List<ConsoleColor>> OctoVersionLogger { get; set; } = ProcessTasks.DefaultLogger;
         /// <summary>
         ///   <p>For more details, visit the <a href="https://github.com/OctopusDeploy/OctoVersion">official website</a>.</p>
         /// </summary>
-        public static IReadOnlyCollection<Output> OctoVersion(ref ArgumentStringHandler arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Action<OutputType, string> customLogger = null)
+        public static IReadOnlyCollection<Output> OctoVersion(ref ArgumentStringHandler arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Action<OutputType, string,List<ConsoleColor>> customLogger = null)
         {
             using var process = ProcessTasks.StartProcess(OctoVersionPath, ref arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, customLogger ?? OctoVersionLogger);
             process.AssertZeroExitCode();
@@ -213,7 +213,7 @@ namespace Nuke.Common.Tools.OctoVersion
         ///   Path to the OctoVersion executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? GetProcessToolPath();
-        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? OctoVersionTasks.OctoVersionLogger;
+        public override Action<OutputType, string,List<ConsoleColor>> ProcessCustomLogger => base.ProcessCustomLogger ?? OctoVersionTasks.OctoVersionLogger;
         /// <summary>
         ///   Pass in the name of the branch. If not set, OctoVersion will attempt to derive it, but this may lead to incorrect values.
         /// </summary>
@@ -298,7 +298,7 @@ namespace Nuke.Common.Tools.OctoVersion
         ///   Path to the OctoVersion executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? GetProcessToolPath();
-        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? OctoVersionTasks.OctoVersionLogger;
+        public override Action<OutputType, string,List<ConsoleColor>> ProcessCustomLogger => base.ProcessCustomLogger ?? OctoVersionTasks.OctoVersionLogger;
         /// <summary>
         ///   Pass in the name of the branch. If not set, OctoVersion will attempt to derive it, but this may lead to incorrect values.
         /// </summary>

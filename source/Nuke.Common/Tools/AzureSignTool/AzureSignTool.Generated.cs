@@ -1,4 +1,4 @@
-// Generated from https://github.com/nuke-build/nuke/blob/master/source/Nuke.Common/Tools/AzureSignTool/AzureSignTool.json
+// Generated from https://github.com/Typhon0/nuke/blob/master/source/Nuke.Common/Tools/AzureSignTool/AzureSignTool.json
 
 using JetBrains.Annotations;
 using Newtonsoft.Json;
@@ -34,12 +34,12 @@ namespace Nuke.Common.Tools.AzureSignTool
         public static string AzureSignToolPath =>
             ToolPathResolver.TryGetEnvironmentExecutable("AZURESIGNTOOL_EXE") ??
             NuGetToolPathResolver.GetPackageExecutable("AzureSignTool", "AzureSignTool.dll");
-        public static Action<OutputType, string> AzureSignToolLogger { get; set; } = ProcessTasks.DefaultLogger;
+        public static Action<OutputType, string,List<ConsoleColor>> AzureSignToolLogger { get; set; } = ProcessTasks.DefaultLogger;
         /// <summary>
         ///   <p>Azure Sign Tool is similar to <c>signtool</c> in the Windows SDK, with the major difference being that it uses Azure Key Vault for performing the signing process. The usage is like <c>signtool</c>, except with a limited set of options for signing and options for authenticating to Azure Key Vault.</p>
         ///   <p>For more details, visit the <a href="https://github.com/vcsjones/AzureSignTool">official website</a>.</p>
         /// </summary>
-        public static IReadOnlyCollection<Output> AzureSignTool(ref ArgumentStringHandler arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Action<OutputType, string> customLogger = null)
+        public static IReadOnlyCollection<Output> AzureSignTool(ref ArgumentStringHandler arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Action<OutputType, string,List<ConsoleColor>> customLogger = null)
         {
             using var process = ProcessTasks.StartProcess(AzureSignToolPath, ref arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, customLogger ?? AzureSignToolLogger);
             process.AssertZeroExitCode();
@@ -170,7 +170,7 @@ namespace Nuke.Common.Tools.AzureSignTool
         ///   Path to the AzureSignTool executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? AzureSignToolTasks.AzureSignToolPath;
-        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? AzureSignToolTasks.AzureSignToolLogger;
+        public override Action<OutputType, string,List<ConsoleColor>> ProcessCustomLogger => base.ProcessCustomLogger ?? AzureSignToolTasks.AzureSignToolLogger;
         /// <summary>
         ///   A fully qualified URL of the key vault with the certificate that will be used for signing. An example value might be <c>https://my-vault.vault.azure.net</c>.
         /// </summary>

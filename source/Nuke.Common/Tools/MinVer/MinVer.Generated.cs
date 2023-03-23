@@ -1,4 +1,4 @@
-// Generated from https://github.com/nuke-build/nuke/blob/master/source/Nuke.Common/Tools/MinVer/MinVer.json
+// Generated from https://github.com/Typhon0/nuke/blob/master/source/Nuke.Common/Tools/MinVer/MinVer.json
 
 using JetBrains.Annotations;
 using Newtonsoft.Json;
@@ -34,12 +34,12 @@ namespace Nuke.Common.Tools.MinVer
         public static string MinVerPath =>
             ToolPathResolver.TryGetEnvironmentExecutable("MINVER_EXE") ??
             GetToolPath();
-        public static Action<OutputType, string> MinVerLogger { get; set; } = ProcessTasks.DefaultLogger;
+        public static Action<OutputType, string,List<ConsoleColor>> MinVerLogger { get; set; } = ProcessTasks.DefaultLogger;
         /// <summary>
         ///   <p>Minimalistic versioning using Git tags.</p>
         ///   <p>For more details, visit the <a href="https://github.com/adamralph/minver">official website</a>.</p>
         /// </summary>
-        public static IReadOnlyCollection<Output> MinVer(ref ArgumentStringHandler arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Action<OutputType, string> customLogger = null)
+        public static IReadOnlyCollection<Output> MinVer(ref ArgumentStringHandler arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Action<OutputType, string,List<ConsoleColor>> customLogger = null)
         {
             using var process = ProcessTasks.StartProcess(MinVerPath, ref arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, customLogger ?? MinVerLogger);
             process.AssertZeroExitCode();
@@ -119,7 +119,7 @@ namespace Nuke.Common.Tools.MinVer
         ///   Path to the MinVer executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? GetProcessToolPath();
-        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? MinVerTasks.MinVerLogger;
+        public override Action<OutputType, string,List<ConsoleColor>> ProcessCustomLogger => base.ProcessCustomLogger ?? MinVerTasks.MinVerLogger;
         public virtual MinVerVersionPart AutoIncrement { get; internal set; }
         public virtual string BuildMetadata { get; internal set; }
         public virtual string DefaultPreReleasePhase { get; internal set; }
