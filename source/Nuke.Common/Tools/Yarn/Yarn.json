@@ -1,0 +1,236 @@
+{
+  "$schema": "https://raw.githubusercontent.com/nuke-build/nuke/master/source/Nuke.Tooling.Generator/schema.json",
+  "references": [
+    "https://yarnpkg.com/cli/run",
+    "https://yarnpkg.com/cli/install",
+    "https://yarnpkg.com/cli/add",
+    "https://yarnpkg.com/cli/pack"
+  ],
+  "name": "Yarn",
+  "officialUrl": "https://yarnpkg.com/",
+  "help": "Yarn is a package manager that doubles down as project manager. Whether you work on one-shot projects or large monorepos, as a hobbyist or an enterprise user, we've got you covered.",
+  "pathExecutable": "yarn",
+  "customLogger": true,
+  "tasks": [
+    {
+      "help": "Install the project dependencies.",
+      "postfix": "Install",
+      "definiteArgument": "install",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "JSON",
+            "type": "bool",
+            "format": "--json",
+            "help": "Format the output as an NDJSON stream"
+          },
+          {
+            "name": "Immutable",
+            "type": "bool",
+            "format": "--immutable",
+            "help": "Abort with an error exit code if the lockfile was to be modified"
+          },
+          {
+            "name": "WorkingDirectory",
+            "type": "string",
+            "format": "--cwd",
+            "help": "The directory to run the command in"
+          },
+          {
+            "name": "ImmutableCache",
+            "type": "bool",
+            "format": "--immutable-cache",
+            "help": "Abort with an error exit code if the cache folder was to be modified"
+          },
+          {
+            "name": "CheckCache",
+            "type": "bool",
+            "format": "--check-cache",
+            "help": "Always refetch the packages and ensure that their checksums are consistent"
+          },
+          {
+            "name": "InlineBuilds",
+            "type": "bool",
+            "format": "--inline-builds",
+            "help": "Verbosely print the output of the build steps of dependencies"
+          },
+          {
+            "name": "Mode",
+            "type": "YarnMode",
+            "format": "--mode",
+            "help": "Change what artifacts installs generate"
+          }
+        ]
+      }
+    },
+    {
+      "help": "Add dependencies to the project.",
+      "postfix": "Add",
+      "definiteArgument": "add",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "Packages",
+            "type": "List<string>",
+            "format": "{value}",
+            "help": "List of packages to be installed."
+          },
+          {
+            "name": "JSON",
+            "type": "bool",
+            "format": "--json",
+            "help": "Format the output as an NDJSON stream"
+          },
+          {
+            "name": "Exact",
+            "type": "bool",
+            "format": "--exact",
+            "help": "Don't use any semver modifier on the resolved range"
+          },
+          {
+            "name": "Tilde",
+            "type": "bool",
+            "format": "--tilde",
+            "help": "Use the ~ semver modifier on the resolved range"
+          },
+          {
+            "name": "Caret",
+            "type": "bool",
+            "format": "--caret",
+            "help": "Use the ^ semver modifier on the resolved range"
+          },
+          {
+            "name": "Dev",
+            "type": "bool",
+            "format": "--dev",
+            "help": "Add a package as a dev dependency"
+          },
+          {
+            "name": "Peer",
+            "type": "bool",
+            "format": "--peer",
+            "help": "Add a package as a peer dependency"
+          },
+          {
+            "name": "Optional",
+            "type": "bool",
+            "format": "--optional",
+            "help": "Add / upgrade a package to an optional regular / peer dependency"
+          },
+          {
+            "name": "PreferDev",
+            "type": "bool",
+            "format": "--prefer-dev",
+            "help": "Add / upgrade a package to a dev dependency"
+          },
+          {
+            "name": "Interactive",
+            "type": "bool",
+            "format": "--interactive",
+            "help": "Reuse the specified package from other workspaces in the project"
+          },
+          {
+            "name": "Cached",
+            "type": "bool",
+            "format": "--cached",
+            "help": "Reuse the highest version already used somewhere within the project"
+          },
+          {
+            "name": "Mode",
+            "type": "YarnMode",
+            "format": "--mode",
+            "help": "Change what artifacts installs generate"
+          }
+        ]
+      }
+    },
+    {
+      "help": "Run a script defined in the package.json.",
+      "postfix": "Run",
+      "definiteArgument": "run",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "Inspect",
+            "type": "bool",
+            "format": "--inspect",
+            "help": "Forwarded to the underlying Node process when executing a binary"
+          },
+          {
+            "name": "InspectBrk",
+            "type": "bool",
+            "format": "--inspect-brk",
+            "help": "Forwarded to the underlying Node process when executing a binary"
+          },
+          {
+            "name": "TopLevel",
+            "type": "bool",
+            "format": "--top-level",
+            "help": "Check the root workspace for scripts and/or binaries instead of the current one"
+          },
+          {
+            "name": "BinariesOnly",
+            "type": "bool",
+            "format": "--binaries-only",
+            "help": "Ignore any user defined scripts and only check for binaries"
+          },
+          {
+            "name": "Command",
+            "type": "string",
+            "format": "{value}",
+            "help": "The command to be executed."
+          },
+          {
+            "name": "Arguments",
+            "type": "List<string>",
+            "format": "-- {value}",
+            "separator": " ",
+            "help": "Arguments passed to the script."
+          }
+        ]
+      }
+    },
+    {
+      "help": "Generate a tarball from the active workspace.",
+      "postfix": "Pack",
+      "definiteArgument": "pack",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "InstallIfNeeded",
+            "type": "bool",
+            "format": "--install-if-needed",
+            "help": "Run a preliminary yarn install if the package contains build scripts"
+          },
+          {
+            "name": "DryRun",
+            "type": "bool",
+            "format": "--dry-run",
+            "help": "Print the file paths without actually generating the package archive"
+          },
+          {
+            "name": "JSON",
+            "type": "bool",
+            "format": "--json",
+            "help": "Format the output as an NDJSON stream"
+          },
+          {
+            "name": "Out",
+            "type": "string",
+            "format": "--out",
+            "help": "Create the archive at the specified path"
+          }
+        ]
+      }
+    }
+  ],
+  "enumerations": [
+    {
+      "name": "YarnMode",
+      "values": [
+        "skip-build",
+        "update-lockfile"
+      ]
+    }
+  ]
+}
