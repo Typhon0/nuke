@@ -2,6 +2,8 @@
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
+using System;
+using System.Collections.Generic;
 using Nuke.Common.Tooling;
 using Serilog;
 
@@ -9,7 +11,7 @@ namespace Nuke.Common.Tools.Npm
 {
     partial class NpmTasks
     {
-        public static void CustomLogger(OutputType type, string output)
+        public static void CustomLogger(OutputType type, string output,List<ConsoleColor> consoleColors)
         {
             switch (type)
             {

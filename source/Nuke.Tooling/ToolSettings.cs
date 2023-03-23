@@ -20,21 +20,29 @@ namespace Nuke.Common.Tooling
 
         protected ToolSettings()
         {
-            ProcessEnvironmentVariablesInternal = EnvironmentInfo.Variables.ToDictionary(x => x.Key, x => x.Value);
+            ProcessEnvironmentVariablesInternal = EnvironmentInfo.Variables.ToDictionary(
+                x => x.Key,
+                x => x.Value
+            );
             Created?.Invoke(this, EventArgs.Empty);
         }
 
         public virtual string ProcessToolPath { get; internal set; }
         public virtual string ProcessWorkingDirectory { get; internal set; }
 
-        public IReadOnlyDictionary<string, string> ProcessEnvironmentVariables => ProcessEnvironmentVariablesInternal.AsReadOnly();
+        public IReadOnlyDictionary<string, string> ProcessEnvironmentVariables =>
+            ProcessEnvironmentVariablesInternal.AsReadOnly();
         internal Dictionary<string, string> ProcessEnvironmentVariablesInternal { get; set; }
         public int? ProcessExecutionTimeout { get; internal set; }
         public bool? ProcessLogOutput { get; internal set; }
         public bool? ProcessLogInvocation { get; internal set; }
 
         [field: NonSerialized]
-        public virtual Action<OutputType, string> ProcessCustomLogger { get; internal set; }
+        public virtual Action<OutputType, string, List<ConsoleColor>> ProcessCustomLogger
+        {
+            get;
+            internal set;
+        }
 
         [NonSerialized]
         private Func<Arguments, Arguments> _processArgumentConfigurator = x => x;
@@ -78,9 +86,7 @@ namespace Nuke.Common.Tooling
             return new Arguments();
         }
 
-        protected virtual void AssertValid()
-        {
-        }
+        protected virtual void AssertValid() { }
 
         public sealed override string ToString()
         {

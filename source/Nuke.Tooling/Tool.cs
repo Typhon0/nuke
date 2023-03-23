@@ -19,6 +19,7 @@ namespace Nuke.Common.Tooling
         int? timeout = null,
         bool? logOutput = null,
         bool? logInvocation = null,
-        Action<OutputType, string> customLogger = null,
-        Func<string, string> outputFilter = null);
+        Action<OutputType, string, List<ConsoleColor>> customLogger = null,
+        Func<string, string> outputFilter = null
+    );
 }

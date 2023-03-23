@@ -1,4 +1,4 @@
-// Generated from https://github.com/nuke-build/nuke/blob/master/source/Nuke.Common/Tools/GitLink/GitLink.json
+// Generated from https://github.com/Typhon0/nuke/blob/master/source/Nuke.Common/Tools/GitLink/GitLink.json
 
 using JetBrains.Annotations;
 using Newtonsoft.Json;
@@ -34,12 +34,12 @@ namespace Nuke.Common.Tools.GitLink
         public static string GitLinkPath =>
             ToolPathResolver.TryGetEnvironmentExecutable("GITLINK_EXE") ??
             NuGetToolPathResolver.GetPackageExecutable("gitlink", "GitLink.exe");
-        public static Action<OutputType, string> GitLinkLogger { get; set; } = ProcessTasks.DefaultLogger;
+        public static Action<OutputType, string,List<ConsoleColor>> GitLinkLogger { get; set; } = ProcessTasks.DefaultLogger;
         /// <summary>
         ///   <p>GitLink makes symbol servers obsolete which saves you both time with uploading source files with symbols and the user no longer has to specify custom symbol servers (such as symbolsource.org). The advantage of GitLink is that it is fully customized for Git. It also works with GitHub or BitBucket urls so it does not require a local git repository to work. This makes it perfectly usable in continuous integration servers such as Continua CI. Updating all the pdb files is very fast. A solution with over 85 projects will be handled in less than 30 seconds. When using GitLink, the user no longer has to specify symbol servers. The only requirement is to ensure the check the Enable source server support option in Visual Studio.</p>
         ///   <p>For more details, visit the <a href="https://github.com/GitTools/GitLink/">official website</a>.</p>
         /// </summary>
-        public static IReadOnlyCollection<Output> GitLink(ref ArgumentStringHandler arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Action<OutputType, string> customLogger = null)
+        public static IReadOnlyCollection<Output> GitLink(ref ArgumentStringHandler arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Action<OutputType, string,List<ConsoleColor>> customLogger = null)
         {
             using var process = ProcessTasks.StartProcess(GitLinkPath, ref arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, customLogger ?? GitLinkLogger);
             process.AssertZeroExitCode();
@@ -202,7 +202,7 @@ namespace Nuke.Common.Tools.GitLink
         ///   Path to the GitLink executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? GitLinkTasks.GitLinkPath;
-        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? GitLinkTasks.GitLinkLogger;
+        public override Action<OutputType, string,List<ConsoleColor>> ProcessCustomLogger => base.ProcessCustomLogger ?? GitLinkTasks.GitLinkLogger;
         /// <summary>
         ///   The directory containing the solution with the pdb files.
         /// </summary>
@@ -288,7 +288,7 @@ namespace Nuke.Common.Tools.GitLink
         ///   Path to the GitLink executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? GitLinkTasks.GitLinkPath;
-        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? GitLinkTasks.GitLinkLogger;
+        public override Action<OutputType, string,List<ConsoleColor>> ProcessCustomLogger => base.ProcessCustomLogger ?? GitLinkTasks.GitLinkLogger;
         /// <summary>
         ///   The PDB to add source indexing to.
         /// </summary>

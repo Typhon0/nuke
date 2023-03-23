@@ -1,4 +1,4 @@
-// Generated from https://github.com/nuke-build/nuke/blob/master/source/Nuke.Common/Tools/StaticWebApps/StaticWebApps.json
+// Generated from https://github.com/Typhon0/nuke/blob/master/source/Nuke.Common/Tools/StaticWebApps/StaticWebApps.json
 
 using JetBrains.Annotations;
 using Newtonsoft.Json;
@@ -34,12 +34,12 @@ namespace Nuke.Common.Tools.StaticWebApps
         public static string StaticWebAppsPath =>
             ToolPathResolver.TryGetEnvironmentExecutable("STATICWEBAPPS_EXE") ??
             NpmToolPathResolver.GetNpmExecutable("swa");
-        public static Action<OutputType, string> StaticWebAppsLogger { get; set; } = ProcessTasks.DefaultLogger;
+        public static Action<OutputType, string,List<ConsoleColor>> StaticWebAppsLogger { get; set; } = ProcessTasks.DefaultLogger;
         /// <summary>
         ///   <p>The Static Web Apps CLI, also known as SWA CLI, serves as a local development tool for <a href="https://docs.microsoft.com/azure/static-web-apps">Azure Static Web Apps</a>. It can:<ul><li>Serve static app assets, or proxy to your app dev server</li><li>Serve API requests, or proxy to APIs running in Azure Functions Core Tools</li><li>Emulate authentication and authorization</li><li>Emulate Static Web Apps configuration, including routing</li></ul></p>
         ///   <p>For more details, visit the <a href="https://docs.microsoft.com/en-us/azure/static-web-apps/local-development">official website</a>.</p>
         /// </summary>
-        public static IReadOnlyCollection<Output> StaticWebApps(ref ArgumentStringHandler arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Action<OutputType, string> customLogger = null)
+        public static IReadOnlyCollection<Output> StaticWebApps(ref ArgumentStringHandler arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Action<OutputType, string,List<ConsoleColor>> customLogger = null)
         {
             using var process = ProcessTasks.StartProcess(StaticWebAppsPath, ref arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, customLogger ?? StaticWebAppsLogger);
             process.AssertZeroExitCode();
@@ -197,7 +197,7 @@ namespace Nuke.Common.Tools.StaticWebApps
         ///   Path to the StaticWebApps executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? StaticWebAppsTasks.StaticWebAppsPath;
-        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? StaticWebAppsTasks.StaticWebAppsLogger;
+        public override Action<OutputType, string,List<ConsoleColor>> ProcessCustomLogger => base.ProcessCustomLogger ?? StaticWebAppsTasks.StaticWebAppsLogger;
         /// <summary>
         ///   Location for the static app source code (default: <c>./</c>)
         /// </summary>
@@ -279,7 +279,7 @@ namespace Nuke.Common.Tools.StaticWebApps
         ///   Path to the StaticWebApps executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? StaticWebAppsTasks.StaticWebAppsPath;
-        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? StaticWebAppsTasks.StaticWebAppsLogger;
+        public override Action<OutputType, string,List<ConsoleColor>> ProcessCustomLogger => base.ProcessCustomLogger ?? StaticWebAppsTasks.StaticWebAppsLogger;
         /// <summary>
         ///   Directory containing the source code of the front-end application (default: <c>./</c>).
         /// </summary>

@@ -18,17 +18,34 @@ namespace Nuke.CodeGeneration.Generators
     {
         public static void Run(Tool tool, ToolWriter toolWriter)
         {
-            if (tool.Tasks.Count == 0 && !tool.CustomExecutable && tool.PathExecutable == null && tool.NuGetPackageId == null)
+            if (
+                tool.Tasks.Count == 0
+                && !tool.CustomExecutable
+                && tool.PathExecutable == null
+                && tool.NuGetPackageId == null
+            )
                 return;
 
             toolWriter
                 .WriteSummary(tool)
                 .WriteLine("[PublicAPI]")
                 .WriteLine("[ExcludeFromCodeCoverage]")
-                .WriteLineIfTrue(tool.NuGetPackageId != null, $"[NuGetPackageRequirement({tool.Name}PackageId)]")
-                .WriteLineIfTrue(tool.NpmPackageId != null, $"[NpmPackageRequirement({tool.Name}PackageId)]")
-                .WriteLineIfTrue(tool.AptGetPackageId != null, $"[AptGetPackageRequirement({tool.Name}PackageId)]")
-                .WriteLineIfTrue(tool.PathExecutable != null, $"[PathToolRequirement({tool.Name}PathExecutable)]")
+                .WriteLineIfTrue(
+                    tool.NuGetPackageId != null,
+                    $"[NuGetPackageRequirement({tool.Name}PackageId)]"
+                )
+                .WriteLineIfTrue(
+                    tool.NpmPackageId != null,
+                    $"[NpmPackageRequirement({tool.Name}PackageId)]"
+                )
+                .WriteLineIfTrue(
+                    tool.AptGetPackageId != null,
+                    $"[AptGetPackageRequirement({tool.Name}PackageId)]"
+                )
+                .WriteLineIfTrue(
+                    tool.PathExecutable != null,
+                    $"[PathToolRequirement({tool.Name}PathExecutable)]"
+                )
                 .WriteLine($"public partial class {tool.GetClassName()}")
                 .WriteLineIfTrue(tool.NuGetPackageId != null, "    : IRequireNuGetPackage")
                 .WriteLineIfTrue(tool.NpmPackageId != null, "    : IRequireNpmPackage")
@@ -36,19 +53,33 @@ namespace Nuke.CodeGeneration.Generators
                 .WriteLineIfTrue(tool.PathExecutable != null, "    : IRequirePathTool")
                 .WriteBlock(w =>
                 {
-                    w
-                        .WriteLineIfTrue(tool.NuGetPackageId != null, $"public const string {tool.Name}PackageId = {tool.NuGetPackageId.DoubleQuote()};")
-                        .WriteLineIfTrue(tool.NpmPackageId != null, $"public const string {tool.Name}PackageId = {tool.NpmPackageId.DoubleQuote()};")
-                        .WriteLineIfTrue(tool.AptGetPackageId != null, $"public const string {tool.Name}PackageId = {tool.AptGetPackageId.DoubleQuote()};")
-                        .WriteLineIfTrue(tool.PathExecutable != null, $"public const string {tool.Name}PathExecutable = {tool.PathExecutable.DoubleQuote()};")
+                    w.WriteLineIfTrue(
+                            tool.NuGetPackageId != null,
+                            $"public const string {tool.Name}PackageId = {tool.NuGetPackageId.DoubleQuote()};"
+                        )
+                        .WriteLineIfTrue(
+                            tool.NpmPackageId != null,
+                            $"public const string {tool.Name}PackageId = {tool.NpmPackageId.DoubleQuote()};"
+                        )
+                        .WriteLineIfTrue(
+                            tool.AptGetPackageId != null,
+                            $"public const string {tool.Name}PackageId = {tool.AptGetPackageId.DoubleQuote()};"
+                        )
+                        .WriteLineIfTrue(
+                            tool.PathExecutable != null,
+                            $"public const string {tool.Name}PathExecutable = {tool.PathExecutable.DoubleQuote()};"
+                        )
                         .WriteToolPath()
                         .WriteToolLogger()
                         .WriteGenericTask();
 
-                    tool.Tasks.ForEach(x => new TaskWriter(x, toolWriter)
-                        .WriteToolSettingsTask()
-                        .WriteConfiguratorTask()
-                        .WriteCombinatorialConfiguratorTask());
+                    tool.Tasks.ForEach(
+                        x =>
+                            new TaskWriter(x, toolWriter)
+                                .WriteToolSettingsTask()
+                                .WriteConfiguratorTask()
+                                .WriteCombinatorialConfiguratorTask()
+                    );
                 });
         }
 
@@ -56,34 +87,40 @@ namespace Nuke.CodeGeneration.Generators
         {
             var tool = writer.Tool;
             var parameters = new[]
-                             {
-                                 "ref ArgumentStringHandler arguments",
-                                 "string workingDirectory = null",
-                                 "IReadOnlyDictionary<string, string> environmentVariables = null",
-                                 "int? timeout = null",
-                                 "bool? logOutput = null",
-                                 "bool? logInvocation = null",
-                                 "Action<OutputType, string> customLogger = null"
-                             };
+            {
+                "ref ArgumentStringHandler arguments",
+                "string workingDirectory = null",
+                "IReadOnlyDictionary<string, string> environmentVariables = null",
+                "int? timeout = null",
+                "bool? logOutput = null",
+                "bool? logInvocation = null",
+                "Action<OutputType, string,List<ConsoleColor>> customLogger = null"
+            };
             var arguments = new[]
-                            {
-                                $"{tool.Name}Path",
-                                "ref arguments",
-                                "workingDirectory",
-                                "environmentVariables",
-                                "timeout",
-                                "logOutput",
-                                "logInvocation",
-                                $"customLogger ?? {tool.Name}Logger"
-                            };
+            {
+                $"{tool.Name}Path",
+                "ref arguments",
+                "workingDirectory",
+                "environmentVariables",
+                "timeout",
+                "logOutput",
+                "logInvocation",
+                $"customLogger ?? {tool.Name}Logger"
+            };
             writer
                 .WriteSummary(tool)
                 .WriteObsoleteAttributeWhenObsolete(tool)
-                .WriteLine($"public static IReadOnlyCollection<Output> {tool.Name}({parameters.JoinCommaSpace()})")
-                .WriteBlock(w => w
-                    .WriteLine($"using var process = ProcessTasks.StartProcess({arguments.JoinCommaSpace()});")
-                    .WriteLine("process.AssertZeroExitCode();")
-                    .WriteLine("return process.Output;"));
+                .WriteLine(
+                    $"public static IReadOnlyCollection<Output> {tool.Name}({parameters.JoinCommaSpace()})"
+                )
+                .WriteBlock(
+                    w =>
+                        w.WriteLine(
+                                $"using var process = ProcessTasks.StartProcess({arguments.JoinCommaSpace()});"
+                            )
+                            .WriteLine("process.AssertZeroExitCode();")
+                            .WriteLine("return process.Output;")
+                );
         }
 
         private static TaskWriter WriteToolSettingsTask(this TaskWriter writer)
@@ -97,16 +134,24 @@ namespace Nuke.CodeGeneration.Generators
                 .WriteSummary(task)
                 .WriteRemarks(task)
                 .WriteObsoleteAttributeWhenObsolete(task)
-                .WriteLine($"public static {returnType} {task.GetTaskMethodName()}({task.SettingsClass.Name} toolSettings = null)")
-                .WriteBlock(w => w
-                    .WriteLine($"toolSettings = toolSettings ?? new {task.SettingsClass.Name}();")
-                    .WriteLineIfTrue(task.PreProcess, "PreProcess(ref toolSettings);")
-                    .WriteLine($"using var process = {GetProcessStart(task)};")
-                    .WriteLine(GetProcessAssertion(task))
-                    .WriteLineIfTrue(task.PostProcess, "PostProcess(toolSettings);")
-                    .WriteLine(task.HasReturnValue()
-                        ? "return (GetResult(process, toolSettings), process.Output);"
-                        : "return process.Output;"));
+                .WriteLine(
+                    $"public static {returnType} {task.GetTaskMethodName()}({task.SettingsClass.Name} toolSettings = null)"
+                )
+                .WriteBlock(
+                    w =>
+                        w.WriteLine(
+                                $"toolSettings = toolSettings ?? new {task.SettingsClass.Name}();"
+                            )
+                            .WriteLineIfTrue(task.PreProcess, "PreProcess(ref toolSettings);")
+                            .WriteLine($"using var process = {GetProcessStart(task)};")
+                            .WriteLine(GetProcessAssertion(task))
+                            .WriteLineIfTrue(task.PostProcess, "PostProcess(toolSettings);")
+                            .WriteLine(
+                                task.HasReturnValue()
+                                    ? "return (GetResult(process, toolSettings), process.Output);"
+                                    : "return process.Output;"
+                            )
+                );
         }
 
         private static TaskWriter WriteConfiguratorTask(this TaskWriter writer)
@@ -120,9 +165,15 @@ namespace Nuke.CodeGeneration.Generators
                 .WriteSummary(task)
                 .WriteRemarks(task)
                 .WriteObsoleteAttributeWhenObsolete(task)
-                .WriteLine($"public static {returnType} {task.GetTaskMethodName()}(Configure<{task.SettingsClass.Name}> configurator)")
-                .WriteBlock(w => w
-                    .WriteLine($"return {task.GetTaskMethodName()}(configurator(new {task.SettingsClass.Name}()));"));
+                .WriteLine(
+                    $"public static {returnType} {task.GetTaskMethodName()}(Configure<{task.SettingsClass.Name}> configurator)"
+                )
+                .WriteBlock(
+                    w =>
+                        w.WriteLine(
+                            $"return {task.GetTaskMethodName()}(configurator(new {task.SettingsClass.Name}()));"
+                        )
+                );
         }
 
         private static TaskWriter WriteCombinatorialConfiguratorTask(this TaskWriter writer)
@@ -134,20 +185,23 @@ namespace Nuke.CodeGeneration.Generators
                 : $"IEnumerable<({task.SettingsClass.Name} Settings, {task.ReturnType} Result, IReadOnlyCollection<Output> Output)>";
 
             var parameters = new[]
-                             {
-                                 $"CombinatorialConfigure<{task.SettingsClass.Name}> configurator",
-                                 "int degreeOfParallelism = 1",
-                                 "bool completeOnFailure = false"
-                             }.JoinCommaSpace();
+            {
+                $"CombinatorialConfigure<{task.SettingsClass.Name}> configurator",
+                "int degreeOfParallelism = 1",
+                "bool completeOnFailure = false"
+            }.JoinCommaSpace();
 
             return writer
                 .WriteSummary(task)
                 .WriteRemarks(task)
                 .WriteObsoleteAttributeWhenObsolete(task)
                 .WriteLine($"public static {returnType} {task.GetTaskMethodName()}({parameters})")
-                .WriteBlock(w => w
-                    .WriteLine(
-                        $"return configurator.Invoke({task.GetTaskMethodName()}, {task.Tool.Name}Logger, degreeOfParallelism, completeOnFailure);"));
+                .WriteBlock(
+                    w =>
+                        w.WriteLine(
+                            $"return configurator.Invoke({task.GetTaskMethodName()}, {task.Tool.Name}Logger, degreeOfParallelism, completeOnFailure);"
+                        )
+                );
         }
 
         private static string GetProcessStart(Task task)
@@ -171,18 +225,24 @@ namespace Nuke.CodeGeneration.Generators
 
             if (tool.NuGetPackageId != null && tool.PackageExecutable != null)
             {
-                resolvers.Add("NuGetToolPathResolver.GetPackageExecutable(" +
-                              $"{tool.NuGetPackageId.DoubleQuote()}, " +
-                              $"{tool.PackageExecutable.DoubleQuote()})");
+                resolvers.Add(
+                    "NuGetToolPathResolver.GetPackageExecutable("
+                        + $"{tool.NuGetPackageId.DoubleQuote()}, "
+                        + $"{tool.PackageExecutable.DoubleQuote()})"
+                );
             }
 
             if (tool.NpmPackageId != null && tool.PackageExecutable != null)
             {
-                resolvers.Add($"NpmToolPathResolver.GetNpmExecutable({tool.PackageExecutable.DoubleQuote()})");
+                resolvers.Add(
+                    $"NpmToolPathResolver.GetNpmExecutable({tool.PackageExecutable.DoubleQuote()})"
+                );
             }
 
             if (tool.PathExecutable != null)
-                resolvers.Add($"ToolPathResolver.GetPathExecutable({tool.PathExecutable.DoubleQuote()})");
+                resolvers.Add(
+                    $"ToolPathResolver.GetPathExecutable({tool.PathExecutable.DoubleQuote()})"
+                );
 
             if (resolvers.Count == 0)
                 resolvers.Add("GetToolPath()");
@@ -192,7 +252,9 @@ namespace Nuke.CodeGeneration.Generators
             return writer
                 .WriteSummary($"Path to the {tool.Name} executable.")
                 .WriteLine($"public static string {tool.Name}Path =>")
-                .WriteLine($"    ToolPathResolver.TryGetEnvironmentExecutable(\"{tool.Name.ToUpperInvariant()}_EXE\") ??")
+                .WriteLine(
+                    $"    ToolPathResolver.TryGetEnvironmentExecutable(\"{tool.Name.ToUpperInvariant()}_EXE\") ??"
+                )
                 .WriteLine($"    {resolvers.Single()};");
         }
 
@@ -200,8 +262,9 @@ namespace Nuke.CodeGeneration.Generators
         {
             var tool = writer.Tool;
             var logger = tool.CustomLogger ? "CustomLogger" : "ProcessTasks.DefaultLogger";
-            return writer
-                .WriteLine($"public static Action<OutputType, string> {tool.Name}Logger {{ get; set; }} = {logger};");
+            return writer.WriteLine(
+                $"public static Action<OutputType, string,List<ConsoleColor>> {tool.Name}Logger {{ get; set; }} = {logger};"
+            );
         }
     }
 }

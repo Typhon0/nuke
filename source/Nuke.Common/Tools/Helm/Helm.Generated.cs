@@ -1,4 +1,4 @@
-// Generated from https://github.com/nuke-build/nuke/blob/master/source/Nuke.Common/Tools/Helm/Helm.json
+// Generated from https://github.com/Typhon0/nuke/blob/master/source/Nuke.Common/Tools/Helm/Helm.json
 
 using JetBrains.Annotations;
 using Newtonsoft.Json;
@@ -33,11 +33,11 @@ namespace Nuke.Common.Tools.Helm
         public static string HelmPath =>
             ToolPathResolver.TryGetEnvironmentExecutable("HELM_EXE") ??
             ToolPathResolver.GetPathExecutable("helm");
-        public static Action<OutputType, string> HelmLogger { get; set; } = ProcessTasks.DefaultLogger;
+        public static Action<OutputType, string,List<ConsoleColor>> HelmLogger { get; set; } = ProcessTasks.DefaultLogger;
         /// <summary>
         ///   <p>For more details, visit the <a href="https://helm.sh/">official website</a>.</p>
         /// </summary>
-        public static IReadOnlyCollection<Output> Helm(ref ArgumentStringHandler arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Action<OutputType, string> customLogger = null)
+        public static IReadOnlyCollection<Output> Helm(ref ArgumentStringHandler arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Action<OutputType, string,List<ConsoleColor>> customLogger = null)
         {
             using var process = ProcessTasks.StartProcess(HelmPath, ref arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, customLogger ?? HelmLogger);
             process.AssertZeroExitCode();
@@ -3018,7 +3018,7 @@ namespace Nuke.Common.Tools.Helm
         ///   Path to the Helm executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? HelmTasks.HelmPath;
-        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? HelmTasks.HelmLogger;
+        public override Action<OutputType, string,List<ConsoleColor>> ProcessCustomLogger => base.ProcessCustomLogger ?? HelmTasks.HelmLogger;
         /// <summary>
         ///   Help for completion.
         /// </summary>
@@ -3047,7 +3047,7 @@ namespace Nuke.Common.Tools.Helm
         ///   Path to the Helm executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? HelmTasks.HelmPath;
-        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? HelmTasks.HelmLogger;
+        public override Action<OutputType, string,List<ConsoleColor>> ProcessCustomLogger => base.ProcessCustomLogger ?? HelmTasks.HelmLogger;
         /// <summary>
         ///   Help for create.
         /// </summary>
@@ -3084,7 +3084,7 @@ namespace Nuke.Common.Tools.Helm
         ///   Path to the Helm executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? HelmTasks.HelmPath;
-        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? HelmTasks.HelmLogger;
+        public override Action<OutputType, string,List<ConsoleColor>> ProcessCustomLogger => base.ProcessCustomLogger ?? HelmTasks.HelmLogger;
         /// <summary>
         ///   Specify a description for the release.
         /// </summary>
@@ -3172,7 +3172,7 @@ namespace Nuke.Common.Tools.Helm
         ///   Path to the Helm executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? HelmTasks.HelmPath;
-        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? HelmTasks.HelmLogger;
+        public override Action<OutputType, string,List<ConsoleColor>> ProcessCustomLogger => base.ProcessCustomLogger ?? HelmTasks.HelmLogger;
         /// <summary>
         ///   Help for build.
         /// </summary>
@@ -3214,7 +3214,7 @@ namespace Nuke.Common.Tools.Helm
         ///   Path to the Helm executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? HelmTasks.HelmPath;
-        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? HelmTasks.HelmLogger;
+        public override Action<OutputType, string,List<ConsoleColor>> ProcessCustomLogger => base.ProcessCustomLogger ?? HelmTasks.HelmLogger;
         /// <summary>
         ///   Help for list.
         /// </summary>
@@ -3246,7 +3246,7 @@ namespace Nuke.Common.Tools.Helm
         ///   Path to the Helm executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? HelmTasks.HelmPath;
-        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? HelmTasks.HelmLogger;
+        public override Action<OutputType, string,List<ConsoleColor>> ProcessCustomLogger => base.ProcessCustomLogger ?? HelmTasks.HelmLogger;
         /// <summary>
         ///   Help for update.
         /// </summary>
@@ -3293,7 +3293,7 @@ namespace Nuke.Common.Tools.Helm
         ///   Path to the Helm executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? HelmTasks.HelmPath;
-        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? HelmTasks.HelmLogger;
+        public override Action<OutputType, string,List<ConsoleColor>> ProcessCustomLogger => base.ProcessCustomLogger ?? HelmTasks.HelmLogger;
         /// <summary>
         ///   Verify certificates of HTTPS-enabled servers using this CA bundle.
         /// </summary>
@@ -3396,7 +3396,7 @@ namespace Nuke.Common.Tools.Helm
         ///   Path to the Helm executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? HelmTasks.HelmPath;
-        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? HelmTasks.HelmLogger;
+        public override Action<OutputType, string,List<ConsoleColor>> ProcessCustomLogger => base.ProcessCustomLogger ?? HelmTasks.HelmLogger;
         /// <summary>
         ///   Help for get.
         /// </summary>
@@ -3463,7 +3463,7 @@ namespace Nuke.Common.Tools.Helm
         ///   Path to the Helm executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? HelmTasks.HelmPath;
-        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? HelmTasks.HelmLogger;
+        public override Action<OutputType, string,List<ConsoleColor>> ProcessCustomLogger => base.ProcessCustomLogger ?? HelmTasks.HelmLogger;
         /// <summary>
         ///   Help for hooks.
         /// </summary>
@@ -3530,7 +3530,7 @@ namespace Nuke.Common.Tools.Helm
         ///   Path to the Helm executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? HelmTasks.HelmPath;
-        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? HelmTasks.HelmLogger;
+        public override Action<OutputType, string,List<ConsoleColor>> ProcessCustomLogger => base.ProcessCustomLogger ?? HelmTasks.HelmLogger;
         /// <summary>
         ///   Help for manifest.
         /// </summary>
@@ -3597,7 +3597,7 @@ namespace Nuke.Common.Tools.Helm
         ///   Path to the Helm executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? HelmTasks.HelmPath;
-        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? HelmTasks.HelmLogger;
+        public override Action<OutputType, string,List<ConsoleColor>> ProcessCustomLogger => base.ProcessCustomLogger ?? HelmTasks.HelmLogger;
         /// <summary>
         ///   Help for notes.
         /// </summary>
@@ -3661,7 +3661,7 @@ namespace Nuke.Common.Tools.Helm
         ///   Path to the Helm executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? HelmTasks.HelmPath;
-        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? HelmTasks.HelmLogger;
+        public override Action<OutputType, string,List<ConsoleColor>> ProcessCustomLogger => base.ProcessCustomLogger ?? HelmTasks.HelmLogger;
         /// <summary>
         ///   Dump all (computed) values.
         /// </summary>
@@ -3738,7 +3738,7 @@ namespace Nuke.Common.Tools.Helm
         ///   Path to the Helm executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? HelmTasks.HelmPath;
-        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? HelmTasks.HelmLogger;
+        public override Action<OutputType, string,List<ConsoleColor>> ProcessCustomLogger => base.ProcessCustomLogger ?? HelmTasks.HelmLogger;
         /// <summary>
         ///   Specifies the max column width of output (default 60).
         /// </summary>
@@ -3815,7 +3815,7 @@ namespace Nuke.Common.Tools.Helm
         ///   Path to the Helm executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? HelmTasks.HelmPath;
-        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? HelmTasks.HelmLogger;
+        public override Action<OutputType, string,List<ConsoleColor>> ProcessCustomLogger => base.ProcessCustomLogger ?? HelmTasks.HelmLogger;
         /// <summary>
         ///   Help for home.
         /// </summary>
@@ -3842,7 +3842,7 @@ namespace Nuke.Common.Tools.Helm
         ///   Path to the Helm executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? HelmTasks.HelmPath;
-        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? HelmTasks.HelmLogger;
+        public override Action<OutputType, string,List<ConsoleColor>> ProcessCustomLogger => base.ProcessCustomLogger ?? HelmTasks.HelmLogger;
         /// <summary>
         ///   Auto-mount the given service account to tiller (default true).
         /// </summary>
@@ -3990,7 +3990,7 @@ namespace Nuke.Common.Tools.Helm
         ///   Path to the Helm executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? HelmTasks.HelmPath;
-        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? HelmTasks.HelmLogger;
+        public override Action<OutputType, string,List<ConsoleColor>> ProcessCustomLogger => base.ProcessCustomLogger ?? HelmTasks.HelmLogger;
         /// <summary>
         ///   Chart repository url where to locate the requested chart.
         /// </summary>
@@ -4072,7 +4072,7 @@ namespace Nuke.Common.Tools.Helm
         ///   Path to the Helm executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? HelmTasks.HelmPath;
-        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? HelmTasks.HelmLogger;
+        public override Action<OutputType, string,List<ConsoleColor>> ProcessCustomLogger => base.ProcessCustomLogger ?? HelmTasks.HelmLogger;
         /// <summary>
         ///   Chart repository url where to locate the requested chart.
         /// </summary>
@@ -4154,7 +4154,7 @@ namespace Nuke.Common.Tools.Helm
         ///   Path to the Helm executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? HelmTasks.HelmPath;
-        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? HelmTasks.HelmLogger;
+        public override Action<OutputType, string,List<ConsoleColor>> ProcessCustomLogger => base.ProcessCustomLogger ?? HelmTasks.HelmLogger;
         /// <summary>
         ///   Chart repository url where to locate the requested chart.
         /// </summary>
@@ -4226,7 +4226,7 @@ namespace Nuke.Common.Tools.Helm
         ///   Path to the Helm executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? HelmTasks.HelmPath;
-        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? HelmTasks.HelmLogger;
+        public override Action<OutputType, string,List<ConsoleColor>> ProcessCustomLogger => base.ProcessCustomLogger ?? HelmTasks.HelmLogger;
         /// <summary>
         ///   Chart repository url where to locate the requested chart.
         /// </summary>
@@ -4308,7 +4308,7 @@ namespace Nuke.Common.Tools.Helm
         ///   Path to the Helm executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? HelmTasks.HelmPath;
-        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? HelmTasks.HelmLogger;
+        public override Action<OutputType, string,List<ConsoleColor>> ProcessCustomLogger => base.ProcessCustomLogger ?? HelmTasks.HelmLogger;
         /// <summary>
         ///   If set, installation process purges chart on fail, also sets --wait flag.
         /// </summary>
@@ -4509,7 +4509,7 @@ namespace Nuke.Common.Tools.Helm
         ///   Path to the Helm executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? HelmTasks.HelmPath;
-        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? HelmTasks.HelmLogger;
+        public override Action<OutputType, string,List<ConsoleColor>> ProcessCustomLogger => base.ProcessCustomLogger ?? HelmTasks.HelmLogger;
         /// <summary>
         ///   Help for lint.
         /// </summary>
@@ -4575,7 +4575,7 @@ namespace Nuke.Common.Tools.Helm
         ///   Path to the Helm executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? HelmTasks.HelmPath;
-        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? HelmTasks.HelmLogger;
+        public override Action<OutputType, string,List<ConsoleColor>> ProcessCustomLogger => base.ProcessCustomLogger ?? HelmTasks.HelmLogger;
         /// <summary>
         ///   Show all releases, not just the ones marked DEPLOYED.
         /// </summary>
@@ -4712,7 +4712,7 @@ namespace Nuke.Common.Tools.Helm
         ///   Path to the Helm executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? HelmTasks.HelmPath;
-        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? HelmTasks.HelmLogger;
+        public override Action<OutputType, string,List<ConsoleColor>> ProcessCustomLogger => base.ProcessCustomLogger ?? HelmTasks.HelmLogger;
         /// <summary>
         ///   Set the appVersion on the chart to this version.
         /// </summary>
@@ -4785,7 +4785,7 @@ namespace Nuke.Common.Tools.Helm
         ///   Path to the Helm executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? HelmTasks.HelmPath;
-        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? HelmTasks.HelmLogger;
+        public override Action<OutputType, string,List<ConsoleColor>> ProcessCustomLogger => base.ProcessCustomLogger ?? HelmTasks.HelmLogger;
         /// <summary>
         ///   Help for install.
         /// </summary>
@@ -4825,7 +4825,7 @@ namespace Nuke.Common.Tools.Helm
         ///   Path to the Helm executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? HelmTasks.HelmPath;
-        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? HelmTasks.HelmLogger;
+        public override Action<OutputType, string,List<ConsoleColor>> ProcessCustomLogger => base.ProcessCustomLogger ?? HelmTasks.HelmLogger;
         /// <summary>
         ///   Help for list.
         /// </summary>
@@ -4852,7 +4852,7 @@ namespace Nuke.Common.Tools.Helm
         ///   Path to the Helm executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? HelmTasks.HelmPath;
-        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? HelmTasks.HelmLogger;
+        public override Action<OutputType, string,List<ConsoleColor>> ProcessCustomLogger => base.ProcessCustomLogger ?? HelmTasks.HelmLogger;
         /// <summary>
         ///   Help for remove.
         /// </summary>
@@ -4885,7 +4885,7 @@ namespace Nuke.Common.Tools.Helm
         ///   Path to the Helm executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? HelmTasks.HelmPath;
-        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? HelmTasks.HelmLogger;
+        public override Action<OutputType, string,List<ConsoleColor>> ProcessCustomLogger => base.ProcessCustomLogger ?? HelmTasks.HelmLogger;
         /// <summary>
         ///   Help for update.
         /// </summary>
@@ -4918,7 +4918,7 @@ namespace Nuke.Common.Tools.Helm
         ///   Path to the Helm executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? HelmTasks.HelmPath;
-        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? HelmTasks.HelmLogger;
+        public override Action<OutputType, string,List<ConsoleColor>> ProcessCustomLogger => base.ProcessCustomLogger ?? HelmTasks.HelmLogger;
         /// <summary>
         ///   Verify certificates of HTTPS-enabled servers using this CA bundle.
         /// </summary>
@@ -4985,7 +4985,7 @@ namespace Nuke.Common.Tools.Helm
         ///   Path to the Helm executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? HelmTasks.HelmPath;
-        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? HelmTasks.HelmLogger;
+        public override Action<OutputType, string,List<ConsoleColor>> ProcessCustomLogger => base.ProcessCustomLogger ?? HelmTasks.HelmLogger;
         /// <summary>
         ///   Help for index.
         /// </summary>
@@ -5027,7 +5027,7 @@ namespace Nuke.Common.Tools.Helm
         ///   Path to the Helm executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? HelmTasks.HelmPath;
-        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? HelmTasks.HelmLogger;
+        public override Action<OutputType, string,List<ConsoleColor>> ProcessCustomLogger => base.ProcessCustomLogger ?? HelmTasks.HelmLogger;
         /// <summary>
         ///   Help for list.
         /// </summary>
@@ -5054,7 +5054,7 @@ namespace Nuke.Common.Tools.Helm
         ///   Path to the Helm executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? HelmTasks.HelmPath;
-        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? HelmTasks.HelmLogger;
+        public override Action<OutputType, string,List<ConsoleColor>> ProcessCustomLogger => base.ProcessCustomLogger ?? HelmTasks.HelmLogger;
         /// <summary>
         ///   Help for remove.
         /// </summary>
@@ -5086,7 +5086,7 @@ namespace Nuke.Common.Tools.Helm
         ///   Path to the Helm executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? HelmTasks.HelmPath;
-        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? HelmTasks.HelmLogger;
+        public override Action<OutputType, string,List<ConsoleColor>> ProcessCustomLogger => base.ProcessCustomLogger ?? HelmTasks.HelmLogger;
         /// <summary>
         ///   Help for update.
         /// </summary>
@@ -5118,7 +5118,7 @@ namespace Nuke.Common.Tools.Helm
         ///   Path to the Helm executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? HelmTasks.HelmPath;
-        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? HelmTasks.HelmLogger;
+        public override Action<OutputType, string,List<ConsoleColor>> ProcessCustomLogger => base.ProcessCustomLogger ?? HelmTasks.HelmLogger;
         /// <summary>
         ///   Forces Tiller uninstall even if there are releases installed, or if Tiller is not in ready state. Releases are not deleted.).
         /// </summary>
@@ -5185,7 +5185,7 @@ namespace Nuke.Common.Tools.Helm
         ///   Path to the Helm executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? HelmTasks.HelmPath;
-        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? HelmTasks.HelmLogger;
+        public override Action<OutputType, string,List<ConsoleColor>> ProcessCustomLogger => base.ProcessCustomLogger ?? HelmTasks.HelmLogger;
         /// <summary>
         ///   Specify a description for the release.
         /// </summary>
@@ -5287,7 +5287,7 @@ namespace Nuke.Common.Tools.Helm
         ///   Path to the Helm executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? HelmTasks.HelmPath;
-        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? HelmTasks.HelmLogger;
+        public override Action<OutputType, string,List<ConsoleColor>> ProcessCustomLogger => base.ProcessCustomLogger ?? HelmTasks.HelmLogger;
         /// <summary>
         ///   Specifies the max column width of output (default 60).
         /// </summary>
@@ -5339,7 +5339,7 @@ namespace Nuke.Common.Tools.Helm
         ///   Path to the Helm executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? HelmTasks.HelmPath;
-        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? HelmTasks.HelmLogger;
+        public override Action<OutputType, string,List<ConsoleColor>> ProcessCustomLogger => base.ProcessCustomLogger ?? HelmTasks.HelmLogger;
         /// <summary>
         ///   Address to listen on (default "127.0.0.1:8879").
         /// </summary>
@@ -5381,7 +5381,7 @@ namespace Nuke.Common.Tools.Helm
         ///   Path to the Helm executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? HelmTasks.HelmPath;
-        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? HelmTasks.HelmLogger;
+        public override Action<OutputType, string,List<ConsoleColor>> ProcessCustomLogger => base.ProcessCustomLogger ?? HelmTasks.HelmLogger;
         /// <summary>
         ///   Help for status.
         /// </summary>
@@ -5453,7 +5453,7 @@ namespace Nuke.Common.Tools.Helm
         ///   Path to the Helm executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? HelmTasks.HelmPath;
-        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? HelmTasks.HelmLogger;
+        public override Action<OutputType, string,List<ConsoleColor>> ProcessCustomLogger => base.ProcessCustomLogger ?? HelmTasks.HelmLogger;
         /// <summary>
         ///   Only execute the given templates.
         /// </summary>
@@ -5547,7 +5547,7 @@ namespace Nuke.Common.Tools.Helm
         ///   Path to the Helm executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? HelmTasks.HelmPath;
-        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? HelmTasks.HelmLogger;
+        public override Action<OutputType, string,List<ConsoleColor>> ProcessCustomLogger => base.ProcessCustomLogger ?? HelmTasks.HelmLogger;
         /// <summary>
         ///   Delete test pods upon completion.
         /// </summary>
@@ -5624,7 +5624,7 @@ namespace Nuke.Common.Tools.Helm
         ///   Path to the Helm executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? HelmTasks.HelmPath;
-        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? HelmTasks.HelmLogger;
+        public override Action<OutputType, string,List<ConsoleColor>> ProcessCustomLogger => base.ProcessCustomLogger ?? HelmTasks.HelmLogger;
         /// <summary>
         ///   If set, upgrade process rolls back changes made in case of failed upgrade, also sets --wait flag.
         /// </summary>
@@ -5835,7 +5835,7 @@ namespace Nuke.Common.Tools.Helm
         ///   Path to the Helm executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? HelmTasks.HelmPath;
-        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? HelmTasks.HelmLogger;
+        public override Action<OutputType, string,List<ConsoleColor>> ProcessCustomLogger => base.ProcessCustomLogger ?? HelmTasks.HelmLogger;
         /// <summary>
         ///   Help for verify.
         /// </summary>
@@ -5872,7 +5872,7 @@ namespace Nuke.Common.Tools.Helm
         ///   Path to the Helm executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? HelmTasks.HelmPath;
-        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? HelmTasks.HelmLogger;
+        public override Action<OutputType, string,List<ConsoleColor>> ProcessCustomLogger => base.ProcessCustomLogger ?? HelmTasks.HelmLogger;
         /// <summary>
         ///   Client version only.
         /// </summary>

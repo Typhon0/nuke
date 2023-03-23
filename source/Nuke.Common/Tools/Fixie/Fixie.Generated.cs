@@ -1,4 +1,4 @@
-// Generated from https://github.com/nuke-build/nuke/blob/master/source/Nuke.Common/Tools/Fixie/Fixie.json
+// Generated from https://github.com/Typhon0/nuke/blob/master/source/Nuke.Common/Tools/Fixie/Fixie.json
 
 using JetBrains.Annotations;
 using Newtonsoft.Json;
@@ -34,12 +34,12 @@ namespace Nuke.Common.Tools.Fixie
         public static string FixiePath =>
             ToolPathResolver.TryGetEnvironmentExecutable("FIXIE_EXE") ??
             NuGetToolPathResolver.GetPackageExecutable("fixie.console", "dotnet-fixie.dll");
-        public static Action<OutputType, string> FixieLogger { get; set; } = ProcessTasks.DefaultLogger;
+        public static Action<OutputType, string,List<ConsoleColor>> FixieLogger { get; set; } = ProcessTasks.DefaultLogger;
         /// <summary>
         ///   <p>Fixie is a .NET modern test framework similar to NUnit and xUnit, but with an emphasis on low-ceremony defaults and flexible customization.</p>
         ///   <p>For more details, visit the <a href="https://fixie.github.io/">official website</a>.</p>
         /// </summary>
-        public static IReadOnlyCollection<Output> Fixie(ref ArgumentStringHandler arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Action<OutputType, string> customLogger = null)
+        public static IReadOnlyCollection<Output> Fixie(ref ArgumentStringHandler arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Action<OutputType, string,List<ConsoleColor>> customLogger = null)
         {
             using var process = ProcessTasks.StartProcess(FixiePath, ref arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, customLogger ?? FixieLogger);
             process.AssertZeroExitCode();
@@ -116,7 +116,7 @@ namespace Nuke.Common.Tools.Fixie
         ///   Path to the Fixie executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? FixieTasks.FixiePath;
-        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? FixieTasks.FixieLogger;
+        public override Action<OutputType, string,List<ConsoleColor>> ProcessCustomLogger => base.ProcessCustomLogger ?? FixieTasks.FixieLogger;
         /// <summary>
         ///   The configuration under which to build. When this option is omitted, the default configuration is `Debug`.
         /// </summary>

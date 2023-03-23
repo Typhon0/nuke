@@ -3,6 +3,7 @@
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
 using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using JetBrains.Annotations;
@@ -17,16 +18,23 @@ namespace Nuke.Common.Tooling
         public static T AddProcessEnvironmentVariable<T>(
             this T toolSettings,
             string environmentVariableKey,
-            string environmentVariableValue)
+            string environmentVariableValue
+        )
             where T : ToolSettings
         {
             var newToolSettings = toolSettings.NewInstance();
-            newToolSettings.ProcessEnvironmentVariablesInternal.Add(environmentVariableKey, environmentVariableValue);
+            newToolSettings.ProcessEnvironmentVariablesInternal.Add(
+                environmentVariableKey,
+                environmentVariableValue
+            );
             return newToolSettings;
         }
 
         [Pure]
-        public static T RemoveProcessEnvironmentVariable<T>(this T toolSettings, string environmentVariableKey)
+        public static T RemoveProcessEnvironmentVariable<T>(
+            this T toolSettings,
+            string environmentVariableKey
+        )
             where T : ToolSettings
         {
             var newToolSettings = toolSettings.NewInstance();
@@ -38,11 +46,13 @@ namespace Nuke.Common.Tooling
         public static T SetProcessEnvironmentVariable<T>(
             this T toolSettings,
             string environmentVariableKey,
-            string environmentVariableValue)
+            string environmentVariableValue
+        )
             where T : ToolSettings
         {
             var newToolSettings = toolSettings.NewInstance();
-            newToolSettings.ProcessEnvironmentVariablesInternal[environmentVariableKey] = environmentVariableValue;
+            newToolSettings.ProcessEnvironmentVariablesInternal[environmentVariableKey] =
+                environmentVariableValue;
             return newToolSettings;
         }
 
@@ -57,7 +67,10 @@ namespace Nuke.Common.Tooling
 
         ///<summary>Sets <see cref="ToolSettings.ProcessExecutionTimeout"/> -- <inheritdoc cref="ToolSettings.ProcessExecutionTimeout" /></summary>
         [Pure]
-        public static T SetProcessExecutionTimeout<T>(this T toolSettings, [CanBeNull] int? executionTimeout)
+        public static T SetProcessExecutionTimeout<T>(
+            this T toolSettings,
+            [CanBeNull] int? executionTimeout
+        )
             where T : ToolSettings
         {
             var newToolSettings = toolSettings.NewInstance();
@@ -67,7 +80,10 @@ namespace Nuke.Common.Tooling
 
         ///<summary>Sets <see cref="ToolSettings.ProcessExecutionTimeout"/> -- <inheritdoc cref="ToolSettings.ProcessExecutionTimeout" /></summary>
         [Pure]
-        public static T SetProcessExecutionTimeout<T>(this T toolSettings, TimeSpan executionTimeout)
+        public static T SetProcessExecutionTimeout<T>(
+            this T toolSettings,
+            TimeSpan executionTimeout
+        )
             where T : ToolSettings
         {
             var newToolSettings = toolSettings.NewInstance();
@@ -147,7 +163,10 @@ namespace Nuke.Common.Tooling
 
         ///<summary>Sets <see cref="ToolSettings.ProcessWorkingDirectory"/> -- <inheritdoc cref="ToolSettings.ProcessWorkingDirectory" /></summary>
         [Pure]
-        public static T SetProcessWorkingDirectory<T>(this T toolSettings, [CanBeNull] string workingDirectory)
+        public static T SetProcessWorkingDirectory<T>(
+            this T toolSettings,
+            [CanBeNull] string workingDirectory
+        )
             where T : ToolSettings
         {
             var newToolSettings = toolSettings.NewInstance();
@@ -157,17 +176,23 @@ namespace Nuke.Common.Tooling
 
         ///<summary>Sets <see cref="ToolSettings.ProcessArgumentConfigurator"/> -- <inheritdoc cref="ToolSettings.ProcessArgumentConfigurator" /></summary>
         [Pure]
-        public static T SetProcessArgumentConfigurator<T>(this T toolSettings, [CanBeNull] Func<Arguments, Arguments> argumentConfigurator)
+        public static T SetProcessArgumentConfigurator<T>(
+            this T toolSettings,
+            [CanBeNull] Func<Arguments, Arguments> argumentConfigurator
+        )
             where T : ToolSettings
         {
             var newToolSettings = toolSettings.NewInstance();
             newToolSettings.ProcessArgumentConfigurator = argumentConfigurator;
             return newToolSettings;
         }
-        
+
         ///<summary>Sets <see cref="ToolSettings.ProcessCustomLogger"/> -- <inheritdoc cref="ToolSettings.ProcessCustomLogger" /></summary>
         [Pure]
-        public static T SetProcessCustomLogger<T>(this T toolSettings, [CanBeNull] Action<OutputType, string> customLogger)
+        public static T SetProcessCustomLogger<T>(
+            this T toolSettings,
+            [CanBeNull] Action<OutputType, string, List<ConsoleColor>> customLogger
+        )
             where T : ToolSettings
         {
             var newToolSettings = toolSettings.NewInstance();

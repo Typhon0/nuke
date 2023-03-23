@@ -9,6 +9,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using JetBrains.Annotations;
 using Nuke.Common.Utilities;
 using Nuke.Common.Utilities.Collections;
@@ -32,12 +33,15 @@ namespace Nuke.Common.Tooling
             int? timeout = null,
             bool? logOutput = null,
             bool? logInvocation = null,
-            Action<OutputType, string> customLogger = null,
-            Func<string, string> outputFilter = null)
+            Action<OutputType, string, List<ConsoleColor>> customLogger = null,
+            Func<string, string> outputFilter = null
+        )
         {
             // TODO: fallback to sh
             return StartProcess(
-                toolPath: ToolPathResolver.GetPathExecutable(EnvironmentInfo.IsWin ? "cmd" : "bash"),
+                toolPath: ToolPathResolver.GetPathExecutable(
+                    EnvironmentInfo.IsWin ? "cmd" : "bash"
+                ),
                 arguments: $"{(EnvironmentInfo.IsWin ? "/c" : "-c")} {command.DoubleQuote()}",
                 workingDirectory,
                 environmentVariables,
@@ -45,7 +49,8 @@ namespace Nuke.Common.Tooling
                 logOutput,
                 logInvocation,
                 customLogger,
-                outputFilter);
+                outputFilter
+            );
         }
 
         public static IProcess StartProcess(ToolSettings toolSettings)
@@ -61,7 +66,8 @@ namespace Nuke.Common.Tooling
                 toolSettings.ProcessLogOutput,
                 toolSettings.ProcessLogInvocation,
                 toolSettings.ProcessCustomLogger,
-                arguments.FilterSecrets);
+                arguments.FilterSecrets
+            );
         }
 
 #if NET6_0_OR_GREATER
@@ -74,12 +80,19 @@ namespace Nuke.Common.Tooling
             int? timeout = null,
             bool? logOutput = null,
             bool? logInvocation = null,
-            Action<OutputType, string> customLogger = null)
+            Action<OutputType, string, List<ConsoleColor>> customLogger = null
+        )
         {
-            static Func<string, string> GetOutputFilterForArgumentStringHandler(ref ArgumentStringHandler arguments)
+            static Func<string, string> GetOutputFilterForArgumentStringHandler(
+                ref ArgumentStringHandler arguments
+            )
             {
                 var redactedValues = arguments.SecretValues;
-                return x => redactedValues.Aggregate(x, (arguments, value) => arguments.ReplaceRegex(value, _ => Arguments.Redacted));
+                return x =>
+                    redactedValues.Aggregate(
+                        x,
+                        (arguments, value) => arguments.ReplaceRegex(value, _ => Arguments.Redacted)
+                    );
             }
 
             return StartProcess(
@@ -91,9 +104,9 @@ namespace Nuke.Common.Tooling
                 logOutput,
                 logInvocation,
                 customLogger,
-                GetOutputFilterForArgumentStringHandler(ref arguments));
+                GetOutputFilterForArgumentStringHandler(ref arguments)
+            );
         }
-
 #endif
 
         public static IProcess StartProcess(
@@ -104,8 +117,9 @@ namespace Nuke.Common.Tooling
             int? timeout = null,
             bool? logOutput = null,
             bool? logInvocation = null,
-            Action<OutputType, string> customLogger = null,
-            Func<string, string> outputFilter = null)
+            Action<OutputType, string, List<ConsoleColor>> customLogger = null,
+            Func<string, string> outputFilter = null
+        )
         {
             Assert.True(toolPath != null);
             if (!Path.IsPathRooted(toolPath) && !toolPath.Contains(Path.DirectorySeparatorChar))
@@ -123,20 +137,24 @@ namespace Nuke.Common.Tooling
             if (logInvocation ?? DefaultLogInvocation)
             {
                 // TODO: logging additional
-                Log.Information("> {ToolPath} {Arguments}", Path.GetFullPath(toolPath).DoubleQuoteIfNeeded(), outputFilter(arguments));
+                Log.Information(
+                    "> {ToolPath} {Arguments}",
+                    Path.GetFullPath(toolPath).DoubleQuoteIfNeeded(),
+                    outputFilter(arguments)
+                );
                 if (LogWorkingDirectory && workingDirectory != null)
                     Log.Information("@ {WorkingDirectory}", workingDirectory);
             }
 
-            return StartProcessInternal(toolPath,
+            return StartProcessInternal(
+                toolPath,
                 arguments,
                 workingDirectory,
                 environmentVariables,
                 timeout,
-                logOutput ?? DefaultLogOutput
-                    ? customLogger ?? DefaultLogger
-                    : null,
-                outputFilter);
+                logOutput ?? DefaultLogOutput ? customLogger ?? DefaultLogger : null,
+                outputFilter
+            );
         }
 
         [CanBeNull]
@@ -144,13 +162,15 @@ namespace Nuke.Common.Tooling
         {
             if (toolPath.EndsWithOrdinalIgnoreCase(".dll"))
             {
-                return ToolPathResolver.TryGetEnvironmentExecutable("DOTNET_EXE") ??
-                       ToolPathResolver.GetPathExecutable("dotnet");
+                return ToolPathResolver.TryGetEnvironmentExecutable("DOTNET_EXE")
+                    ?? ToolPathResolver.GetPathExecutable("dotnet");
             }
 
-            if (EnvironmentInfo.IsUnix &&
-                toolPath.EndsWithOrdinalIgnoreCase(".exe") &&
-                !EnvironmentInfo.IsWsl)
+            if (
+                EnvironmentInfo.IsUnix
+                && toolPath.EndsWithOrdinalIgnoreCase(".exe")
+                && !EnvironmentInfo.IsWsl
+            )
                 return ToolPathResolver.GetPathExecutable("mono");
 
             return null;
@@ -164,22 +184,26 @@ namespace Nuke.Common.Tooling
             [CanBeNull] string workingDirectory,
             [CanBeNull] IReadOnlyDictionary<string, string> environmentVariables,
             int? timeout,
-            [CanBeNull] Action<OutputType, string> logger,
-            Func<string, string> outputFilter)
+            [CanBeNull] Action<OutputType, string, List<ConsoleColor>> logger,
+            Func<string, string> outputFilter
+        )
         {
-            Assert.True(workingDirectory == null || Directory.Exists(workingDirectory), $"WorkingDirectory '{workingDirectory}' does not exist");
+            Assert.True(
+                workingDirectory == null || Directory.Exists(workingDirectory),
+                $"WorkingDirectory '{workingDirectory}' does not exist"
+            );
 
             var startInfo = new ProcessStartInfo
-                            {
-                                FileName = toolPath,
-                                Arguments = arguments ?? string.Empty,
-                                WorkingDirectory = workingDirectory ?? EnvironmentInfo.WorkingDirectory,
-                                RedirectStandardOutput = true,
-                                RedirectStandardError = true,
-                                UseShellExecute = false,
-                                StandardErrorEncoding = Encoding.UTF8,
-                                StandardOutputEncoding = Encoding.UTF8
-                            };
+            {
+                FileName = toolPath,
+                Arguments = arguments ?? string.Empty,
+                WorkingDirectory = workingDirectory ?? EnvironmentInfo.WorkingDirectory,
+                RedirectStandardOutput = true,
+                RedirectStandardError = true,
+                UseShellExecute = false,
+                StandardErrorEncoding = Encoding.UTF8,
+                StandardOutputEncoding = Encoding.UTF8
+            };
 
             ApplyEnvironmentVariables(environmentVariables, startInfo);
             // PrintEnvironmentVariables(startInfo);
@@ -194,7 +218,8 @@ namespace Nuke.Common.Tooling
 
         private static void ApplyEnvironmentVariables(
             [CanBeNull] IReadOnlyDictionary<string, string> environmentVariables,
-            ProcessStartInfo startInfo)
+            ProcessStartInfo startInfo
+        )
         {
             if (environmentVariables == null)
                 return;
@@ -207,30 +232,52 @@ namespace Nuke.Common.Tooling
 
         private static BlockingCollection<Output> GetOutputCollection(
             Process process,
-            [CanBeNull] Action<OutputType, string> logger,
-            Func<string, string> outputFilter)
+            [CanBeNull] Action<OutputType, string, List<ConsoleColor>> logger,
+            Func<string, string> outputFilter
+        )
         {
             var output = new BlockingCollection<Output>();
+
+            bool startColor = false, endColor = false;
+            var currentColor = new List<ConsoleColor>();
 
             process.OutputDataReceived += (_, e) =>
             {
                 if (e.Data == null)
                     return;
 
-                output.Add(new Output { Text = e.Data, Type = OutputType.Std });
+                HandleConsoleOutput(e.Data, ref startColor, ref endColor, ref currentColor);
+
+                output.Add(new Output { Text = e.Data, Type = OutputType.Std, ConsoleColor = currentColor });
 
                 var filteredOutput = outputFilter(e.Data);
-                logger?.Invoke(OutputType.Std, filteredOutput);
+                logger?.Invoke(OutputType.Std, filteredOutput, currentColor);
+                ClearConsoleColor(ref startColor, ref endColor, ref currentColor);
+
             };
+
+            bool startErrorColor = false, endErrorColor = false;
+            var currentErrorColor = new List<ConsoleColor>();
             process.ErrorDataReceived += (_, e) =>
             {
                 if (e.Data == null)
                     return;
 
-                output.Add(new Output { Text = e.Data, Type = OutputType.Err });
+                HandleConsoleOutput(e.Data, ref startErrorColor, ref endErrorColor, ref currentErrorColor);
+
+                output.Add(
+                    new Output
+                    {
+                        Text = e.Data,
+                        Type = OutputType.Err,
+                        ConsoleColor = currentErrorColor
+                    }
+                );
 
                 var filteredOutput = outputFilter(e.Data);
-                logger?.Invoke(OutputType.Err, filteredOutput);
+                logger?.Invoke(OutputType.Err, filteredOutput, currentErrorColor);
+                ClearConsoleColor(ref startErrorColor, ref endErrorColor, ref currentErrorColor);
+
             };
 
             process.BeginOutputReadLine();
@@ -239,12 +286,25 @@ namespace Nuke.Common.Tooling
             return output;
         }
 
-        public static void DefaultLogger(OutputType type, string output)
+        public static void DefaultLogger(
+            OutputType type,
+            string output,
+            List<ConsoleColor> consoleColors
+        )
         {
             if (type == OutputType.Std)
                 Log.Debug(output);
             else
-                Log.Error(output);
+            {
+                if (consoleColors.Contains(ConsoleColor.Yellow))
+                {
+                    Log.Warning(output);
+                }
+                else
+                {
+                    Log.Error(output);
+                }
+            }
         }
 
         private static void PrintEnvironmentVariables(ProcessStartInfo startInfo)
@@ -254,7 +314,12 @@ namespace Nuke.Common.Tooling
             // TODO: logging additional
             Log.Verbose("Environment variables:");
 
-            foreach (var (key, value) in startInfo.Environment.OrderBy(x => x.Key, StringComparer.OrdinalIgnoreCase))
+            foreach (
+                var (key, value) in startInfo.Environment.OrderBy(
+                    x => x.Key,
+                    StringComparer.OrdinalIgnoreCase
+                )
+            )
             {
                 if (key.EqualsOrdinalIgnoreCase("path"))
                 {
@@ -262,7 +327,10 @@ namespace Nuke.Common.Tooling
                     var padding = paths.Length.ToString().Length;
 
                     for (var i = 0; i < paths.Length; i++)
-                        TraceItem($"{key}[{i.ToString().PadLeft(padding, paddingChar: '0')}]", paths[i]);
+                        TraceItem(
+                            $"{key}[{i.ToString().PadLeft(padding, paddingChar: '0')}]",
+                            paths[i]
+                        );
                 }
                 else
                 {
@@ -278,7 +346,86 @@ namespace Nuke.Common.Tooling
                 .Value.Split(s_pathSeparators, StringSplitOptions.RemoveEmptyEntries)
                 .Select(EnvironmentInfo.ExpandVariables)
                 .Where(x => !Directory.Exists(x))
-                .ForEach(x => Log.Warning("Path environment variable contains invalid or inaccessible path {Path}", x));
+                .ForEach(
+                    x =>
+                        Log.Warning(
+                            "Path environment variable contains invalid or inaccessible path {Path}",
+                            x
+                        )
+                );
         }
+
+        static ConsoleColor GetColorFromCode(string code)
+        {
+            code = code.TrimEnd('m').Substring(2);
+            string[] parts = code.Split(';');
+            int[] values = Array.ConvertAll(parts, int.Parse);
+
+            switch (values[0])
+            {
+                case 30:
+                case 40:
+                    return ConsoleColor.Black;
+                case 31:
+                case 41:
+                    return ConsoleColor.Red;
+                case 32:
+                case 42:
+                    return ConsoleColor.Green;
+                case 33:
+                case 43:
+                    return ConsoleColor.Yellow;
+                case 34:
+                case 44:
+                    return ConsoleColor.Blue;
+                case 35:
+                case 45:
+                    return ConsoleColor.Magenta;
+                case 36:
+                case 46:
+                    return ConsoleColor.Cyan;
+                case 37:
+                case 47:
+                    return ConsoleColor.White;
+                case 39:
+                    return ConsoleColor.Gray;
+                default:
+                    return ConsoleColor.White;
+            }
+        }
+        private static void HandleConsoleOutput(string data, ref bool startColor, ref bool endColor, ref List<ConsoleColor> currentColor)
+        {
+            MatchCollection matches = Regex.Matches(data, @"\x1b\[3[0-9;]*m");
+            if (matches.Count > 0)
+            {
+                for (int i = 0; i < matches.Count; i++)
+                {
+                    Match d = matches[i];
+                    if (Regex.IsMatch(d.Value, @"\x1b\[3[0-7;]*m"))
+                    {
+                        startColor = true;
+                        endColor = false;
+                        currentColor.Add(GetColorFromCode(d.Value));
+                    }
+                    else if (Regex.IsMatch(d.Value, @"\x1b\[39]*m"))
+                    {
+                        endColor = true;
+                    }
+                }
+            }
+        }
+        private static void ClearConsoleColor(ref bool startColor, ref bool endColor, ref List<ConsoleColor> currentColor)
+        {
+            if (startColor && endColor)
+            {
+                currentColor.Clear();
+            }
+            else if (endColor)
+            {
+                currentColor.Clear();
+
+            }
+        }
+
     }
 }

@@ -1,4 +1,4 @@
-// Generated from https://github.com/nuke-build/nuke/blob/master/source/Nuke.Common/Tools/Netlify/Netlify.json
+// Generated from https://github.com/Typhon0/nuke/blob/master/source/Nuke.Common/Tools/Netlify/Netlify.json
 
 using JetBrains.Annotations;
 using Newtonsoft.Json;
@@ -34,12 +34,12 @@ namespace Nuke.Common.Tools.Netlify
         public static string NetlifyPath =>
             ToolPathResolver.TryGetEnvironmentExecutable("NETLIFY_EXE") ??
             ToolPathResolver.GetPathExecutable("npx");
-        public static Action<OutputType, string> NetlifyLogger { get; set; } = ProcessTasks.DefaultLogger;
+        public static Action<OutputType, string,List<ConsoleColor>> NetlifyLogger { get; set; } = ProcessTasks.DefaultLogger;
         /// <summary>
         ///   <p>Netlify’s command line interface (CLI) lets you configure <a href="https://docs.netlify.com/cli/get-started/#continuous-deployment">continuous deployment</a> straight from the command line. You can use Netlify CLI to <a href="https://docs.netlify.com/cli/get-started/#run-a-local-development-environment">run a local development server</a> that you can share with others, <a href="https://docs.netlify.com/cli/get-started/#run-builds-locally">run a local build and plugins</a>, and <a href="https://docs.netlify.com/cli/get-started/#manual-deploys">deploy your site</a>.</p>
         ///   <p>For more details, visit the <a href="https://docs.netlify.com/cli/get-started/">official website</a>.</p>
         /// </summary>
-        public static IReadOnlyCollection<Output> Netlify(ref ArgumentStringHandler arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Action<OutputType, string> customLogger = null)
+        public static IReadOnlyCollection<Output> Netlify(ref ArgumentStringHandler arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Action<OutputType, string,List<ConsoleColor>> customLogger = null)
         {
             using var process = ProcessTasks.StartProcess(NetlifyPath, ref arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, customLogger ?? NetlifyLogger);
             process.AssertZeroExitCode();
@@ -272,7 +272,7 @@ namespace Nuke.Common.Tools.Netlify
         ///   Path to the Netlify executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? NetlifyTasks.NetlifyPath;
-        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? NetlifyTasks.NetlifyLogger;
+        public override Action<OutputType, string,List<ConsoleColor>> ProcessCustomLogger => base.ProcessCustomLogger ?? NetlifyTasks.NetlifyLogger;
         /// <summary>
         ///   Specify a folder to deploy.
         /// </summary>
@@ -379,7 +379,7 @@ namespace Nuke.Common.Tools.Netlify
         ///   Path to the Netlify executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? NetlifyTasks.NetlifyPath;
-        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? NetlifyTasks.NetlifyLogger;
+        public override Action<OutputType, string,List<ConsoleColor>> ProcessCustomLogger => base.ProcessCustomLogger ?? NetlifyTasks.NetlifyLogger;
         /// <summary>
         ///   Name of site.
         /// </summary>
@@ -436,7 +436,7 @@ namespace Nuke.Common.Tools.Netlify
         ///   Path to the Netlify executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? NetlifyTasks.NetlifyPath;
-        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? NetlifyTasks.NetlifyLogger;
+        public override Action<OutputType, string,List<ConsoleColor>> ProcessCustomLogger => base.ProcessCustomLogger ?? NetlifyTasks.NetlifyLogger;
         /// <summary>
         ///   Site ID to delete.
         /// </summary>

@@ -1,4 +1,4 @@
-// Generated from https://github.com/nuke-build/nuke/blob/master/source/Nuke.Common/Tools/Paket/Paket.json
+// Generated from https://github.com/Typhon0/nuke/blob/master/source/Nuke.Common/Tools/Paket/Paket.json
 
 using JetBrains.Annotations;
 using Newtonsoft.Json;
@@ -34,12 +34,12 @@ namespace Nuke.Common.Tools.Paket
         public static string PaketPath =>
             ToolPathResolver.TryGetEnvironmentExecutable("PAKET_EXE") ??
             NuGetToolPathResolver.GetPackageExecutable("Paket", "paket.exe");
-        public static Action<OutputType, string> PaketLogger { get; set; } = ProcessTasks.DefaultLogger;
+        public static Action<OutputType, string,List<ConsoleColor>> PaketLogger { get; set; } = ProcessTasks.DefaultLogger;
         /// <summary>
         ///   <p>Paket is a dependency manager for .NET and mono projects, which is designed to work well with <a href="https://www.nuget.org/">NuGet</a> packages and also enables referencing files directly from <a href="https://fsprojects.github.io/Paket/git-dependencies.html">Git repositories</a> or any <a href="https://fsprojects.github.io/Paket/http-dependencies.html">HTTP resource</a>. It enables precise and predictable control over what packages the projects within your application reference.</p><p>If you want to learn how to use Paket then read the <a href="https://fsprojects.github.io/Paket/getting-started.html"><em>Getting started</em> tutorial</a> and take a look at the <a href="https://fsprojects.github.io/Paket/faq.html">FAQs</a>.</p><p>If you are already using NuGet for package management in your solution then you can learn about the upgrade process in the <a href="https://fsprojects.github.io/Paket/getting-started.html#Automatic-NuGet-conversion">convert from NuGet</a> section.</p>
         ///   <p>For more details, visit the <a href="https://fsprojects.github.io/paket">official website</a>.</p>
         /// </summary>
-        public static IReadOnlyCollection<Output> Paket(ref ArgumentStringHandler arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Action<OutputType, string> customLogger = null)
+        public static IReadOnlyCollection<Output> Paket(ref ArgumentStringHandler arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Action<OutputType, string,List<ConsoleColor>> customLogger = null)
         {
             using var process = ProcessTasks.StartProcess(PaketPath, ref arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, customLogger ?? PaketLogger);
             process.AssertZeroExitCode();
@@ -395,7 +395,7 @@ namespace Nuke.Common.Tools.Paket
         ///   Path to the Paket executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? PaketTasks.PaketPath;
-        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? PaketTasks.PaketLogger;
+        public override Action<OutputType, string,List<ConsoleColor>> ProcessCustomLogger => base.ProcessCustomLogger ?? PaketTasks.PaketLogger;
         /// <summary>
         ///   NuGet package ID.
         /// </summary>
@@ -502,7 +502,7 @@ namespace Nuke.Common.Tools.Paket
         ///   Path to the Paket executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? PaketTasks.PaketPath;
-        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? PaketTasks.PaketLogger;
+        public override Action<OutputType, string,List<ConsoleColor>> ProcessCustomLogger => base.ProcessCustomLogger ?? PaketTasks.PaketLogger;
         /// <summary>
         ///   Force download and reinstallation of all dependencies.
         /// </summary>
@@ -590,7 +590,7 @@ namespace Nuke.Common.Tools.Paket
         ///   Path to the Paket executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? PaketTasks.PaketPath;
-        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? PaketTasks.PaketLogger;
+        public override Action<OutputType, string,List<ConsoleColor>> ProcessCustomLogger => base.ProcessCustomLogger ?? PaketTasks.PaketLogger;
         /// <summary>
         ///   Path to the package.
         /// </summary>
@@ -652,7 +652,7 @@ namespace Nuke.Common.Tools.Paket
         ///   Path to the Paket executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? PaketTasks.PaketPath;
-        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? PaketTasks.PaketLogger;
+        public override Action<OutputType, string,List<ConsoleColor>> ProcessCustomLogger => base.ProcessCustomLogger ?? PaketTasks.PaketLogger;
         /// <summary>
         ///   Output directory for .nupkg files.
         /// </summary>
