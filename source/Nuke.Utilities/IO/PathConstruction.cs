@@ -1,4 +1,4 @@
-﻿// Copyright 2021 Maintainers of NUKE.
+﻿// Copyright 2023 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -85,7 +85,18 @@ namespace Nuke.Common.IO
 
         // TODO: check usages
         [Pure]
-        public static string GetRelativePath(string basePath, string destinationPath, bool normalize = true)
+        [Obsolete($"Use {nameof(AbsolutePath)}.{nameof(GetRelativePathTo)} extension method")]
+        [CodeTemplate(
+            searchTemplate: "PathConstruction.GetRelativePath($expr{'Nuke.Common.IO.AbsolutePath', true}$, $args$)",
+            ReplaceTemplate = "$expr$.GetRelativePathTo($args$)",
+            ReplaceMessage = "Replace with $expr$.GetRelativePathTo($args$)",
+            Message = $"WARNING: {nameof(GetRelativePath)} is obsolete")]
+        [CodeTemplate(
+            searchTemplate: "GetRelativePath($expr{'Nuke.Common.IO.AbsolutePath', true}$, $args$)",
+            ReplaceTemplate = "$expr$.GetRelativePathTo($args$)",
+            ReplaceMessage = "Replace with $expr$.GetRelativePathTo($args$)",
+            Message = $"WARNING: {nameof(GetRelativePath)} is obsolete")]
+        public static string GetRelativePath(string basePath, string destinationPath)
         {
             basePath = NormalizePath(basePath);
             destinationPath = NormalizePath(destinationPath);
@@ -104,6 +115,17 @@ namespace Nuke.Common.IO
         }
 
         [Pure]
+        [Obsolete($"Use {nameof(AbsolutePath)}.{nameof(Contains)} extension method")]
+        [CodeTemplate(
+            searchTemplate: "PathConstruction.IsDescendantPath($expr{'Nuke.Common.IO.AbsolutePath', true}$, $args$)",
+            ReplaceTemplate = "$expr$.Contains($args$)",
+            ReplaceMessage = "Replace with $expr$.Contains($args$)",
+            Message = $"WARNING: {nameof(IsDescendantPath)} is obsolete")]
+        [CodeTemplate(
+            searchTemplate: "IsDescendantPath($expr{'Nuke.Common.IO.AbsolutePath', true}$, $args$)",
+            ReplaceTemplate = "$expr$.Contains($args$)",
+            ReplaceMessage = "Replace with $expr$.Contains($args$)",
+            Message = $"WARNING: {nameof(IsDescendantPath)} is obsolete")]
         public static bool IsDescendantPath(string basePath, string destinationPath)
         {
             var destinationPathParts = NormalizePath(destinationPath).Split(AllSeparators);
@@ -141,7 +163,7 @@ namespace Nuke.Common.IO
                root[index: 1] == UncSeparator &&
                root.Skip(count: 2).All(char.IsLetterOrDigit);
 
-        private static string GetHeadPart([CanBeNull] string str, int count) => new string((str ?? string.Empty).Take(count).ToArray());
+        private static string GetHeadPart([CanBeNull] string str, int count) => new((str ?? string.Empty).Take(count).ToArray());
 
         internal static bool HasUnixRoot([CanBeNull] string path) => IsUnixRoot(GetHeadPart(path, count: 1));
         internal static bool HasUncRoot([CanBeNull] string path) => IsUncRoot(GetHeadPart(path, count: 3));

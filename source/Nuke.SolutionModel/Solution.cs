@@ -1,4 +1,4 @@
-﻿// Copyright 2021 Maintainers of NUKE.
+﻿// Copyright 2023 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -19,8 +19,8 @@ namespace Nuke.Common.ProjectModel
     [PublicAPI]
     public class Solution
     {
-        internal List<PrimitiveProject> PrimitiveProjects { get; } = new List<PrimitiveProject>();
-        internal Dictionary<PrimitiveProject, SolutionFolder> PrimitiveProjectParents { get; } = new Dictionary<PrimitiveProject, SolutionFolder>();
+        internal List<PrimitiveProject> PrimitiveProjects { get; } = new();
+        internal Dictionary<PrimitiveProject, SolutionFolder> PrimitiveProjectParents { get; } = new();
 
         /// <summary>
         /// File the solution was loaded from or saved to.

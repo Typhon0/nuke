@@ -1,4 +1,4 @@
-﻿// Copyright 2021 Maintainers of NUKE.
+﻿// Copyright 2023 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -31,7 +31,7 @@ namespace Nuke.Common.ProjectModel
             Configurations = configurations;
         }
 
-        public AbsolutePath Path => (AbsolutePath) _pathProvider.Invoke();
+        public AbsolutePath Path => _pathProvider.Invoke();
         public AbsolutePath Directory => Path.Parent;
 
         public IDictionary<string, string> Configurations { get; }

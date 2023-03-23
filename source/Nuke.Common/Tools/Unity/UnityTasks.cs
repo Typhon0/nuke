@@ -1,4 +1,4 @@
-﻿// Copyright 2021 Maintainers of NUKE.
+﻿// Copyright 2023 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -12,6 +12,7 @@ using Nuke.Common.IO;
 using Nuke.Common.Tooling;
 using Nuke.Common.Tools.Unity.Logging;
 using Nuke.Common.Utilities;
+using Nuke.Utilities.Text.Yaml;
 using Serilog;
 
 namespace Nuke.Common.Tools.Unity
@@ -88,10 +89,10 @@ namespace Nuke.Common.Tools.Unity
             Assert.FileExists(manualInstallationToolPath, $"Required Unity Hub installation for version '{editorVersion}' was not found");
         }
 
-        private static string ReadUnityEditorVersion(string projectPath)
+        private static string ReadUnityEditorVersion(AbsolutePath projectPath)
         {
-            var projectVersionPath = Path.Combine(projectPath, "ProjectSettings", "ProjectVersion.txt");
-            var properties = SerializationTasks.YamlDeserializeFromFile<Dictionary<string, string>>(projectVersionPath);
+            var projectVersionFile = projectPath / "ProjectSettings" / "ProjectVersion.txt";
+            var properties = projectVersionFile.ReadYaml<Dictionary<string, string>>();
             return properties["m_EditorVersion"];
         }
 

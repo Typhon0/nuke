@@ -1,4 +1,4 @@
-﻿// Copyright 2021 Maintainers of NUKE.
+﻿// Copyright 2023 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -18,7 +18,7 @@ namespace Nuke.Common.Tools.Kubernetes
     {
         public virtual string Command { get; internal set; }
         public virtual IReadOnlyList<string> Arguments => ArgumentsInternal.AsReadOnly();
-        internal List<string> ArgumentsInternal { get; set; } = new List<string>();
+        internal List<string> ArgumentsInternal { get; set; } = new();
 
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {

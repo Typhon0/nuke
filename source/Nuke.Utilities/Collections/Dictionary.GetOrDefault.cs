@@ -1,6 +1,8 @@
-﻿// Copyright 2021 Maintainers of NUKE.
+﻿// Copyright 2023 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
+
+#if NETSTANDARD2_0
 
 using System;
 using System.Collections.Generic;
@@ -25,3 +27,4 @@ namespace Nuke.Common.Utilities.Collections
         }
     }
 }
+#endif

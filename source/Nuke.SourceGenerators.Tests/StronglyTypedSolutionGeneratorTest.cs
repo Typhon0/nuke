@@ -1,4 +1,4 @@
-﻿// Copyright 2021 Maintainers of NUKE.
+﻿// Copyright 2023 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -21,15 +21,15 @@ namespace Nuke.SourceGenerators.Tests
         [Fact]
         public Task Test()
         {
-            var inputCompilation = CreateCompilation(@"
-using Nuke.Common;
-using Nuke.Common.ProjectModel;
-
-partial class Build : NukeBuild
-{
-    [Solution(GenerateProjects = true)]
-    readonly Solution Solution;
-}");
+            var inputCompilation = CreateCompilation("""
+                using Nuke.Common;
+                using Nuke.Common.ProjectModel;
+                partial class Build : NukeBuild
+                {
+                    [Solution(GenerateProjects = true)]
+                    readonly Solution Solution;
+                }
+                """);
 
             var generator = new StronglyTypedSolutionGenerator();
             var driver = CSharpGeneratorDriver.Create(generator);
@@ -40,15 +40,17 @@ partial class Build : NukeBuild
         [Fact]
         public void TestDisabled()
         {
-            var inputCompilation = CreateCompilation(@"
-using Nuke.Common;
-using Nuke.Common.ProjectModel;
-
-partial class Build : NukeBuild
-{
-    [Solution(GenerateProjects = false)]
-    readonly Solution Solution;
-}");
+            var inputCompilation = CreateCompilation("""
+                
+                using Nuke.Common;
+                using Nuke.Common.ProjectModel;
+                
+                partial class Build : NukeBuild
+                {
+                    [Solution(GenerateProjects = false)]
+                    readonly Solution Solution;
+                }
+                """);
 
             var generator = new StronglyTypedSolutionGenerator();
             var driver = CSharpGeneratorDriver.Create(generator);
@@ -62,15 +64,17 @@ partial class Build : NukeBuild
         [Fact]
         public void TestUnspecified()
         {
-            var inputCompilation = CreateCompilation(@"
-using Nuke.Common;
-using Nuke.Common.ProjectModel;
-
-partial class Build : NukeBuild
-{
-    [Solution]
-    readonly Solution Solution;
-}");
+            var inputCompilation = CreateCompilation("""
+                
+                using Nuke.Common;
+                using Nuke.Common.ProjectModel;
+                
+                partial class Build : NukeBuild
+                {
+                    [Solution]
+                    readonly Solution Solution;
+                }
+                """);
 
             var generator = new StronglyTypedSolutionGenerator();
             var driver = CSharpGeneratorDriver.Create(generator);
@@ -85,7 +89,7 @@ partial class Build : NukeBuild
         {
             return CSharpCompilation.Create("compilation",
                 new[] { CSharpSyntaxTree.ParseText(source) },
-                Basic.Reference.Assemblies.NetStandard20.All
+                Basic.Reference.Assemblies.NetStandard20.References.All
                     .Concat(new[] { typeof(NukeBuild), typeof(SolutionAttribute) }
                         .Select(x => MetadataReference.CreateFromFile(x.Assembly.Location))),
                 new CSharpCompilationOptions(OutputKind.ConsoleApplication));

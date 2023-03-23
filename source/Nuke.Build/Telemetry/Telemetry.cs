@@ -1,9 +1,8 @@
-﻿// Copyright 2021 Maintainers of NUKE.
+﻿// Copyright 2023 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
 using System;
-using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Threading;
@@ -45,7 +44,8 @@ namespace Nuke.Common.Execution
                 return;
 
             var configuration = TelemetryConfiguration.CreateDefault();
-            s_client = new TelemetryClient(configuration) { InstrumentationKey = InstrumentationKey };
+            configuration.ConnectionString = $"InstrumentationKey={InstrumentationKey}";
+            s_client = new TelemetryClient(configuration);
             s_client.Context.Session.Id = Guid.NewGuid().ToString();
             s_client.Context.Location.Ip = "N/A";
             s_client.Context.Cloud.RoleInstance = "N/A";

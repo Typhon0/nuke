@@ -1,4 +1,4 @@
-// Copyright 2021 Maintainers of NUKE.
+// Copyright 2023 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -72,7 +72,7 @@ namespace Nuke.Common.Tooling
 
 #if NET6_0_OR_GREATER
 
-        internal static IProcess StartProcess(
+        public static IProcess StartProcess(
             string toolPath,
             ref ArgumentStringHandler arguments,
             string workingDirectory = null,

@@ -1,4 +1,4 @@
-﻿// Copyright 2021 Maintainers of NUKE.
+﻿// Copyright 2023 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -14,9 +14,9 @@ namespace Nuke.Common.Tools.DocFX
     {
         private const string TimestampPattern = @"^\[\d\d\-\d\d\-\d\d\s\d\d\:\d\d\:\d\d\.\d\d\d\]";
 
-        private static readonly Regex MetadataNoFilesFoundRegex = new Regex($@"{TimestampPattern}Info\:\[ExtractMetadata\]No\ files\ are\ found", RegexOptions.Singleline | RegexOptions.Compiled);
-        private static readonly Regex ErrorRegex = new Regex($@"{TimestampPattern}Error\:", RegexOptions.Singleline | RegexOptions.Compiled);
-        private static readonly Regex WarningRegex = new Regex($@"{TimestampPattern}Warning\:", RegexOptions.Singleline | RegexOptions.Compiled);
+        private static readonly Regex MetadataNoFilesFoundRegex = new($@"{TimestampPattern}Info\:\[ExtractMetadata\]No\ files\ are\ found", RegexOptions.Singleline | RegexOptions.Compiled);
+        private static readonly Regex ErrorRegex = new($@"{TimestampPattern}Error\:", RegexOptions.Singleline | RegexOptions.Compiled);
+        private static readonly Regex WarningRegex = new($@"{TimestampPattern}Warning\:", RegexOptions.Singleline | RegexOptions.Compiled);
 
         internal static void CustomLogger(OutputType type, string output,List<ConsoleColor> consoleColors)
         {

@@ -1,4 +1,4 @@
-﻿// Copyright 2022 Maintainers of NUKE.
+﻿// Copyright 2023 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -21,7 +21,7 @@ namespace Nuke.Common.IO
         [Pure]
         public static bool Exists(this AbsolutePath path, [CallerArgumentExpression("path")] string expression = null)
         {
-            if (expression.EndsWithAnyOrdinalIgnoreCase("file", "executable", "exe", "script"))
+            if (expression.EndsWithAnyOrdinalIgnoreCase("file", "executable", "exe", "script", "archive"))
                 return path.FileExists();
             if (expression.EndsWithAnyOrdinalIgnoreCase("directory", "dir", "folder"))
                 return path.DirectoryExists();

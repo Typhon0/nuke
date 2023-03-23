@@ -1,4 +1,4 @@
-﻿// Copyright 2021 Maintainers of NUKE.
+﻿// Copyright 2023 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -14,8 +14,8 @@ namespace Nuke.Components
     [TypeConverter(typeof(TypeConverter<Configuration>))]
     public class Configuration : Enumeration
     {
-        public static Configuration Debug = new Configuration { Value = nameof(Debug) };
-        public static Configuration Release = new Configuration { Value = nameof(Release) };
+        public static Configuration Debug = new() { Value = nameof(Debug) };
+        public static Configuration Release = new() { Value = nameof(Release) };
 
         public static implicit operator string(Configuration configuration)
         {

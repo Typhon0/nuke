@@ -7,7 +7,6 @@ internal class Solution : Nuke.Common.ProjectModel.Solution
     public Project _build => SolutionFolder.GetProject("_build");
     public Project Nuke_Common => SolutionFolder.GetProject("Nuke.Common");
     public Project Nuke_Common_Tests => SolutionFolder.GetProject("Nuke.Common.Tests");
-    public Project Nuke_MSBuildLocator => SolutionFolder.GetProject("Nuke.MSBuildLocator");
     public Project Nuke_Tooling_Generator => SolutionFolder.GetProject("Nuke.Tooling.Generator");
     public Project Nuke_GlobalTool => SolutionFolder.GetProject("Nuke.GlobalTool");
     public Project Nuke_GlobalTool_Tests => SolutionFolder.GetProject("Nuke.GlobalTool.Tests");
@@ -30,6 +29,8 @@ internal class Solution : Nuke.Common.ProjectModel.Solution
     public Project Nuke_Build_Shared => SolutionFolder.GetProject("Nuke.Build.Shared");
     public Project Nuke_Build => SolutionFolder.GetProject("Nuke.Build");
     public Project Nuke_Build_Tests => SolutionFolder.GetProject("Nuke.Build.Tests");
+    public Project Nuke_Utilities_Text_Yaml => SolutionFolder.GetProject("Nuke.Utilities.Text.Yaml");
+    public Project Nuke_Utilities_IO_Compression => SolutionFolder.GetProject("Nuke.Utilities.IO.Compression");
     public _misc misc => new(SolutionFolder.GetSolutionFolder("misc"));
     internal class _misc
     {

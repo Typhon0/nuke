@@ -1,4 +1,4 @@
-﻿// Copyright 2022 Maintainers of NUKE.
+﻿// Copyright 2023 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -19,20 +19,19 @@ using Octokit;
 namespace Nuke.Components
 {
     [PublicAPI]
-    [ParameterPrefix(GitHubRelease)]
     public interface ICreateGitHubRelease : IHazGitRepository, IHazChangelog
     {
         public const string GitHubRelease = nameof(GitHubRelease);
 
-        [Parameter] [Secret] string Token => TryGetValue(() => Token) ?? GitHubActions.Instance.Token;
+        [Parameter] [Secret] string GitHubToken => TryGetValue(() => GitHubToken) ?? GitHubActions.Instance.Token;
+
         string Version { get; }
         IEnumerable<AbsolutePath> AssetFiles { get; }
 
         Target CreateGitHubRelease => _ => _
-            .Requires(() => Token)
             .Executes(async () =>
             {
-                GitHubTasks.GitHubClient.Credentials = new Credentials(Token);
+                GitHubTasks.GitHubClient.Credentials ??= new Credentials(GitHubToken);
 
                 var release = await GitHubTasks.GitHubClient.Repository.Release.Create(
                     GitRepository.GetGitHubOwner(),
@@ -40,7 +39,7 @@ namespace Nuke.Components
                     new NewRelease(Version)
                     {
                         Name = $"v{Version}",
-                        Body = ChangelogTasks.ExtractChangelogSectionNotes(NuGetReleaseNotes).JoinNewLine()
+                        Body = ChangelogTasks.ExtractChangelogSectionNotes(ChangelogFile).JoinNewLine()
                     });
 
                 var uploadTasks = AssetFiles.Select(async x =>

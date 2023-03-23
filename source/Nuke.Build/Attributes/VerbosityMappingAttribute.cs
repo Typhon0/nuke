@@ -1,4 +1,4 @@
-// Copyright 2021 Maintainers of NUKE.
+// Copyright 2023 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -49,8 +49,7 @@ namespace Nuke.Common.Tooling
 
     internal static class VerbosityMapping
     {
-        public static readonly LookupTable<Type, (Verbosity Verbosity, object MappedVerbosity)> Mappings
-            = new LookupTable<Type, (Verbosity Verbosity, object MappedVerbosity)>();
+        public static readonly LookupTable<Type, (Verbosity Verbosity, object MappedVerbosity)> Mappings = new();
 
         public static void Apply(object obj)
         {

@@ -1,4 +1,4 @@
-﻿// Copyright 2021 Maintainers of NUKE.
+﻿// Copyright 2023 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -13,9 +13,9 @@ namespace Nuke.Common.Tests.Execution
 {
     public class BuildExecutorTest
     {
-        private ExecutableTarget A = new ExecutableTarget { Name = nameof(A), Status = ExecutionStatus.Scheduled };
-        private ExecutableTarget B = new ExecutableTarget { Name = nameof(B), Status = ExecutionStatus.Scheduled };
-        private ExecutableTarget C = new ExecutableTarget { Name = nameof(C), Status = ExecutionStatus.Scheduled };
+        private ExecutableTarget A = new() { Name = nameof(A), Status = ExecutionStatus.Scheduled };
+        private ExecutableTarget B = new() { Name = nameof(B), Status = ExecutionStatus.Scheduled };
+        private ExecutableTarget C = new() { Name = nameof(C), Status = ExecutionStatus.Scheduled };
 
         public BuildExecutorTest()
         {

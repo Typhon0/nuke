@@ -1,4 +1,4 @@
-﻿// Copyright 2021 Maintainers of NUKE.
+﻿// Copyright 2023 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -24,8 +24,8 @@ namespace Nuke.Common.Tooling
         internal const string Redacted = "[REDACTED]";
         private const char Space = ' ';
 
-        private readonly List<string> _secrets = new List<string>();
-        private readonly List<KeyValuePair<string, List<string>>> _arguments = new List<KeyValuePair<string, List<string>>>();
+        private readonly List<string> _secrets = new();
+        private readonly List<KeyValuePair<string, List<string>>> _arguments = new();
 
         public Arguments Add(string argumentFormat, bool? condition = true)
         {

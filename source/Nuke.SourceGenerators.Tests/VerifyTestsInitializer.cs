@@ -1,4 +1,4 @@
-﻿// Copyright 2021 Maintainers of NUKE.
+﻿// Copyright 2023 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -16,7 +16,7 @@ namespace Nuke.SourceGenerators.Tests
             Environment.SetEnvironmentVariable("DiffEngine_Disabled", "true");
             Environment.SetEnvironmentVariable("Verify_DisableClipboard", "true");
             VerifyDiffPlex.Initialize();
-            VerifySourceGenerators.Enable();
+            VerifySourceGenerators.Initialize();
         }
     }
 }

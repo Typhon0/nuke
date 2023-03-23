@@ -1,4 +1,4 @@
-﻿// Copyright 2021 Maintainers of NUKE.
+﻿// Copyright 2023 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -57,9 +57,9 @@ namespace Nuke.Common
             return collection;
         }
 
-        public static void SuppressErrors(Action action, bool includeStackTrace = false)
+        public static void SuppressErrors(Action action, bool includeStackTrace = false, bool logWarning = true)
         {
-            SuppressErrorsIf(condition: true, action, includeStackTrace: includeStackTrace);
+            SuppressErrorsIf(condition: true, action, includeStackTrace: includeStackTrace, logWarning: logWarning);
         }
 
         [ContractAnnotation("defaultValue: notnull => notnull")]

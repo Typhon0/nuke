@@ -1,4 +1,4 @@
-// Copyright 2021 Maintainers of NUKE.
+// Copyright 2023 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -8,7 +8,6 @@ using JetBrains.Annotations;
 using Microsoft.Build.Framework;
 using Nuke.CodeGeneration;
 using Nuke.CodeGeneration.Model;
-using Nuke.Common;
 using Nuke.Common.IO;
 using Nuke.Common.Utilities.Collections;
 

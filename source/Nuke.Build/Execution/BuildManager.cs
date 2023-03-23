@@ -1,4 +1,4 @@
-﻿// Copyright 2021 Maintainers of NUKE.
+﻿// Copyright 2023 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -6,11 +6,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Runtime.CompilerServices;
 using System.Text;
+using Microsoft.Extensions.DependencyModel;
 using Nuke.Common.Tooling;
 using Nuke.Common.Utilities;
 using Nuke.Common.Utilities.Collections;
 using Serilog;
+#pragma warning disable CA2255
 
 namespace Nuke.Common.Execution
 {
@@ -18,12 +21,20 @@ namespace Nuke.Common.Execution
     {
         private const int ErrorExitCode = -1;
 
-        private static readonly LinkedList<Action> s_cancellationHandlers = new LinkedList<Action>();
+        private static readonly LinkedList<Action> s_cancellationHandlers = new();
 
         public static event Action CancellationHandler
         {
             add => s_cancellationHandlers.AddFirst(value);
             remove => s_cancellationHandlers.Remove(value);
+        }
+
+        [ModuleInitializer]
+        public static void Initialize()
+        {
+            DependencyContext.Default?.GetRuntimeAssemblyNames(string.Empty)
+                .Where(x => x.FullName.StartsWith("Nuke."))
+                .ForEach(x => AppDomain.CurrentDomain.Load(x));
         }
 
         public static int Execute<T>(Expression<Func<T, Target>>[] defaultTargetExpressions)

@@ -1,4 +1,4 @@
-// Copyright 2021 Maintainers of NUKE.
+// Copyright 2023 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -17,42 +17,49 @@ namespace Nuke.Common.Tests
         [Fact]
         public void TestGetCompletionItemsFromSchema()
         {
-            var schema = JsonDocument.Parse(@"
-{
-  ""$schema"": ""http://json-schema.org/draft-04/schema#"",
-  ""title"": ""Build Schema"",
-  ""definitions"": {
-    ""build"": {
-      ""type"": ""object"",
-      ""properties"": {
-        ""NoLogo"": {
-          ""type"": ""boolean"",
-          ""description"": ""Disables displaying the NUKE logo""
-        },
-        ""Configuration"": {
-          ""type"": ""string"",
-          ""description"": ""Configuration to build - Default is 'Debug' (local) or 'Release' (server)"",
-          ""enum"": [
-            ""Debug"",
-            ""Release""
-          ]
-        },
-        ""Target"": {
-          ""type"": ""array"",
-          ""description"": ""List of targets to be invoked. Default is '{default_target}'"",
-          ""items"": {
-            ""type"": ""string"",
-            ""enum"": [
-              ""Restore"",
-              ""Compile""
-            ]
-          }
-        }
-      }
-    }
-  }
-}
-");
+            var schema = JsonDocument.Parse("""
+                {
+                  "$schema": "http://json-schema.org/draft-04/schema#",
+                  "title": "Build Schema",
+                  "definitions": {
+                    "build": {
+                      "type": "object",
+                      "properties": {
+                        "NoLogo": {
+                          "type": "boolean",
+                          "description": "Disables displaying the NUKE logo"
+                        },
+                        "Configuration": {
+                          "type": "string",
+                          "description": "Configuration to build - Default is 'Debug' (local) or 'Release' (server)",
+                          "enum": [
+                            "Debug",
+                            "Release"
+                          ]
+                        },
+                        "Profile": {
+                          "type": "array",
+                          "description": "Defines the profiles to load",
+                          "items": {
+                            "type": "string"
+                          }
+                        },
+                        "Target": {
+                          "type": "array",
+                          "description": "List of targets to be invoked. Default is '{default_target}'",
+                          "items": {
+                            "type": "string",
+                            "enum": [
+                              "Restore",
+                              "Compile"
+                            ]
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+                """);
             var profileNames = new[] { "dev" };
             var items = CompletionUtility.GetItemsFromSchema(schema, profileNames);
             items.Should().BeEquivalentTo(

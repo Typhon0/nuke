@@ -1,4 +1,4 @@
-﻿// Copyright 2021 Maintainers of NUKE.
+﻿// Copyright 2023 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -6,7 +6,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
@@ -22,7 +21,7 @@ namespace Nuke.CodeGeneration
     [PublicAPI]
     public static class ReferenceUpdater
     {
-        private static HttpClient s_client = new HttpClient();
+        private static HttpClient s_client = new();
 
         public static void UpdateReferences(string specificationsDirectory, string referencesDirectory = null)
         {

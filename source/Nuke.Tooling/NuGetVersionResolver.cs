@@ -1,4 +1,4 @@
-﻿// Copyright 2022 Maintainers of NUKE.
+﻿// Copyright 2023 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -15,7 +15,7 @@ namespace Nuke.Common.Tooling
     [PublicAPI]
     public static class NuGetVersionResolver
     {
-        private static readonly HttpClient s_client = new HttpClient();
+        private static readonly HttpClient s_client = new();
 
         [ItemCanBeNull]
         public static async Task<string> GetLatestVersion(string packageId, bool includePrereleases, bool includeUnlisted = false)

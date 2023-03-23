@@ -1,4 +1,4 @@
-﻿// Copyright 2021 Maintainers of NUKE.
+﻿// Copyright 2023 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -8,7 +8,6 @@ using System.Linq;
 using System.Reflection;
 using JetBrains.Annotations;
 using Nuke.Common.IO;
-using Nuke.Common.ValueInjection;
 
 namespace Nuke.Common.Tooling
 {
@@ -34,6 +33,11 @@ namespace Nuke.Common.Tooling
         public LocalPathAttribute(string absoluteOrRelativePath)
         {
             _absoluteOrRelativePath = absoluteOrRelativePath;
+        }
+
+        public LocalPathAttribute(string windowsPath, string unixPath)
+        {
+            _absoluteOrRelativePath = EnvironmentInfo.IsWin ? windowsPath : unixPath;
         }
 
         public override ToolRequirement GetRequirement(MemberInfo member)

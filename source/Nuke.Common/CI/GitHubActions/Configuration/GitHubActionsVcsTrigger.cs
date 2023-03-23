@@ -1,4 +1,4 @@
-// Copyright 2021 Maintainers of NUKE.
+// Copyright 2023 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -26,7 +26,8 @@ namespace Nuke.Common.CI.GitHubActions.Configuration
         {
             writer.WriteLine($"{Kind.GetValue()}:");
 
-            void WriteValue(string value) => writer.WriteLine($"- {value.SingleQuoteIfNeeded('*', '!')}");
+            void WriteValue(string value)
+                => writer.WriteLine($"- {value.SingleQuoteIfNeeded('.', '*', '!', '?', '+', '[', ']', '(', ')')}");
 
             using (writer.Indent())
             {

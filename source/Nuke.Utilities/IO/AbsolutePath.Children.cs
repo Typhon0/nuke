@@ -1,10 +1,12 @@
-﻿// Copyright 2022 Maintainers of NUKE.
+﻿// Copyright 2023 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using Nuke.Common.Utilities.Collections;
 
 namespace Nuke.Common.IO
 {
@@ -43,15 +45,21 @@ namespace Nuke.Common.IO
         {
             Assert.True(depth >= 0);
 
-            if (depth == 0)
-                return Enumerable.Empty<AbsolutePath>();
+            var paths = new string[] { path };
+            while (!paths.IsEmpty() && depth > 0)
+            {
+                var matchingDirectories = paths
+                    .SelectMany(x => Directory.EnumerateDirectories(x, pattern, SearchOption.TopDirectoryOnly))
+                    .Where(x => (File.GetAttributes(x) & attributes) == 0)
+                    .OrderBy(x => x)
+                    .Select(AbsolutePath.Create).ToList();
 
-            var directories = Directory.EnumerateDirectories(path, pattern, SearchOption.TopDirectoryOnly)
-                .Where(x => (File.GetAttributes(x) & attributes) == 0)
-                .OrderBy(x => x)
-                .Select(AbsolutePath.Create);
+                foreach (var matchingDirectory in matchingDirectories)
+                    yield return matchingDirectory;
 
-            return directories.Concat(path.GetDirectories(depth: depth - 1).SelectMany(x => x.GetDirectories(pattern, attributes: attributes)));
+                depth--;
+                paths = paths.SelectMany(x => Directory.GetDirectories(x, "*", SearchOption.TopDirectoryOnly)).ToArray();
+            }
         }
     }
 }

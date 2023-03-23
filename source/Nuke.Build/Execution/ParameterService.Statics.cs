@@ -1,4 +1,4 @@
-﻿// Copyright 2022 Maintainers of NUKE.
+﻿// Copyright 2023 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -13,7 +13,7 @@ namespace Nuke.Common
 {
     internal partial class ParameterService
     {
-        internal static ParameterService Instance = new ParameterService(
+        internal static ParameterService Instance = new(
             () => EnvironmentInfo.ArgumentParser,
             () => EnvironmentInfo.Variables);
 

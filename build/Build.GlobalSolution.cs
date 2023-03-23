@@ -1,4 +1,4 @@
-// Copyright 2021 Maintainers of NUKE.
+// Copyright 2023 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -12,9 +12,9 @@ using Nuke.Common.Git;
 using Nuke.Common.IO;
 using Nuke.Common.ProjectModel;
 using Nuke.Common.Tools.GitHub;
+using Nuke.Utilities.Text.Yaml;
 using static Nuke.Common.ControlFlow;
 using static Nuke.Common.IO.FileSystemTasks;
-using static Nuke.Common.IO.SerializationTasks;
 using static Nuke.Common.ProjectModel.SolutionModelTasks;
 using static Nuke.Common.Tools.Git.GitTasks;
 
@@ -22,8 +22,7 @@ partial class Build
 {
     [Parameter] readonly bool UseHttps;
 
-    Nuke.Common.ProjectModel.Solution GlobalSolution = (RootDirectory / "nuke-global.sln").ExistingFile()?.ReadSolution();
-
+    AbsolutePath GlobalSolution => RootDirectory / "nuke-global.sln";
     AbsolutePath ExternalRepositoriesDirectory => RootDirectory / "external";
     AbsolutePath ExternalRepositoriesFile => ExternalRepositoriesDirectory / "repositories.yml";
 

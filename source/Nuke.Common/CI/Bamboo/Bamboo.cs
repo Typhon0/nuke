@@ -1,11 +1,10 @@
-﻿// Copyright 2021 Maintainers of NUKE.
+﻿// Copyright 2023 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
 using System;
 using System.Diagnostics.CodeAnalysis;
 using JetBrains.Annotations;
-using Nuke.Common.Utilities;
 
 namespace Nuke.Common.CI.Bamboo
 {

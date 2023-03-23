@@ -1,4 +1,4 @@
-// Copyright 2021 Maintainers of NUKE.
+// Copyright 2023 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -26,7 +26,7 @@ namespace Nuke.Common.Tools.GitHub
     [PublicAPI]
     public static class GitHubTasks
     {
-        public static GitHubClient GitHubClient = new GitHubClient(new ProductHeaderValue(nameof(NukeBuild)));
+        public static GitHubClient GitHubClient = new(new ProductHeaderValue(nameof(NukeBuild)));
 
         static GitHubTasks()
         {

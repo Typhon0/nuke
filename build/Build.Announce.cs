@@ -1,4 +1,4 @@
-// Copyright 2021 Maintainers of NUKE.
+// Copyright 2023 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -31,7 +31,7 @@ partial class Build
         .DependsOn(ReleaseImage)
         .WhenSkipped(DependencyBehavior.Skip)
         .TriggeredBy<IPublish>()
-        .OnlyWhenStatic(() => IsOriginalRepository && GitRepository.IsOnMasterBranch());
+        .OnlyWhenStatic(() => GitRepository.IsOnMasterBranch());
 
     IEnumerable<string> ChangelogSectionNotes => ChangelogTasks.ExtractChangelogSectionNotes(From<IHazChangelog>().ChangelogFile);
 
@@ -78,7 +78,7 @@ partial class Build
             ("Octopus Deploy", "https://octopus.com/"),
         };
 
-    [Parameter] [Secret] readonly string SlackWebhook;
+    [Parameter][Secret] readonly string SlackWebhook;
 
     Target AnnounceSlack => _ => _
         .TriggeredBy(Announce)
@@ -105,7 +105,7 @@ partial class Build
                 SlackWebhook);
         });
 
-    [Parameter] [Secret] readonly string DiscordWebhook;
+    [Parameter][Secret] readonly string DiscordWebhook;
 
     Target AnnounceDiscord => _ => _
         .TriggeredBy(Announce)
@@ -171,7 +171,7 @@ partial class Build
         });
 
     string AnnouncementTootText => AnnouncementTweetText;
-    [Parameter] [Secret] readonly string MastodonAccessToken;
+    [Parameter][Secret] readonly string MastodonAccessToken;
 
     Target AnnounceMastodon => _ => _
         .TriggeredBy(Announce)
@@ -186,7 +186,7 @@ partial class Build
         });
 
     [Parameter] readonly string GitterRoomId;
-    [Parameter] [Secret] readonly string GitterAuthToken;
+    [Parameter][Secret] readonly string GitterAuthToken;
 
     Target AnnounceGitter => _ => _
         .TriggeredBy(Announce)

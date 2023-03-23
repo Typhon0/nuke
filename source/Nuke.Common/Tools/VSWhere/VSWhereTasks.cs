@@ -1,4 +1,4 @@
-// Copyright 2021 Maintainers of NUKE.
+// Copyright 2023 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -24,7 +24,7 @@ namespace Nuke.Common.Tools.VSWhere
                 return null;
 
             var output = process.Output.EnsureOnlyStd().Select(x => x.Text).JoinNewLine();
-            return SerializationTasks.JsonDeserialize<VSWhereResult[]>(output).ToList();
+            return output.GetJson<VSWhereResult[]>().ToList();
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿// Copyright 2022 Maintainers of NUKE.
+﻿// Copyright 2023 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -67,7 +67,9 @@ namespace Nuke.Common
 
         private bool IsOutputEnabled(DefaultOutput output)
         {
-            return !(GetType().GetCustomAttribute<DisableDefaultOutputAttribute>()?.DisabledOutputs.Contains(output) ?? false);
+            return !GetType().GetCustomAttributes<DisableDefaultOutputAttribute>()
+                .Where(x => x.IsApplicable(this))
+                .Any(x => x.DisabledOutputs.Contains(output));
         }
     }
 }

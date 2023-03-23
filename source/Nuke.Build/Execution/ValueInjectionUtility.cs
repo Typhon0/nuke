@@ -1,4 +1,4 @@
-﻿// Copyright 2021 Maintainers of NUKE.
+﻿// Copyright 2023 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -15,7 +15,7 @@ namespace Nuke.Common.ValueInjection
 {
     internal static class ValueInjectionUtility
     {
-        private static readonly Dictionary<MemberInfo, object> s_valueCache = new Dictionary<MemberInfo, object>();
+        private static readonly Dictionary<MemberInfo, object> s_valueCache = new();
 
         [CanBeNull]
         public static T TryGetValue<T>(Expression<Func<T>> parameterExpression)
